@@ -39,7 +39,7 @@
 
 (defun print-result (enemy-waza-level character-name
                      &key (include-固有技 nil))
-  (format t "~&敵 ~A, Level ~D~%"
+  (format t "~2&敵 ~A, Level ~D~%"
           "TODO" enemy-waza-level)
   (let ((閃き-type (find-閃き-type-by-character-name character-name)))
     (format t "~2&名前 ~A 閃きタイプ ~A (~A)~%"
@@ -52,16 +52,33 @@
                 when (or normal unique)
                 do (let ((prob (calc-閃き確率 enemy-waza-level level)))
                      (when (plusp prob)
-                       (format t " ~@[Unique~] ~A ~F (from ~A) (level ~A) ~%"
+                       (format t " ~A	~D (from ~A) (level ~A) ~@[~*Unique ~]~%"
                                waza prob from level unique))))))
       (print-waza-list "剣技" *剣技-閃き-list* (閃き-type-剣 閃き-type) *剣固有技-list*)
       (print-waza-list "大剣技" *大剣技-閃き-list* (閃き-type-大剣 閃き-type) *大剣固有技-list*)
       (print-waza-list "斧技" *斧技-閃き-list* (閃き-type-斧 閃き-type) *斧固有技-list*)
+      (print-waza-list "棍棒技" *棍棒技-閃き-list* (閃き-type-棍棒 閃き-type) *棍棒固有技-list*)
+      (print-waza-list "槍技" *槍技-閃き-list* (閃き-type-槍 閃き-type) *槍固有技-list*)
+      (print-waza-list "小剣技" *小剣技-閃き-list* (閃き-type-小剣 閃き-type) *小剣固有技-list*)
+      (print-waza-list "弓技" *弓技-閃き-list* (閃き-type-弓 閃き-type) *弓固有技-list*)
+      (print-waza-list "体術技" *体術技-閃き-list* (閃き-type-体術 閃き-type) *体術固有技-list*)
 
       )))
 
 
 (defun test ()
-  (print-result 11                      ; gelatious matter
-                'ベア
-                :include-固有技 t))
+  (let ((level 11))                     ; gelatious matter
+    (print-result level 'ジェラール)
+    (print-result level 'ベア)
+    (print-result level 'テレーズ)
+    (print-result level 'ジェイムズ)
+    (print-result level 'アリエス)
+    )
+  (let ((level 23))                     ; tarm soldier
+    (print-result level 'ダイナマイト)
+    (print-result level 'シーシアス)
+    (print-result level 'メディア)
+    (print-result level 'デイジー)
+    (print-result level 'ジェミニ)
+    )
+  )

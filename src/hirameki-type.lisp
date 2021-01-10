@@ -1,5 +1,4 @@
 ;;; -*- coding: utf-8; -*-
-
 (in-package :romasaga2)
 
 (defparameter *閃き済み技-list*
