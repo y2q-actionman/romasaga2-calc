@@ -32,8 +32,8 @@
   (弓 *弓-基本技-list* :type list)
   (体術 *体術-基本技-list* :type list))
 
-(defparameter *閃き-type-alist*
-  (list
+(defparameter *閃き-type-array*
+  (vector
    (make-閃き-type
     :id 0 :name '体術A型
     :剣 *剣-基本技-list*
@@ -203,7 +203,7 @@
     :弓 (list* '影ぬい *弓-基本技-list*)
     :体術 *体術-基本技-list*)))
 
-(defparameter *character-name-to-閃き-type*
+(defparameter *character-name-to-閃き-type-id*
   '(
     ;; 帝国重装歩兵
     (ベア .	13)
@@ -499,3 +499,7 @@
     (コッペリア . 7)
     (最終皇帝男 . 14)
     (最終皇帝女 . 14)))
+
+(defun find-閃き-type-by-character-name (name)
+  (let ((閃き-type-id (cdr (assoc name *character-name-to-閃き-type-id*))))
+    (aref *閃き-type-array* 閃き-type-id)))
