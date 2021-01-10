@@ -177,8 +177,8 @@
     )
   "これを適当にコメントアウトして使うこと")
 
-(defvar *main-enemy* 'ゼラチナスマター)
-(defvar *main-member-list* '(ジェラール ベア テレーズ ジェイムズ アリエス))
+(defparameter *main-enemy* 'ゼラチナスマター)
+(defparameter *main-member-list* '(ジェラール ベア テレーズ ジェイムズ アリエス))
 
 (defun main (&key (include-固有技 nil)
                (monster *main-enemy*)
