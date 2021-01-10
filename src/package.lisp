@@ -3,4 +3,4 @@
 (defpackage :romasaga2
   (:use :cl)
   (:export
-   ))
+   print-result))

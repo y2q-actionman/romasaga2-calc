@@ -9,7 +9,9 @@
     :components
     ((:file "package")
      (:file "waza-list")
+     (:file "monster-level")
      (:file "hirameki-type")
      (:file "calc")
+     (:file "main")
      )))
   )
