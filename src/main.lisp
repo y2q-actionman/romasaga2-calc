@@ -192,6 +192,6 @@
                               *user-閃き済み-斧技-list*
                               *user-閃き済み-棍棒技-list*
                               *user-閃き済み-槍技-list*
-                              *user-閃き済み-槍技-list*
                               *user-閃き済み-小剣技-list*
-                              *user-閃き済み-弓技-list*))))
+                              *user-閃き済み-弓技-list*
+                              *user-閃き済み-体術技-list*))))

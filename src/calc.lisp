@@ -55,7 +55,7 @@
                           (not (find waza 閃き済み技-list)))
                 do (let ((prob (calc-閃き確率 enemy-waza-level level)))
                      (when (plusp prob)
-                       (format t " ~A	~D	(from ~A)	(level ~A)	~@[~A~]~%"
+                       (format t " ~A	~5,3F	(from ~A)	(level ~A)	~@[~A~]~%"
                                waza prob from level unique-weapon))))))
       (print-waza-list "剣技" *剣技-閃き-list* (閃き-type-剣 閃き-type) *剣固有技-list*)
       (print-waza-list "大剣技" *大剣技-閃き-list* (閃き-type-大剣 閃き-type) *大剣固有技-list*)
