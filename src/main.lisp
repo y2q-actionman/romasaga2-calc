@@ -177,7 +177,13 @@
     )
   "これを適当にコメントアウトして使うこと")
 
-(defparameter *main-enemy* 'ゼラチナスマター)
+(defparameter *main-enemy*
+  ;; 'ミミック
+  'ディープワン
+  ;; 'ゼラチナスマター
+  ;; 'タームソルジャー
+  )
+
 (defparameter *main-member-list* '(ジェラール ベア テレーズ ジェイムズ アリエス))
 
 (defun main (&key (include-固有技 nil)
