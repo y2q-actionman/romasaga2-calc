@@ -188,17 +188,21 @@
 (defparameter *main-member-list* '(ジェラール ベア テレーズ ジェイムズ アリエス))
 
 (defun main (&key (include-固有技 nil)
-               (monster *main-enemy*)
-               (member-list *main-member-list*))
-  (loop for m in member-list
-     do (print-result monster m
-                      :include-固有技 include-固有技
-                      :additional-閃き済み技-list
-                      (append *user-閃き済み-剣技-list*
+               (enemy *main-enemy*)
+               (member-list *main-member-list*)
+               (enemy-waza-level (find-waza-level-by-enemy-name enemy)))
+  (format t "~&敵 ~A Level ~D~2%" enemy enemy-waza-level)
+  (let ((additional-閃き済み技-list
+         (append *user-閃き済み-剣技-list*
                               *user-閃き済み-大剣技-list*
                               *user-閃き済み-斧技-list*
                               *user-閃き済み-棍棒技-list*
                               *user-閃き済み-槍技-list*
                               *user-閃き済み-小剣技-list*
                               *user-閃き済み-弓技-list*
-                              *user-閃き済み-体術技-list*))))
+                              *user-閃き済み-体術技-list*)))
+    (loop for m in member-list
+       do (print-result enemy-waza-level m
+                        :include-固有技 include-固有技
+                        :additional-閃き済み技-list additional-閃き済み技-list))
+    (print-固有技 enemy-waza-level :additional-閃き済み技-list additional-閃き済み技-list)))
