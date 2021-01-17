@@ -317,4 +317,5 @@
     (七英雄 . 	36)))
 
 (defun find-waza-level-by-enemy-name (name)
-  (cdr (assoc name *enemy-name-to-waza-level-alist*)))
+  (or (cdr (assoc name *enemy-name-to-waza-level-alist*))
+      (error "Enemy ~A not found" name)))
