@@ -500,5 +500,6 @@
     (最終皇帝女 . 14)))
 
 (defun find-閃き-type-by-character-name (name)
-  (let ((閃き-type-id (cdr (assoc name *character-name-to-閃き-type-id*))))
+  (let ((閃き-type-id (cdr (or (assoc name *character-name-to-閃き-type-id*)
+                               (error "Character name ~A was not found." name)))))
     (aref *閃き-type-array* 閃き-type-id)))
