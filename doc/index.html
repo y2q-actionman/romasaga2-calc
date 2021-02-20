@@ -10,6 +10,51 @@
     </div>
     <hr>
     <!-- 個々の人の欄、それと固有技カウンター技欄 -->
+    <div id="character_1">
+      <label>キャラクタの名前<input id="character_1_name" type="text" /></label><br/>
+      <label>閃きタイプ<input id="character_1_hirameki_type_id" type="number"
+			      min="0" max="15" /></label>
+      <label>閃きタイプ名前
+	<input id="character_1_hirameki_type_name" type="text" list="hirameki_type_name" size="10"/>
+      </label>
+      <details>
+	<summary>装備品、装備技術設定</summary>
+	<fieldset>
+	  <legend>装備武器種類</legend>
+	  <label><input id="character_1_equip_weapon_type_sword" type="checkbox" checked />剣</label>
+	  <label><input id="character_1_equip_weapon_type_two_handed_sword" type="checkbox" checked />大剣</label>
+	  <label><input id="character_1_equip_weapon_type_axe" type="checkbox" checked />斧</label>
+	  <label><input id="character_1_equip_weapon_type_mace" type="checkbox" checked />棍棒</label>
+	  <label><input id="character_1_equip_weapon_type_spear" type="checkbox" checked />槍</label>
+	  <label><input id="character_1_equip_weapon_type_small_sword" type="checkbox" checked />小剣</label>
+	  <label><input id="character_1_equip_weapon_type_bow" type="checkbox" checked />弓</label>
+	  <label><input id="character_1_equip_weapon_type_martial_arts" type="checkbox" checked />体術</label>
+	</fieldset>
+	<fieldset>
+	  <legend>装備技術欄</legend>
+	  <ul> <!-- TODO: とりあえず初期装備技を置く。 -->
+	    <li><input id="character_1_equip_waza_1" type="text" /></li>
+	    <li><input id="character_1_equip_waza_2" type="text" /></li>
+	    <li><input id="character_1_equip_waza_3" type="text" /></li>
+	    <li><input id="character_1_equip_waza_4" type="text" /></li>
+	    <li><input id="character_1_equip_waza_5" type="text" /></li>
+	    <li><input id="character_1_equip_waza_6" type="text" /></li>
+	    <li><input id="character_1_equip_waza_7" type="text" /></li>
+	    <li><input id="character_1_equip_waza_8" type="text" /></li>
+	  </ul>
+	</fieldset>
+      </details>
+      <!-- 閃き可能技一覧　装備技から閃き可能は太字、装備技から無理なら薄字。閃き済みなら出さない。 -->
+      <label>閃き可能技一覧
+	<output> <table> </table></output>
+      </label>
+    </div>
+    <hr>
+    TODO
+    <ul>
+      <li>技道場から取れる技の一覧</li>
+      <li>固有装備の所持状況、閃き状況</li>
+    </ul>
     <datalist id="hirameki_type_name">
       <option value=""></option>
       <option>体術A型</option> <!-- 0 -->
@@ -29,41 +74,5 @@
       <option>剣型</option>
       <option>術士型</option>
     </datalist>
-    <div id="character_1">
-      <label>キャラクタの名前<input id="character_1_name" type="text" /></label><br/>
-      <label>閃きタイプ<input id="character_1_hirameki_type_id" type="number"
-			      min="0" max="15" /></label>
-      <label>閃きタイプ名前
-	<select id="character_1_hirameki_type_name" type="text"> <!--  TODO自動計算 -->
-	  <option value=""></option>
-	  <option>体術A型</option> <!-- 0 -->
-	  <option>体術B型</option> <!-- 1 -->
-	  <option>弓型</option>	   <!-- 2 -->
-	  <option>小剣型</option>
-	  <option>槍型</option>
-	  <option>棍棒型</option> <!-- 5 -->
-	  <option>斧型</option>
-	  <option>皆無型</option>
-	  <option>大剣A型</option>
-	  <option>斧槍型</option>
-	  <option>剣豪型</option> <!-- 10 -->
-	  <option>大剣B型</option>
-	  <option>未使用</option> <!-- 12 -->
-	  <option>半端型</option>
-	  <option>剣型</option>
-	  <option>術士型</option>
-	</select>
-      </label>
-      <!--
-
-- 閃き可能技一覧　装備技から閃き可能は太字、装備技から無理なら薄字。閃き済みなら出さない。
-- 装備技術欄。とりあえず初期装備技を置く。
-- 装備欄？　武器の種類をcheckboxで並べる
-	-->
-    </div>
-    <hr>
-      <!-- 技道場から取れる技の一覧 -->
-      <!-- 固有装備の所持状況、閃き状況 -->
-    </form>
   </body>
 </html>
