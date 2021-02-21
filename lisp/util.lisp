@@ -31,6 +31,7 @@ This macro is for Parenscript-compatible alist definition."
 
 
 (defun ps-compile-file-to-file (lisp-file-name)
+  "For debug"
   (let ((output-file-name (make-pathname :type "js" :defaults lisp-file-name)))
     (with-open-file (out output-file-name :direction :output :if-exists :supersede)
       (let ((ps:*parenscript-stream* out))

@@ -230,3 +230,20 @@
        do (format stream "<option>~A<option> " waza))
     (terpri stream))
   (format stream "~&</datalist>"))
+
+
+;;; JS output
+
+(defparameter *required-ps-files*
+  '("waza-list.lisp"
+    "monster-level.lisp"
+    ;; "hirameki-type.lisp"
+    ;; "calc.lisp"
+    ))
+
+(defun make-romasaga2-js (&optional (output-file-name "romasaga2.js"))
+  (with-open-file (out output-file-name :direction :output :if-exists :supersede)
+    (let ((ps:*parenscript-stream* out))
+      (dolist (file *required-ps-files*)
+        (ps:ps-compile-file file))))
+  output-file-name)
