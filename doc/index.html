@@ -33,14 +33,14 @@
 	  <legend>装備技術欄</legend>
 	  装備技は閃き可能技一覧には出ない。また、閃き派生元の技術を装備している場合、閃き可能技一覧の派生先が太字になる。(装備していない場合は薄字)
 	  <ul> <!-- TODO: とりあえず初期装備技を置く。 -->
-	    <li><input id="character_1_equip_waza_1" type="text" /></li>
-	    <li><input id="character_1_equip_waza_2" type="text" /></li>
-	    <li><input id="character_1_equip_waza_3" type="text" /></li>
-	    <li><input id="character_1_equip_waza_4" type="text" /></li>
-	    <li><input id="character_1_equip_waza_5" type="text" /></li>
-	    <li><input id="character_1_equip_waza_6" type="text" /></li>
-	    <li><input id="character_1_equip_waza_7" type="text" /></li>
-	    <li><input id="character_1_equip_waza_8" type="text" /></li>
+	    <li><input id="character_1_equip_waza_1" type="text" list="all_waza_name" /></li>
+	    <li><input id="character_1_equip_waza_2" type="text" list="all_waza_name" /></li>
+	    <li><input id="character_1_equip_waza_3" type="text" list="all_waza_name" /></li>
+	    <li><input id="character_1_equip_waza_4" type="text" list="all_waza_name" /></li>
+	    <li><input id="character_1_equip_waza_5" type="text" list="all_waza_name" /></li>
+	    <li><input id="character_1_equip_waza_6" type="text" list="all_waza_name" /></li>
+	    <li><input id="character_1_equip_waza_7" type="text" list="all_waza_name" /></li>
+	    <li><input id="character_1_equip_waza_8" type="text" list="all_waza_name" /></li>
 	  </ul>
 	</fieldset>
       </details>
@@ -111,6 +111,17 @@
       <option>セイメイ<option> <option>マキビ<option> <option>タダユキ<option> <option>ヤスチカ<option> <option>ヨシヒラ<option> <option>カワヒト<option> <option>ドウマン<option> <option>ナカマロ<option>
       <option>アザミ<option> <option>シオン<option> <option>ツバキ<option> <option>ナズナ<option> <option>フヨウ<option> <option>ミズキ<option> <option>モミジ<option> <option>ユキノ<option>
       <option>レオン<option> <option>ジェラール<option> <option>コッペリア<option> <option>最終皇帝男<option> <option>最終皇帝女<option>
+    </datalist>
+    <datalist id="all_waza_name">
+      <option>なぎ払い<option> <option>パリイ<option> <option>二段斬り<option> <option>十文字斬り<option> <option>みじん斬り<option> <option>短冊斬り<option> <option>空圧波<option> <option>つむじ風<option> <option>線斬り<option> <option>音速剣<option> <option>残像剣<option> <option>真空斬り<option> <option>光速剣<option> <option>不動剣<option> 
+      <option>みね打ち<option> <option>ディフレクト<option> <option>巻き打ち<option> <option>強撃<option> <option>切り落とし<option> <option>流し斬り<option> <option>無無剣<option> <option>水鳥剣<option> <option>清流剣<option> <option>ツバメ返し<option> <option>乱れ雪月花<option> <option>無明剣<option> <option>活人剣<option> 
+      <option>トマホーク<option> <option>アクスボンバー<option> <option>大木断<option> <option>次元断<option> <option>一人時間差<option> <option>ブレードロール<option> <option>ヨーヨー<option> <option>高速ナブラ<option> <option>マキ割りスペシャル<option> <option>スカイドライブ<option> 
+      <option>脳天割り<option> <option>返し突き<option> <option>地裂撃<option> <option>骨砕き<option> <option>ダブルヒット<option> <option>削岩撃<option> <option>フルフラット<option> <option>グランドスラム<option> <option>オゾンビート<option> <option>かめごうら割り<option> 
+      <option>二段突き<option> <option>足払い<option> <option>エイミング<option> <option>風車<option> <option>くし刺し<option> <option>チャージ<option> <option>一文字突き<option> <option>活殺化石衝<option> <option>稲妻突き<option> <option>活殺獣神衝<option> <option>無双三段<option> <option>スパイラルチャージ<option> 
+      <option>フェイント<option> <option>サイドワインダー<option> <option>感電衝<option> <option>マタドール<option> <option>プラズマスラスト<option> <option>スネークショット<option> <option>幻惑剣<option> <option>マリオネット<option> <option>スクリュードライバ<option> <option>乱れ突き<option> <option>ファイナルレター<option> 
+      <option>イド・ブレイク<option> <option>でたらめ矢<option> <option>影ぬい<option> <option>二本射ち<option> <option>ビーストスレイヤー<option> <option>アローレイン<option> <option>影矢<option> <option>瞬速の矢<option> <option>落鳳破<option> <option>バラージシュート<option> <option>イヅナ<option> 
+      <option>キック<option> <option>集気法<option> <option>ネコだまし<option> <option>カウンター<option> <option>ソバット<option> <option>気弾<option> <option>不動金しばり<option> <option>ジョルトカウンター<option> <option>コークスクリュー<option> <option>カポエラキック<option> <option>マシンガンジャブ<option> <option>クワドラブル<option> <option>活殺破邪法<option> <option>千手観音<option> 
+      <option>ベルセルク<option> 
     </datalist>
     <datalist id="monster_name">
       <option>スケルトン<option> <option>スカルデーモン<option> <option>ボーンヘッド<option> <option>スカルロード<option> <option>ロトンビースト<option> <option>スパイクヘッド<option> <option>ドレッドナイト<option> <option>ヘルビースト<option> <option>フライアー<option> <option>ウインガー<option> <option>ヘルタスケルター<option> <option>腐骨鳥<option> <option>獄門鳥<option> <option>アドバード<option> <option>ボーンドレイク<option> <option>チャリオット<option>
