@@ -2,7 +2,7 @@
   :description ""
   :license ""
   :author "YOKOTA Yuki <y2q.actionman@gmail.com>"
-  :depends-on (:parenscript :paren6 :alexandria)
+  :depends-on (:parenscript :paren6 :alexandria :cl-ppcre)
   :serial t
   :components
   ((:file "package")
