@@ -7,6 +7,10 @@
   `(throw-js-error -Error ,string))
 
 
+(ps:defpsmacro vector (&rest args)
+  `(ps:array ,@args))
+
+
 (defmacro define-assoc-list (variable-name finder-function-name alist)
   "Defines an assoc list and a finder function.
 This macro is for Parenscript-compatible alist definition."
