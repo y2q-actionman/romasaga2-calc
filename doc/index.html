@@ -1,20 +1,29 @@
 <html>
   <head>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="./romasaga2.js"></script>
+    <script type="text/javascript">
+      function updateEnemyTechLevel() {
+	  let enemy_name = $('#enemy_name').val();
+	  let w_lv = findWazaLevelByEnemyName(enemy_name);
+	  $('#enemy_tech_level').val(w_lv);
+      }
+    </script>
   </head>
   <body>
     <div id="enemy">
-      <label>敵の名前 <input id="enemy_name" type="text" list="monster_name"/>
-      </label>
+      <label for="enemy_name">敵の名前</label>
+      <input id="enemy_name" type="text" list="enemy_name_list" onChange="updateEnemyTechLevel()"/>
       <label>敵の技レベル <input id="enemy_tech_level" type="number" min="0" max="50"/> </label>
     </div>
     <hr>
     <!-- 個々の人の欄、それと固有技カウンター技欄 -->
     <div id="character_1">
-      <label>キャラクタの名前<input id="character_1_name" type="text" list="character_name" /></label><br/>
+      <label>キャラクタの名前<input id="character_1_name" type="text" list="character_name_list" size="18" /></label><br/>
       <label>閃きタイプ<input id="character_1_hirameki_type_id" type="number"
 			      min="0" max="15" /></label>
       <label>閃きタイプ名前
-	<input id="character_1_hirameki_type_name" type="text" list="hirameki_type_name" size="10"/>
+	<input id="character_1_hirameki_type_name" type="text" list="hirameki_type_name_list" size="10"/>
       </label>
       <details>
 	<summary>装備品、装備技術設定</summary>
@@ -33,14 +42,14 @@
 	  <legend>装備技術欄</legend>
 	  装備技は閃き可能技一覧には出ない。また、閃き派生元の技術を装備している場合、閃き可能技一覧の派生先が太字になる。(装備していない場合は薄字)
 	  <ul> <!-- TODO: とりあえず初期装備技を置く。 -->
-	    <li><input id="character_1_equip_waza_1" type="text" list="all_waza_name" /></li>
-	    <li><input id="character_1_equip_waza_2" type="text" list="all_waza_name" /></li>
-	    <li><input id="character_1_equip_waza_3" type="text" list="all_waza_name" /></li>
-	    <li><input id="character_1_equip_waza_4" type="text" list="all_waza_name" /></li>
-	    <li><input id="character_1_equip_waza_5" type="text" list="all_waza_name" /></li>
-	    <li><input id="character_1_equip_waza_6" type="text" list="all_waza_name" /></li>
-	    <li><input id="character_1_equip_waza_7" type="text" list="all_waza_name" /></li>
-	    <li><input id="character_1_equip_waza_8" type="text" list="all_waza_name" /></li>
+	    <li><input id="character_1_equip_waza_1" type="text" list="all_waza_name_list" /></li>
+	    <li><input id="character_1_equip_waza_2" type="text" list="all_waza_name_list" /></li>
+	    <li><input id="character_1_equip_waza_3" type="text" list="all_waza_name_list" /></li>
+	    <li><input id="character_1_equip_waza_4" type="text" list="all_waza_name_list" /></li>
+	    <li><input id="character_1_equip_waza_5" type="text" list="all_waza_name_list" /></li>
+	    <li><input id="character_1_equip_waza_6" type="text" list="all_waza_name_list" /></li>
+	    <li><input id="character_1_equip_waza_7" type="text" list="all_waza_name_list" /></li>
+	    <li><input id="character_1_equip_waza_8" type="text" list="all_waza_name_list" /></li>
 	  </ul>
 	</fieldset>
       </details>
@@ -57,7 +66,7 @@
     </ul>
 
     <!-- Datalist -->
-    <datalist id="hirameki_type_name">
+    <datalist id="hirameki_type_name_list">
       <option>体術A型</option> <!-- 0 -->
       <option>体術B型</option> <!-- 1 -->
       <option>弓型</option>	   <!-- 2 -->
@@ -75,7 +84,7 @@
       <option>剣型</option>
       <option>術士型</option>
     </datalist>
-    <datalist id="character_name">
+    <datalist id="character_name_list">
       <option>ベア<option> <option>バイソン<option> <option>ウォーラス<option> <option>スネイル<option> <option>ヘッジホッグ<option> <option>トータス<option> <option>ライノ<option> <option>フェルディナント<option>
       <option>ジェイムズ<option> <option>ジョン<option> <option>リチャード<option> <option>ハーバート<option> <option>ハリー<option> <option>ロナルド<option> <option>ドワイト<option> <option>フランクリン<option>
       <option>ライーザ<option> <option>ジェシカ<option> <option>シャーリー<option> <option>オードリー<option> <option>ジュディ<option> <option>グレース<option> <option>イングリット<option> <option>グレタ<option>
@@ -112,7 +121,7 @@
       <option>アザミ<option> <option>シオン<option> <option>ツバキ<option> <option>ナズナ<option> <option>フヨウ<option> <option>ミズキ<option> <option>モミジ<option> <option>ユキノ<option>
       <option>レオン<option> <option>ジェラール<option> <option>コッペリア<option> <option>最終皇帝男<option> <option>最終皇帝女<option>
     </datalist>
-    <datalist id="all_waza_name">
+    <datalist id="all_waza_name_list">
       <option>なぎ払い<option> <option>パリイ<option> <option>二段斬り<option> <option>十文字斬り<option> <option>みじん斬り<option> <option>短冊斬り<option> <option>空圧波<option> <option>つむじ風<option> <option>線斬り<option> <option>音速剣<option> <option>残像剣<option> <option>真空斬り<option> <option>光速剣<option> <option>不動剣<option> 
       <option>みね打ち<option> <option>ディフレクト<option> <option>巻き打ち<option> <option>強撃<option> <option>切り落とし<option> <option>流し斬り<option> <option>無無剣<option> <option>水鳥剣<option> <option>清流剣<option> <option>ツバメ返し<option> <option>乱れ雪月花<option> <option>無明剣<option> <option>活人剣<option> 
       <option>トマホーク<option> <option>アクスボンバー<option> <option>大木断<option> <option>次元断<option> <option>一人時間差<option> <option>ブレードロール<option> <option>ヨーヨー<option> <option>高速ナブラ<option> <option>マキ割りスペシャル<option> <option>スカイドライブ<option> 
@@ -123,7 +132,7 @@
       <option>キック<option> <option>集気法<option> <option>ネコだまし<option> <option>カウンター<option> <option>ソバット<option> <option>気弾<option> <option>不動金しばり<option> <option>ジョルトカウンター<option> <option>コークスクリュー<option> <option>カポエラキック<option> <option>マシンガンジャブ<option> <option>クワドラブル<option> <option>活殺破邪法<option> <option>千手観音<option> 
       <option>ベルセルク<option> 
     </datalist>
-    <datalist id="monster_name">
+    <datalist id="enemy_name_list">
       <option>スケルトン<option> <option>スカルデーモン<option> <option>ボーンヘッド<option> <option>スカルロード<option> <option>ロトンビースト<option> <option>スパイクヘッド<option> <option>ドレッドナイト<option> <option>ヘルビースト<option> <option>フライアー<option> <option>ウインガー<option> <option>ヘルタスケルター<option> <option>腐骨鳥<option> <option>獄門鳥<option> <option>アドバード<option> <option>ボーンドレイク<option> <option>チャリオット<option>
       <option>コープス<option> <option>ゾンビ<option> <option>レブナント<option> <option>屍食鬼<option> <option>吸精鬼<option> <option>寄生鬼<option> <option>ボーンバイター<option> <option>ブレインイーター<option> <option>ブラッドサッカー<option> <option>獄竜<option> <option>屍竜<option> <option>腐竜<option> <option>ヴァンパイア<option> <option>ヴァンパイア<option> <option>デュラハン<option> <option>ノスフェラン<option>
       <option>ゴブリン<option> <option>ホブリン<option> <option>ドビー<option> <option>ミノタウロス<option> <option>ビーストメア<option> <option>オーガ<option> <option>オーガバトラー<option> <option>チャンピオン<option> <option>マッドオーガ<option> <option>ゲットー<option> <option>ウオッチマン<option> <option>ロビンハット<option> <option>百獣王<option> <option>人狼<option> <option>ラルヴァクィーン<option> <option>スフィンクス<option>
