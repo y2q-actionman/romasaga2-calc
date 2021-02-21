@@ -218,3 +218,15 @@
                         :include-固有技 include-固有技
                         :additional-閃き済み技-list additional-閃き済み技-list))
     (print-固有技 enemy-waza-level :additional-閃き済み技-list additional-閃き済み技-list)))
+
+
+;;; HTML output
+
+(defun print-all-waza-name-for-html-datalist (&optional (stream *standard-output*))
+  (format stream "<datalist id=\"all_waza_name\">~%")
+  (dolist (waza-list (list *剣技-list* *大剣技-list* *斧技-list* *棍棒技-list*
+                           *槍技-list* *小剣技-list* *弓技-list* *体術技-list* *爪技-list*))
+    (loop for waza in (rest waza-list)
+       do (format stream "<option>~A<option> " waza))
+    (terpri stream))
+  (format stream "~&</datalist>"))
