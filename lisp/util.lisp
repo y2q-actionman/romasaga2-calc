@@ -12,6 +12,11 @@
      (otherwise (ps-simple-error "Fallen to ecase otherwise clause."))))
 
 
+(ps:defpsmacro position (item sequence &key (start 0 start-supplied-p))
+  (let ((ret (gensym)))
+    `(let ((,ret (ps:chain ,sequence (index-of ,item ,@ (if start-supplied-p `(,start))))))
+       (if (= ,ret -1) nil ,ret))))
+
 (ps:defpsmacro vector (&rest args)
   `(ps:array ,@args))
 

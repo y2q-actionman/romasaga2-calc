@@ -345,6 +345,8 @@
 (defun find-閃き-type-name-by-閃き-type-id (id)
   (aref *閃き-type-name-array* id))
 
+(defun find-閃き-type-id-by-閃き-type-name (name)
+  (position name *閃き-type-name-array*))
 
 (defparameter *閃き可能-waza-list-array*
   #((ベルセルク 千手観音 クワドラブル ジョルトカウンター マシンガンジャブ カポエラキック 不動金しばり コークスクリュー 気弾 集気法 カウンター
@@ -465,4 +467,4 @@
   "Built by `read-rs2techlearnflag-file'")
 
 (defun find-閃き可能-waza-list-by-閃き-type-id (id)
-  (aref *閃き可能-waza-list-array* id)) 
+  (aref *閃き可能-waza-list-array* id))
