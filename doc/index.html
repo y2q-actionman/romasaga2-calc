@@ -3,28 +3,35 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="./romasaga2.js"></script>
     <script type="text/javascript">
-      function updateEnemyTechLevel() {
-	  let enemy_name = $('#enemy_name').val();
-	  let w_lv = findWazaLevelByEnemyName(enemy_name);
-	  $('#enemy_tech_level').val(w_lv);
+      function changeIt(target, new_value) {
+	  if ($(target).val() != new_value) {
+	      $(target).val(new_value);
+	      $(target).trigger("change");
+	  }
       }
     </script>
   </head>
   <body>
     <div id="enemy">
       <label for="enemy_name">敵の名前</label>
-      <input id="enemy_name" type="text" list="enemy_name_list" onChange="updateEnemyTechLevel()"/>
+      <input id="enemy_name" type="text" list="enemy_name_list"
+	     onChange="changeIt('#enemy_tech_level', findWazaLevelByEnemyName($('#enemy_name').val()))"/>
       <label>敵の技レベル <input id="enemy_tech_level" type="number" min="0" max="50"/> </label>
     </div>
     <hr>
     <!-- 個々の人の欄、それと固有技カウンター技欄 -->
     <div id="character_1">
-      <label>キャラクタの名前<input id="character_1_name" type="text" list="character_name_list" size="18" /></label><br/>
-      <label>閃きタイプ<input id="character_1_hirameki_type_id" type="number"
-			      min="0" max="15" /></label>
-      <label>閃きタイプ名前
-	<input id="character_1_hirameki_type_name" type="text" list="hirameki_type_name_list" size="10"/>
-      </label>
+      <label for="character_1_name">キャラクタの名前</label>
+      <input id="character_1_name" type="text" list="character_name_list" size="18"
+	     onChange="changeIt('#character_1_hirameki_type_id', find閃きTypeIdByCharacterName($('#character_1_name').val()));"/>
+      <br/>
+      <label for="character_1_hirameki_type_id">閃きタイプ</label>
+      <input id="character_1_hirameki_type_id" type="number" min="0" max="15"
+	     onChange="changeIt('#character_1_hirameki_type_name', find閃きTypeNameBy閃きTypeId($('#character_1_hirameki_type_id').val()));"/>
+      <label for="character_1_hirameki_type_name">閃きタイプ名前</label>
+      <input id="character_1_hirameki_type_name" type="text" list="hirameki_type_name_list" size="10"
+	     onChange="changeIt('#character_1_hirameki_type_id', find閃きTypeIdBy閃きTypeName($('#character_1_hirameki_type_name').val()));"/>
+      
       <details>
 	<summary>装備品、装備技術設定</summary>
 	<fieldset>
