@@ -15,7 +15,7 @@
     <div id="enemy">
       <label for="enemy_name">敵の名前</label>
       <input id="enemy_name" type="text" list="enemy_name_list"
-	     onChange="changeIt('#enemy_tech_level', findWazaLevelByEnemyName($('#enemy_name').val()))"/>
+	     onChange="changeIt('#enemy_tech_level', findWazaLevelByEnemyName(this.value))"/>
       <label>敵の技レベル <input id="enemy_tech_level" type="number" min="0" max="50"/> </label>
     </div>
     <hr>
@@ -23,14 +23,14 @@
     <div id="character_1">
       <label for="character_1_name">キャラクタの名前</label>
       <input id="character_1_name" type="text" list="character_name_list" size="18"
-	     onChange="changeIt('#character_1_hirameki_type_id', find閃きTypeIdByCharacterName($('#character_1_name').val()));"/>
+	     onChange="changeIt('#character_1_hirameki_type_id', find閃きTypeIdByCharacterName(this.value));"/>
       <br/>
       <label for="character_1_hirameki_type_id">閃きタイプ</label>
       <input id="character_1_hirameki_type_id" type="number" min="0" max="15"
-	     onChange="changeIt('#character_1_hirameki_type_name', find閃きTypeNameBy閃きTypeId($('#character_1_hirameki_type_id').val()));"/>
+	     onChange="changeIt('#character_1_hirameki_type_name', find閃きTypeNameBy閃きTypeId(this.value));"/>
       <label for="character_1_hirameki_type_name">閃きタイプ名前</label>
       <input id="character_1_hirameki_type_name" type="text" list="hirameki_type_name_list" size="10"
-	     onChange="changeIt('#character_1_hirameki_type_id', find閃きTypeIdBy閃きTypeName($('#character_1_hirameki_type_name').val()));"/>
+	     onChange="changeIt('#character_1_hirameki_type_id', find閃きTypeIdBy閃きTypeName(this.value));"/>
       
       <details>
 	<summary>装備品、装備技術設定</summary>
