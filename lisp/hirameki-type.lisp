@@ -523,6 +523,29 @@
     (aref *閃き-type-array* 閃き-type-id)))
 
 
+(defparameter *閃き-type-name-array*
+  (vector
+   '体術A型
+   '体術B型
+   '弓型
+   '小剣型
+   '槍型
+   '棍棒型
+   '斧型
+   '皆無型
+   '大剣A型
+   '斧槍型
+   '剣豪型
+   '大剣B型
+   '未使用
+   '半端型
+   '剣型
+   '術士型))
+
+(defun find-閃き-type-name-by-閃き-type-id (id)
+  (aref *閃き-type-name-array* id))
+
+
 
 
 
