@@ -6,6 +6,11 @@
 (ps:defpsmacro ps-simple-error (string)
   `(throw-js-error -Error ,string))
 
+(ps:defpsmacro ecase (keyform &body body)
+  `(case ,keyform
+     ,@body
+     (otherwise (ps-simple-error "Fallen to ecase otherwise clause."))))
+
 
 (ps:defpsmacro vector (&rest args)
   `(ps:array ,@args))

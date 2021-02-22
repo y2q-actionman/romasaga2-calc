@@ -9,6 +9,7 @@
    (:file "util")
    (:file "waza-list")
    (:file "monster-level")
+   (:file "generate-hirameki-type")
    (:file "hirameki-type")
    (:file "calc")
    (:file "main")))

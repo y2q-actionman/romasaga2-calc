@@ -45,8 +45,8 @@
                          include-固有技)
   (loop initially (format t "~A~%" waza-type-name)
      for (level waza from unique-weapon) in 閃き-list
-     as normal = (if unique-weapon nil (find waza character-閃き可能-waza-list))
-     as unique = (if include-固有技 (find waza 固有技-list))
+     for normal = (if unique-weapon nil (find waza character-閃き可能-waza-list))
+     for unique = (if include-固有技 (find waza 固有技-list))
      when (and (or normal unique)
                (not (find waza 閃き済み技-list)))
      do (let ((prob (calc-閃き確率 enemy-waza-level level)))
@@ -82,7 +82,7 @@
                        (additional-閃き済み技-list nil))
   (let* ((閃き済み技-list (append additional-閃き済み技-list *閃き済み技-list*))
          (閃き-type-id (find-閃き-type-id-by-character-name character-name))
-         (閃き可能-waza-list (aref *閃き-type-array-2* 閃き-type-id)))
+         (閃き可能-waza-list (find-閃き可能-waza-list-by-閃き-type-id 閃き-type-id)))
     (format t "~2&名前 ~A 閃きタイプ ~A (~A)~%"
             character-name 閃き-type-id (find-閃き-type-name-by-閃き-type-id 閃き-type-id))
     (print-waza-list "剣技" *剣技-閃き-list* *剣固有技-list*

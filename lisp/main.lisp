@@ -237,7 +237,7 @@
 (defparameter *required-ps-files*
   '("waza-list.lisp"
     "monster-level.lisp"
-    ;; "hirameki-type.lisp"
+    "hirameki-type.lisp"
     ;; "calc.lisp"
     ))
 
