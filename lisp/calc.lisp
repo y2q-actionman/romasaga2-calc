@@ -45,7 +45,7 @@
                          include-固有技)
   (loop initially (format t "~A~%" waza-type-name)
      for (level waza from unique-weapon) in 閃き-list
-     as normal = (find waza character-閃き可能-waza-list)
+     as normal = (if unique-weapon nil (find waza character-閃き可能-waza-list))
      as unique = (if include-固有技 (find waza 固有技-list))
      when (and (or normal unique)
                (not (find waza 閃き済み技-list)))
