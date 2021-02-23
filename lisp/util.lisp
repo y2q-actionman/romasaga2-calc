@@ -35,7 +35,7 @@ This macro is for Parenscript-compatible alist definition."
      (defparameter ,variable-name
        ,(loop for (k . v) in alist
            collect (string k) into ret
-           collect v into ret
+           collect `',v into ret
            finally (return (list* 'ps:create ret))))
      (defun ,finder-function-name (name)
        (or (ps:getprop ,variable-name name)
