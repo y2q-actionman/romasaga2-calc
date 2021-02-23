@@ -45,7 +45,8 @@
                          include-固有技)
   (format t "~A~%" waza-type-name)
   (loop for waza in waza-list
-     for hirameki-list = (find-閃き-alist waza)
+     for hirameki-list = (find-閃き-alist waza nil)
+     when hirameki-list
      do (loop for (level from unique-weapon) in hirameki-list
            for normal = (if unique-weapon nil (find waza character-閃き可能-waza-list))
            for unique = (and include-固有技 unique-weapon)
@@ -63,21 +64,21 @@
          (閃き可能-waza-list (find-閃き可能-waza-list-by-閃き-type-id 閃き-type-id)))
     (format t "~2&固有技 閃きタイプ ~A (~A)~%"
             閃き-type-id (find-閃き-type-name-by-閃き-type-id 閃き-type-id))
-    (print-waza-list "剣技" *剣技-list*
+    (print-waza-list "剣技" *剣固有技-list*
                      閃き済み技-list enemy-waza-level 閃き可能-waza-list t)
-    (print-waza-list "大剣技" *大剣技-list*
+    (print-waza-list "大剣技" *大剣固有技-list*
                      閃き済み技-list enemy-waza-level 閃き可能-waza-list t)
-    (print-waza-list "斧技" *斧技-list*
+    (print-waza-list "斧技" *斧固有技-list*
                      閃き済み技-list enemy-waza-level 閃き可能-waza-list t)
-    (print-waza-list "棍棒技" *棍棒技-list*
+    (print-waza-list "棍棒技" *棍棒固有技-list*
                      閃き済み技-list enemy-waza-level 閃き可能-waza-list t)
-    (print-waza-list "槍技" *槍技-list*
+    (print-waza-list "槍技" *槍固有技-list*
                      閃き済み技-list enemy-waza-level 閃き可能-waza-list t)
-    (print-waza-list "小剣技" *小剣技-list*
+    (print-waza-list "小剣技" *小剣固有技-list*
                      閃き済み技-list enemy-waza-level 閃き可能-waza-list t)
-    (print-waza-list "弓技" *弓技-list*
+    (print-waza-list "弓技" *弓固有技-list*
                      閃き済み技-list enemy-waza-level 閃き可能-waza-list t)
-    (print-waza-list "体術技" *体術技-list*
+    (print-waza-list "体術技" (append *体術固有技-list* *爪固有技-list*)
                      閃き済み技-list enemy-waza-level 閃き可能-waza-list t)
     ))
 

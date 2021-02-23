@@ -26,9 +26,9 @@
 This macro is for Parenscript-compatible alist definition."
   `(progn (defparameter ,variable-name
             ',alist)
-          (defun ,finder-function-name (name)
+          (defun ,finder-function-name (name &optional (errorp t))
             (or (cdr (assoc name ,variable-name))
-                (error "'~A' was not found in ~A" name ',variable-name)))))
+                (if errorp (error "'~A' was not found in ~A" name ',variable-name))))))
 
 (ps:defpsmacro define-assoc-list (variable-name finder-function-name alist)
   `(progn
@@ -37,10 +37,10 @@ This macro is for Parenscript-compatible alist definition."
            collect (string k) into ret
            collect `',v into ret
            finally (return (list* 'ps:create ret))))
-     (defun ,finder-function-name (name)
+     (defun ,finder-function-name (name &optional (errorp t))
        (or (ps:getprop ,variable-name name)
            (let ((varname ',variable-name))
-             (ps-simple-error (+ "'" name "' was not found in " varname)))))))
+             (if errorp (ps-simple-error (+ "'" name "' was not found in " varname))))))))
 
 
 (ps:defpsmacro defstruct (name &body slots)
