@@ -197,7 +197,7 @@
   ;; 'アルビオン
   )
 
-(defparameter *main-member-list* '(ジェラール ベア ジェイムズ テレーズ アリエス))
+(defparameter *main-member-list* '(ジェラール ベア ジェイムズ テレーズ アリエス アンドロマケー))
 
 (defun main (&key (include-固有技 nil)
                (enemy *main-enemy*)
