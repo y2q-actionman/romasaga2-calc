@@ -1,12 +1,12 @@
 <html>
   <head>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="./romasaga2.js"></script>
     <script type="text/javascript">
       function changeIt(target, new_value) {
-	  if ($(target).val() != new_value) {
-	      $(target).val(new_value);
-	      $(target).trigger("change");
+	  let targetElem = document.querySelector(target);
+	  if (targetElem.value != new_value) {
+	      targetElem.value = new_value;
+	      targetElem.dispatchEvent(new Event("change"));
 	  }
       }
     </script>
