@@ -21,8 +21,3 @@
                    do (pushnew tech-symbol
                                (aref result (1- i))))))))
     result))
-
-(defparameter *閃き可能-waza-list-array*
-  (read-rs2techlearnflag-file))
-
-(defun 閃き可能-waza-list)
