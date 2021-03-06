@@ -17,6 +17,13 @@
     `(let ((,ret (ps:chain ,sequence (index-of ,item ,@ (if start-supplied-p `(,start))))))
        (if (= ,ret -1) nil ,ret))))
 
+(defun includes (list item)
+  "For Parenscript 'includes' macro, which is expended to Array.includes()."
+  (find item list))
+
+(ps:defpsmacro includes (list item)
+  `(ps:chain ,list (includes ,item)))
+
 (ps:defpsmacro vector (&rest args)
   `(ps:array ,@args))
 

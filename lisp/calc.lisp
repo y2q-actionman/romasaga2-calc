@@ -37,21 +37,36 @@
       (30	25/255)
       (50	52/255))))
 
-(defun print-waza-list  (waza-list
-                         閃き済み技-list
-                         enemy-waza-level
-                         character-閃き可能-waza-list
-                         include-固有技)
-  (dolist (waza waza-list)
-    (when (and (not (find waza 閃き済み技-list))
-               (find waza character-閃き可能-waza-list))
-      (let ((hirameki-list (find-閃き-alist waza nil)))
-        (loop for (level from unique-weapon) in hirameki-list
-           for prob = (calc-閃き確率 enemy-waza-level level)
-           when (and (plusp prob)
-                     (if include-固有技 t (not unique-weapon)))
-           do (format t " ~A	~5,3F	(from ~A)	(level ~A)	~@[~A~]~%"
-                      waza prob from level unique-weapon))))))
+(defun calc-waza-hirameki-list  (waza-list
+                                 閃き済み技-list
+                                 enemy-waza-level
+                                 character-閃き可能-waza-list)
+  (loop for waza in waza-list
+     when (and (not (includes 閃き済み技-list waza))
+               (includes character-閃き可能-waza-list waza))
+     append
+       (loop for (level from unique-weapon) in (find-閃き-alist waza nil)
+          for prob = (calc-閃き確率 enemy-waza-level level)
+          when (plusp prob)
+          collect (list waza prob from level unique-weapon))))
+
+(defun print-waza-hirameki-result (waza-hirameki-result include-固有技)
+  (loop for (waza prob from level unique-weapon) in waza-hirameki-result
+     when (if include-固有技 t (not unique-weapon))
+     do (format t " ~A	~5,3F	(from ~A)	(level ~A)	~@[~A~]~%"
+                waza prob from level unique-weapon)))
+
+(defun print-waza-list (waza-list
+                        閃き済み技-list
+                        enemy-waza-level
+                        character-閃き可能-waza-list
+                        include-固有技)
+  (print-waza-hirameki-result
+   (calc-waza-hirameki-list waza-list
+                            閃き済み技-list
+                            enemy-waza-level
+                            character-閃き可能-waza-list)
+   include-固有技))
 
 (defun print-result (enemy-waza-level character-name
                      &key (include-固有技 nil)
