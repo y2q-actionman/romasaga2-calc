@@ -1,224 +1,71 @@
 (in-package :romasaga2)
 
-(defparameter *user-閃き済み-剣技-list*
-  '(なぎ払い
-    ;; パリイ
-    ;; 二段斬り
-    ;; 短冊斬り
-    ;; みじん斬り
-    ;; 線斬り
-    ;; 空圧波
-    ;; 十文字斬り
-    ;; つむじ風
-    ;; 音速剣
-    ;; 光速剣
-    ;; 真空斬り
-    ;; 残像剣
-    ;; 不動剣
 
-    ;; 落月破斬
-    ;; プロミネンス斬
-    ;; 風狼剣
-    ;; 咬竜剣
-    ;; サクション
-    ;; 分子分解
-    ;; スウォーム
-    ;; カマイタチ
-    ;; 稲妻斬り
-    )
-  "これを適当にコメントアウトして使うこと")
+(defun print-waza-hirameki-result (waza-hirameki-result include-固有技)
+  (loop for (waza prob from level unique-weapon) in waza-hirameki-result
+     when (if include-固有技 t (not unique-weapon))
+     do (format t " ~A	~5,3F	(from ~A)	(level ~A)	~@[~A~]~%"
+                waza prob from level unique-weapon)))
 
-(defparameter *user-閃き済み-大剣技-list*
-  '(みね打ち
-    ;; 巻き打ち
-    ;; 強撃
-    ;; ディフレクト
-    ;; 切り落とし
-    ;; ツバメ返し
-    ;; 水鳥剣
-    ;; 無無剣
-    ;; 無明剣
-    ;; 流し斬り
-    ;; 乱れ雪月花
-    ;; 清流剣
-    ;; 活人剣
+(defun print-waza-list (waza-list
+                        閃き済み技-list
+                        enemy-waza-level
+                        character-閃き可能-waza-list
+                        include-固有技)
+  (print-waza-hirameki-result
+   (calc-waza-hirameki-list waza-list
+                            閃き済み技-list
+                            enemy-waza-level
+                            character-閃き可能-waza-list)
+   include-固有技))
 
-    ;; 雷殺斬
-    ;; 聖光
-    ;; 月影
-    ;; 一刀両断
-    ;; 退魔神剣
-    ;; 殺虫剣
-    ;; 殺人剣
-    )
-  "これを適当にコメントアウトして使うこと")
+(defun print-result (enemy-waza-level character-name
+                     &key (include-固有技 nil)
+                       (additional-閃き済み技-list nil))
+  (let* ((閃き済み技-list (append additional-閃き済み技-list *閃き済み技-list*))
+         (閃き-type-id (find-閃き-type-id-by-character-name character-name))
+         (閃き可能-waza-list (find-閃き可能-waza-list-by-閃き-type-id 閃き-type-id)))
+    (format t "~2&名前 ~A 閃きタイプ ~A (~A)~%"
+            character-name 閃き-type-id (find-閃き-type-name-by-閃き-type-id 閃き-type-id))
+    (format t "剣技~%")
+    (print-waza-list (append *剣技-list* *剣固有技-list*) ; TODO: concatinate them at defparameter?
+                     閃き済み技-list enemy-waza-level 閃き可能-waza-list include-固有技)
+    (format t "大剣技~%")
+    (print-waza-list (append *大剣技-list* *大剣固有技-list*)
+                     閃き済み技-list enemy-waza-level 閃き可能-waza-list include-固有技)
+    (format t "斧技~%")
+    (print-waza-list (append *斧技-list* *斧固有技-list*)
+                     閃き済み技-list enemy-waza-level 閃き可能-waza-list include-固有技)
+    (format t "棍棒技~%")
+    (print-waza-list (append *棍棒技-list* *棍棒固有技-list*)
+                     閃き済み技-list enemy-waza-level 閃き可能-waza-list include-固有技)
+    (format t "槍技~%")
+    (print-waza-list (append *槍技-list* *槍固有技-list*)
+                     閃き済み技-list enemy-waza-level 閃き可能-waza-list include-固有技)
+    (format t "小剣技~%")
+    (print-waza-list (append *小剣技-list* *小剣固有技-list*)
+                     閃き済み技-list enemy-waza-level 閃き可能-waza-list include-固有技)
+    (format t "弓技~%")
+    (print-waza-list (append *弓技-list* *弓固有技-list*)
+                     閃き済み技-list enemy-waza-level 閃き可能-waza-list include-固有技)
+    (format t "体術技~%")
+    (print-waza-list (append *体術技-list* *体術固有技-list*)
+                     閃き済み技-list enemy-waza-level 閃き可能-waza-list include-固有技)
+    (format t "爪技~%")
+    (print-waza-list (append *爪技-list* *爪固有技-list*)
+                     閃き済み技-list enemy-waza-level 閃き可能-waza-list include-固有技)
+    ))
 
-(defparameter *user-閃き済み-斧技-list*
-  '(
-    ;; アクスボンバー
-    ;; トマホーク
-    ;; 一人時間差
-    ;; ヨーヨー
-    ;; 大木断
-    ;; ブレードロール
-    ;; 次元断
-    ;; 高速ナブラ
-    ;; マキ割りスペシャル
-    ;; スカイドライブ
-
-    ;; フェザーシール
-    ;; 電光ブーメラン
-    ;; 死の舞い
-    ;; 幻体戦士法
-    ;; デストラクション
-    )
-  "これを適当にコメントアウトして使うこと")
-
-(defparameter *user-閃き済み-棍棒技-list*
-  '(
-    ;; 返し突き
-    脳天割り
-    ;; 骨砕き
-    ;; 削岩撃
-    ;; ダブルヒット
-    ;; 地裂撃
-    ;; グランドスラム
-    ;; オゾンビート
-    ;; フルフラット
-    ;; かめごうら割り
-
-    ;; ウェアバスター
-    ;; 動くな
-    ;; スペルエンハンス
-    ;; 祝福
-    ;; グランドバスター
-    )
-  "これを適当にコメントアウトして使うこと")
-
-(defparameter *user-閃き済み-槍技-list*
-  '(
-    ;; 足払い
-    二段突き
-    ;; 稲妻突き
-    ;; くし刺し
-    ;; チャージ
-    ;; エイミング
-    ;; 風車
-    ;; 一文字突き
-    ;; 活殺化石衝
-    ;; スパイラルチャージ
-    ;; 活殺獣神衝
-    ;; 無双三段
-
-    ;; ポセイドンシュート
-    ;; サンダーボルト
-    ;; 下り飛竜
-    ;; サイコバインド
-    )
-  "これを適当にコメントアウトして使うこと")
-
-(defparameter *user-閃き済み-小剣技-list*
-  '(フェイント
-    ;; 感電衝
-    サイドワインダー
-    ;; マリオネット
-    ;; スネークショット
-    ;; マタドール
-    ;; 乱れ突き
-    ;; プラズマスラスト
-    ;; スクリュードライバ
-    ;; 幻惑剣
-    ;; ファイナルレター
-
-    ;; マッドバイター
-    ;; ライフスティール
-    ;; 火龍出水
-    ;; 百花繚乱
-    )
-  "これを適当にコメントアウトして使うこと")
-
-(defparameter *user-閃き済み-弓技-list*
-  '(
-    ;; 瞬速の矢
-    ;; でたらめ矢
-    ;; 影ぬい
-    ;; ビーストスレイヤー
-    ;; アローレイン
-    ;; 二本射ち
-    イド・ブレイク
-    ;; 影矢
-    ;; バラージシュート
-    ;; 落鳳破
-    ;; イヅナ
-
-    ;; ハートシーカー
-    ;; 皆死ね矢
-    ;; スターライトアロー
-    )
-  "これを適当にコメントアウトして使うこと")
-
-(defparameter *user-閃き済み-体術技-list*
-  '(キック
-    ;; ソバット
-    ;; カウンター
-    ;; ネコだまし
-    ;; 集気法
-    ;; 気弾
-    ;; コークスクリュー
-    ;; 不動金しばり
-    ;; カポエラキック
-    ;; マシンガンジャブ
-    ;; ジョルトカウンター
-    ;; クワドラブル
-    ;; 活殺破邪法
-    ;; 千手観音
-
-    ふみつけ
-    サラマンダークロー
-    赤竜波
-
-    ;; ベルセルク
-    )
-  "これを適当にコメントアウトして使うこと")
-
-(defparameter *main-enemy*
-  ;; 'ミミック
-  ;; 'ゼラチナスマター
-  ;; '魔道士
-  'ディープワン
-  ;; 'パイロレクス
-  ;; 'タームソルジャー
-  ;; 'サンドバイター
-  ;; 'ラッフルツリー
-  ;; '守護者
-  ;; '水龍
-  ;; '金龍
-  ;; 'ミスティック
-  ;; 'アルビオン
-  )
-
-(defparameter *main-member-list* '(ジェラール ベア ジェイムズ テレーズ アリエス アンドロマケー))
-
-(defun main (&key (include-固有技 nil)
-               (enemy *main-enemy*)
-               (member-list *main-member-list*)
-               (enemy-waza-level (find-waza-level-by-enemy-name enemy)))
+(defun print-all (enemy member-list enemy-waza-level additional-閃き済み技-list)
   (format t "~&敵 ~A Level ~D~2%" enemy enemy-waza-level)
-  (let ((additional-閃き済み技-list
-         (append *user-閃き済み-剣技-list*
-                              *user-閃き済み-大剣技-list*
-                              *user-閃き済み-斧技-list*
-                              *user-閃き済み-棍棒技-list*
-                              *user-閃き済み-槍技-list*
-                              *user-閃き済み-小剣技-list*
-                              *user-閃き済み-弓技-list*
-                              *user-閃き済み-体術技-list*)))
-    (loop for m in member-list
-       do (print-result enemy-waza-level m
-                        :include-固有技 include-固有技
-                        :additional-閃き済み技-list additional-閃き済み技-list))
-    (print-固有技 enemy-waza-level :additional-閃き済み技-list additional-閃き済み技-list)))
-
+  (loop for m in member-list
+     do (print-result enemy-waza-level m
+                      :include-固有技 nil
+                      :additional-閃き済み技-list additional-閃き済み技-list))
+  ;; 固有技
+  (print-result enemy-waza-level 'レオン
+                :additional-閃き済み技-list additional-閃き済み技-list
+                :include-固有技 t))
 
 ;;; HTML output
 
@@ -238,7 +85,7 @@
   '("waza-list.lisp"
     "monster-level.lisp"
     "hirameki-type.lisp"
-    ;; "calc.lisp"
+    "calc.lisp"
     ))
 
 (defun make-romasaga2-js (&optional (output-file-name "romasaga2.js"))

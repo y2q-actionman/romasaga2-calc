@@ -12,4 +12,6 @@
    (:file "generate-hirameki-type")
    (:file "hirameki-type")
    (:file "calc")
-   (:file "main")))
+   (:file "main")
+   (:file "romasaga2-user")
+   ))
