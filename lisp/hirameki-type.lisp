@@ -1,12 +1,6 @@
 ;;; -*- coding: utf-8; -*-
 (in-package :romasaga2)
 
-(defparameter *閃き済み技-list*
-  '(剣攻撃 大剣攻撃 斧攻撃 棍棒攻撃 槍攻撃 小剣攻撃 弓攻撃 パンチ 爪攻撃
-    なぎ払い みね打ち 脳天割り 二段突き フェイント サイドワインダー イド・ブレイク キック
-    ダンシングソード ファイナルストライク シャッタースタッフ
-    ふみつけ サラマンダークロー 赤竜波 地獄爪殺法))
-
 (define-assoc-list *character-name-to-閃き-type-id*
     find-閃き-type-id-by-character-name
   (
