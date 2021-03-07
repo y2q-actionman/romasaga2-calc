@@ -31,22 +31,38 @@
   `(ps:array ,@args))
 
 
-(defmacro define-assoc-list (variable-name finder-function-name alist)
+;;; very hacky 'const' implementation.
+(ps::define-statement-operator define-constant (name value &key test documentation)
+  (declare (ignore test))
+  (let ((value (ps::ps-macroexpand value)))
+    `(const ,(ps::ps-macroexpand name)
+            ,@(list (ps::compile-expression value) documentation))))
+
+(ps::defprinter const (var-name &optional (value (values) value?) docstring)
+  (when docstring (ps::print-comment docstring))
+  "const "(ps::psw (ps::symbol-to-js-string var-name))
+  (when value? (ps::psw " = ") (ps::print-op-argument 'ps-js:= value)))
+
+
+(defmacro define-assoc-list (variable-name finder-function-name alist &optional documentation)
   "Defines an assoc list and a finder function.
 This macro is for Parenscript-compatible alist definition."
-  `(progn (defparameter ,variable-name
-            ',alist)
+  `(progn (define-constant ,variable-name
+              ',alist
+            :test 'tree-equal
+            :documentation ,documentation)
           (defun ,finder-function-name (name &optional (errorp t))
             (or (cdr (assoc name ,variable-name))
                 (if errorp (error "'~A' was not found in ~A" name ',variable-name))))))
 
-(ps:defpsmacro define-assoc-list (variable-name finder-function-name alist)
+(ps:defpsmacro define-assoc-list (variable-name finder-function-name alist &optional documentation)
   `(progn
-     (defparameter ,variable-name
+     (define-constant ,variable-name
        ,(loop for (k . v) in alist
            collect (string k) into ret
            collect `',v into ret
-           finally (return (list* 'ps:create ret))))
+           finally (return (list* 'ps:create ret)))
+       :documentation ,documentation)
      (defun ,finder-function-name (name &optional (errorp t))
        (or (ps:getprop ,variable-name name)
            (let ((varname ',variable-name))

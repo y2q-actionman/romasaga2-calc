@@ -1,6 +1,6 @@
 (in-package :romasaga2)
 
-(define-assoc-list *enemy-name-to-waza-level-alist*
+(define-assoc-list +enemy-name-to-waza-level-alist+
     find-waza-level-by-enemy-name
   ((スケルトン . 	14)
    (スカルデーモン . 	20)

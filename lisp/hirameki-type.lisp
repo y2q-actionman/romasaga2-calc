@@ -1,7 +1,7 @@
 ;;; -*- coding: utf-8; -*-
 (in-package :romasaga2)
 
-(define-assoc-list *character-name-to-閃き-type-id*
+(define-assoc-list +character-name-to-閃き-type-id+
     find-閃き-type-id-by-character-name
   (
    ;; 帝国重装歩兵
@@ -317,7 +317,7 @@
    (最終皇帝男 . 14)
    (最終皇帝女 . 14)))
 
-(defparameter *閃き-type-name-array*
+(define-constant +閃き-type-name-array+
   (vector
    '体術A型
    '体術B型
@@ -334,15 +334,16 @@
    '未使用
    '半端型
    '剣型
-   '術士型))
+   '術士型)
+  :test 'equalp)
 
 (defun find-閃き-type-name-by-閃き-type-id (id)
-  (aref *閃き-type-name-array* id))
+  (aref +閃き-type-name-array+ id))
 
 (defun find-閃き-type-id-by-閃き-type-name (name)
-  (position name *閃き-type-name-array*))
+  (position name +閃き-type-name-array+))
 
-(defparameter *閃き可能-waza-list-array*
+(define-constant +閃き可能-waza-list-array+
   #((ベルセルク 千手観音 クワドラブル ジョルトカウンター マシンガンジャブ カポエラキック 不動金しばり コークスクリュー 気弾 集気法 カウンター
      ソバット キック スターライトアロー 皆死ね矢 ハートシーカー アローレイン 影ぬい でたらめ矢 瞬速の矢 乱れ突き スネークショット サイドワインダー
      フェイント 一文字突き エイミング チャージ 二段突き 足払い グランドバスター 祝福 スペルエンハンス 動くな ウェアバスター 地裂撃 ダブルヒット
@@ -458,7 +459,8 @@
      アクスボンバー 殺人剣 殺虫剣 退魔神剣 一刀両断 月影 聖光 雷殺斬 無無剣 水鳥剣 強撃 みね打ち 稲妻斬り カマイタチ スウォーム 分子分解
      サクション 咬竜剣 風狼剣 プロミネンス斬 落月破斬 音速剣 つむじ風 十文字斬り 空圧波 なぎ払い シャッタースタッフ ダンシングソード
      ファイナルストライク))
-  "Built by `read-rs2techlearnflag-file'")
+  :test 'equalp
+  :documentation "Built by `read-rs2techlearnflag-file'")
 
 (defun find-閃き可能-waza-list-by-閃き-type-id (id)
-  (aref *閃き可能-waza-list-array* id))
+  (aref +閃き可能-waza-list-array+ id))
