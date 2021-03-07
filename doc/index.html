@@ -47,12 +47,18 @@
 	  header.appendChild(buildTR(HIRAMEKI_TABLE_HEADER));
 	  
 	  // Body
-	  let hiramekiList = calcWazaHiramekiList(剣技LIST, 閃き済み技LIST, eLevel, availableWaza);
-
-	  let tbody = tableElem.appendChild(document.createElement('tbody'));
-	  tbody.appendChild(buildTBodyHeader("剣技", HIRAMEKI_TABLE_HEADER.length));
-	  for (i of hiramekiList) {
-	      tbody.appendChild(buildTR(i));
+	  for (wKind of 技種類LIST) {
+	      let hiramekiList = calcWazaHiramekiList(find技種類技一覧Alist(wKind),
+						      閃き済み技LIST,
+						      eLevel,
+						      availableWaza);
+	      if (hiramekiList.length > 0) {
+		  let tbody = tableElem.appendChild(document.createElement('tbody'));
+		  tbody.appendChild(buildTBodyHeader(wKind, HIRAMEKI_TABLE_HEADER.length));
+		  for (i of hiramekiList) {
+		      tbody.appendChild(buildTR(i));
+		  }
+	      }
 	  }
       }
     </script>
