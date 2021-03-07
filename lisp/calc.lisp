@@ -44,7 +44,7 @@
   (loop for waza in waza-list
      when (and (not (includes 閃き済み技-list waza))
                (includes character-閃き可能-waza-list waza))
-     nconc
+     append
        (loop for (level from unique-weapon) in (find-閃き-alist waza nil)
           for prob = (calc-閃き確率 enemy-waza-level level)
           when (plusp prob)
