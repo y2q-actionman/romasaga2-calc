@@ -8,8 +8,52 @@
        	      targetElem.dispatchEvent(new Event("change"));
        	  }
       }
-      function makeWazaList(characterDivElem) {
+
+      // Building 'hiramekiTable'.
+      function buildTBodyHeader(name, colspan) {
+	  let tr = document.createElement('tr');
+	  let td = tr.appendChild(document.createElement('td'));
+	  td.setAttribute("colspan", colspan)
+	  td.appendChild(document.createTextNode(name));
+	  return tr;
+      }
+      
+      function buildTR(array) {
+	  let tr = document.createElement('tr');
+	  for (i of array) {
+	      let td = tr.appendChild(document.createElement('td'));
+	      if (i) {
+		  td.appendChild(document.createTextNode(i));
+	      }
+	  }
+	  return tr;
+      }
+      
+      const HIRAMEKI_TABLE_HEADER = ['技名', '確率', '閃き元', '技Lv', '固有武器'];
+      
+      function updateHiramekiTable(characterDivElem) {
+	  const eLevel = document.querySelector('#enemyTechLevel').value;
+	  const hiramekiId = characterDivElem.querySelector('.hiramekiTypeId').value;
+	  const availableWaza = find閃き可能WazaListBy閃きTypeId(hiramekiId);
+	  const tableElem = characterDivElem.querySelector('.hiramekiTable');
 	  
+	  // Clean
+	  while(tableElem.lastElementChild) {
+	      tableElem.remove(tableElem.lastElementChild);
+	  }
+	  
+	  // Header
+	  const header = tableElem.appendChild(document.createElement('thead'));
+	  header.appendChild(buildTR(HIRAMEKI_TABLE_HEADER));
+	  
+	  // Body
+	  let hiramekiList = calcWazaHiramekiList(剣技LIST, 閃き済み技LIST, eLevel, availableWaza);
+
+	  let tbody = tableElem.appendChild(document.createElement('tbody'));
+	  tbody.appendChild(buildTBodyHeader("剣技", HIRAMEKI_TABLE_HEADER.length));
+	  for (i of hiramekiList) {
+	      tbody.appendChild(buildTR(i));
+	  }
       }
     </script>
   </head>
@@ -17,28 +61,28 @@
     <div id="enemy">
       <label>敵の名前
 	<input id="enemyName" type="text" list="enemyNameList"
-	       onChange="let targetElem = document.querySelector('#enemyTechLevel');
+	       onChange="const targetElem = document.querySelector('#enemyTechLevel');
 			 changeAndInvokeChangeEvent(targetElem, findWazaLevelByEnemyName(this.value));"/>
       </label>
       <label>敵の技レベル <input id="enemyTechLevel" type="number" min="0" max="50"/> </label>
     </div>
     <hr>
     <!-- 個々の人の欄、それと固有技カウンター技欄 -->
-    <div class="character">
+    <div class="character" onChange="updateHiramekiTable(this);">
       <label>キャラクタの名前
 	<input class="characterName" type="text" list="characterNameList" size="18"
-	       onChange="let targetElem = this.parentElement.parentElement.querySelector('.hiramekiTypeId');
+	       onChange="const targetElem = this.parentElement.parentElement.querySelector('.hiramekiTypeId');
 			 changeAndInvokeChangeEvent(targetElem, find閃きTypeIdByCharacterName(this.value));" />
       </label>
       <br/>
       <label>閃きタイプ
 	<input class="hiramekiTypeId" type="number" min="0" max="15"
-	       onChange="let targetElem = this.parentElement.parentElement.querySelector('.hiramekiTypeName');
+	       onChange="const targetElem = this.parentElement.parentElement.querySelector('.hiramekiTypeName');
 			 changeAndInvokeChangeEvent(targetElem, find閃きTypeNameBy閃きTypeId(this.value));" />
       </label>
       <label>閃きタイプ名前
 	<input class="hiramekiTypeName" type="text" list="hiramekiTypeNameList" size="10"
-	       onChange="let targetElem = this.parentElement.parentElement.querySelector('.hiramekiTypeId');
+	       onChange="const targetElem = this.parentElement.parentElement.querySelector('.hiramekiTypeId');
 			 changeAndInvokeChangeEvent(targetElem, find閃きTypeIdBy閃きTypeName(this.value));" />
       </label>
       
@@ -72,7 +116,11 @@
       </details>
       <!-- 閃き可能技一覧　装備技から閃き可能は太字、装備技から無理なら薄字。閃き済みなら出さない。 -->
       <label>閃き可能技一覧
-	<output> <table class="hiramekiTable"> </table></output>
+	<output>
+	  <table class="hiramekiTable" border="1">
+
+	  </table>
+	</output>
       </label>
     </div>
     <hr>
