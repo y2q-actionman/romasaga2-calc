@@ -27,34 +27,10 @@
          (閃き可能-waza-list (find-閃き可能-waza-list-by-閃き-type-id 閃き-type-id)))
     (format t "~2&名前 ~A 閃きタイプ ~A (~A)~%"
             character-name 閃き-type-id (find-閃き-type-name-by-閃き-type-id 閃き-type-id))
-    (format t "剣技~%")
-    (print-waza-list +剣技-list+
-                     閃き済み技-list enemy-waza-level 閃き可能-waza-list include-固有技)
-    (format t "大剣技~%")
-    (print-waza-list +大剣技-list+
-                     閃き済み技-list enemy-waza-level 閃き可能-waza-list include-固有技)
-    (format t "斧技~%")
-    (print-waza-list +斧技-list+
-                     閃き済み技-list enemy-waza-level 閃き可能-waza-list include-固有技)
-    (format t "棍棒技~%")
-    (print-waza-list +棍棒技-list+
-                     閃き済み技-list enemy-waza-level 閃き可能-waza-list include-固有技)
-    (format t "槍技~%")
-    (print-waza-list +槍技-list+
-                     閃き済み技-list enemy-waza-level 閃き可能-waza-list include-固有技)
-    (format t "小剣技~%")
-    (print-waza-list +小剣技-list+
-                     閃き済み技-list enemy-waza-level 閃き可能-waza-list include-固有技)
-    (format t "弓技~%")
-    (print-waza-list +弓技-list+
-                     閃き済み技-list enemy-waza-level 閃き可能-waza-list include-固有技)
-    (format t "体術技~%")
-    (print-waza-list +体術技-list+
-                     閃き済み技-list enemy-waza-level 閃き可能-waza-list include-固有技)
-    (format t "爪技~%")
-    (print-waza-list +爪技-list+
-                     閃き済み技-list enemy-waza-level 閃き可能-waza-list include-固有技)
-    ))
+    (loop for waza-type in +技種類-list+
+       do (format t "~A~%" waza-type)
+         (print-waza-list (find-技種類-技一覧-alist waza-type)
+                          閃き済み技-list enemy-waza-level 閃き可能-waza-list include-固有技))))
 
 (defun print-all (enemy member-list enemy-waza-level additional-閃き済み技-list)
   (format t "~&敵 ~A Level ~D~2%" enemy enemy-waza-level)
@@ -71,8 +47,7 @@
 
 (defun print-all-waza-name-for-html-datalist (&optional (stream *standard-output*))
   (format stream "<datalist id=\"all_waza_name\">~%")
-  (dolist (waza-list (list +剣技-list+ +大剣技-list+ +斧技-list+ +棍棒技-list+
-                           +槍技-list+ +小剣技-list+ +弓技-list+ +体術技-list+ +爪技-list+))
+  (dolist (waza-list (mapcar #'cdr +技種類-技一覧-alist+))
     (loop for waza in (rest waza-list)
        do (format stream "<option>~A<option> " waza))
     (terpri stream))
