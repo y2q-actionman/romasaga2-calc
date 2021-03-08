@@ -27,6 +27,8 @@
          (閃き可能-waza-list (find-閃き可能-waza-list-by-閃き-type-id 閃き-type-id)))
     (format t "~2&名前 ~A 閃きタイプ ~A (~A)~%"
             character-name 閃き-type-id (find-閃き-type-name-by-閃き-type-id 閃き-type-id))
+    (format t "~& 初期技一覧: ~{~A~^ ~}~%"
+            (find-character-初期技-list character-name 閃き済み技-list))
     (loop for waza-type in +技種類-list+
        do (format t "~A~%" waza-type)
          (print-waza-list (find-技種類-技一覧-alist waza-type)
@@ -74,6 +76,7 @@
   '("waza-list.lisp"
     "monster-level.lisp"
     "hirameki-type.lisp"
+    "initial-waza.lisp"
     "calc.lisp"
     ))
 

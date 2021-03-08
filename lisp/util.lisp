@@ -52,8 +52,10 @@ This macro is for Parenscript-compatible alist definition."
             :test 'tree-equal
             :documentation ,documentation)
           (defun ,finder-function-name (name &optional (errorp t))
-            (or (cdr (assoc name ,variable-name))
-                (if errorp (error "'~A' was not found in ~A" name ',variable-name))))))
+            (let ((cons (assoc name ,variable-name)))
+              (if cons
+                  (cdr cons)
+                  (if errorp (error "'~A' was not found in ~A" name ',variable-name)))))))
 
 (ps:defpsmacro define-assoc-list (variable-name finder-function-name alist &optional documentation)
   `(progn
@@ -64,9 +66,10 @@ This macro is for Parenscript-compatible alist definition."
            finally (return (list* 'ps:create ret)))
        :documentation ,documentation)
      (defun ,finder-function-name (name &optional (errorp t))
-       (or (ps:getprop ,variable-name name)
-           (let ((varname ',variable-name))
-             (if errorp (ps-simple-error (+ "'" name "' was not found in " varname))))))))
+       (if (ps:chain ,variable-name (has-own-property name))
+           (ps:getprop ,variable-name name)
+           (if errorp
+               (ps-simple-error (+ "'" name "' was not found in " ',variable-name)))))))
 
 
 (ps:defpsmacro defstruct (name &body slots)

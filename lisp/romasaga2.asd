@@ -11,6 +11,7 @@
    (:file "monster-level")
    (:file "generate-hirameki-type")
    (:file "hirameki-type")
+   (:file "initial-waza")
    (:file "calc")
    (:file "main")
    (:file "romasaga2-user")
