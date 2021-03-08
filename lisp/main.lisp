@@ -53,6 +53,20 @@
     (terpri stream))
   (format stream "~&</datalist>"))
 
+(defun print-all-waza-name-for-html-dojo (&optional (stream *standard-output*))
+  (format stream "<fieldset open>~%")
+  (format stream "<legend>技道場登録状況</legend>~%")
+  (loop for (type-name . waza-list) in +技種類-技一覧-alist+
+     do (format stream "<details>~%")
+       (format stream "<summary>~A</summary>~%" type-name)
+       (loop initially (format stream "<ul>~%")
+          for waza in waza-list
+          do (format stream "<li><label><input type=\"checkbox\" ~:[~;checked~] name=\"~A\"/>~:*~A</label></li>~%"
+                     (member waza +閃き済み技-list+) waza)
+          finally (format stream "</ul>~%"))
+       (format stream "</details>~%"))
+  (format stream "~&</fieldset>"))
+
 
 ;;; JS output
 
