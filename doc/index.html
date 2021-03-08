@@ -19,6 +19,14 @@
 	  }
       }
 
+      function makeDojoWazaList() {
+	  let ret = [];
+	  for (i of document.querySelectorAll('#dojoStatus input:checked')) {
+	      ret.push(i.name);
+	  }
+	  return ret;
+      }
+
       // Building 'hiramekiTable'.
       function buildTBodyHeader(name, colspan) {
 	  let tr = document.createElement('tr');
@@ -65,7 +73,7 @@
 	  // Body
 	  for (wKind of equipWeaponTypeList) {
 	      let hiramekiList = calcWazaHiramekiList(find技種類技一覧Alist(wKind),
-	  					      閃き済み技LIST,
+	  					      makeDojoWazaList(),
 	  					      eLevel,
 	  					      availableWaza);
 	      if (hiramekiList.length > 0) {
@@ -83,17 +91,19 @@
     </script>
   </head>
   <body>
-    <div id="enemy">
-      <label>敵の名前
+    <fieldset id="enemy">
+      <legend>敵</legend>
+      <label>名前
 	<input id="enemyName" type="text" list="enemyNameList"
 	       onChange="const targetElem = document.querySelector('#enemyTechLevel');
 			 changeAndInvokeChangeEvent(targetElem, findWazaLevelByEnemyName(this.value));"/>
       </label>
-      <label>敵の技レベル
+      <label>技レベル
 	<input id="enemyTechLevel" type="number" min="0" max="50"
 	       onChange="invokeAllCharacterChangeEvent()" />
       </label>
-    </div>
+    </fieldset>
+    
     <!-- 個々の人の欄、それと固有技カウンター技欄 -->
     <fieldset class="character" onChange="updateHiramekiTable(this);">
       <legend>キャラクタ1</legend>
@@ -143,7 +153,7 @@
       </details>
     </fieldset>
 
-    <fieldset open>
+    <fieldset open id="dojoStatus" onChange="invokeAllCharacterChangeEvent()">
       <legend>技道場登録状況</legend>
       <details>
 	<summary>剣技</summary>
