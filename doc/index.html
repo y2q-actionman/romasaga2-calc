@@ -18,10 +18,10 @@
 	  return tr;
       }
       
-      function buildTR(array) {
+      function buildTR(array, isHeader) {
 	  let tr = document.createElement('tr');
 	  for (i of array) {
-	      let td = tr.appendChild(document.createElement('td'));
+	      let td = tr.appendChild(document.createElement(isHeader ? 'th' : 'td'));
 	      if (i) {
 		  td.appendChild(document.createTextNode(i));
 	      }
@@ -35,31 +35,37 @@
 	  const eLevel = document.querySelector('#enemyTechLevel').value;
 	  const hiramekiId = characterDivElem.querySelector('.hiramekiTypeId').value;
 	  const availableWaza = find閃き可能WazaListBy閃きTypeId(hiramekiId);
-	  const tableElem = characterDivElem.querySelector('.hiramekiTable');
+
+	  // make waza list
+	  // const equipWeaponType
+	  // 	= characterDivElem.querySelectorAll('.equipWeaponType input:checked');
+	  // for (i of equipWeaponType) {
+	  //     console.log(i);
+	  // }
 	  
-	  // Clean
-	  while(tableElem.lastElementChild) {
-	      tableElem.remove(tableElem.lastElementChild);
-	  }
-	  
+	  const table = document.createElement('table');
+
 	  // Header
-	  const header = tableElem.appendChild(document.createElement('thead'));
-	  header.appendChild(buildTR(HIRAMEKI_TABLE_HEADER));
+	  const header = table.appendChild(document.createElement('thead'));
+	  header.appendChild(buildTR(HIRAMEKI_TABLE_HEADER, true));
 	  
 	  // Body
 	  for (wKind of 技種類LIST) {
 	      let hiramekiList = calcWazaHiramekiList(find技種類技一覧Alist(wKind),
-						      閃き済み技LIST,
-						      eLevel,
-						      availableWaza);
+	  					      閃き済み技LIST,
+	  					      eLevel,
+	  					      availableWaza);
 	      if (hiramekiList.length > 0) {
-		  let tbody = tableElem.appendChild(document.createElement('tbody'));
-		  tbody.appendChild(buildTBodyHeader(wKind, HIRAMEKI_TABLE_HEADER.length));
-		  for (i of hiramekiList) {
-		      tbody.appendChild(buildTR(i));
-		  }
+	  	  let tbody = table.appendChild(document.createElement('tbody'));
+	  	  tbody.appendChild(buildTBodyHeader(wKind, HIRAMEKI_TABLE_HEADER.length));
+	  	  for (i of hiramekiList) {
+	  	      tbody.appendChild(buildTR(i));
+	  	  }
 	      }
 	  }
+
+	  const outputTable = characterDivElem.querySelector('.hiramekiTableOutput table');
+	  outputTable.replaceWith(table);
       }
     </script>
   </head>
@@ -94,17 +100,18 @@
       
       <details>
 	<summary>装備品、装備技術設定</summary>
-	<!-- <fieldset> -->
-	<!--   <legend>装備武器種類</legend> -->
-	<!--   <label><input class="equipWeaponType_sword" type="checkbox" checked />剣</label> -->
-	<!--   <label><input class="equipWeaponType_twoHandedSword" type="checkbox" checked />大剣</label> -->
-	<!--   <label><input class="equipWeaponType_axe" type="checkbox" checked />斧</label> -->
-	<!--   <label><input class="equipWeaponType_mace" type="checkbox" checked />棍棒</label> -->
-	<!--   <label><input class="equipWeaponType_spear" type="checkbox" checked />槍</label> -->
-	<!--   <label><input class="equipWeaponType_smallSword" type="checkbox" checked />小剣</label> -->
-	<!--   <label><input class="equipWeaponType_bow" type="checkbox" checked />弓</label> -->
-	<!--   <label><input class="equipWeaponType_martialArts" type="checkbox" checked />体術</label> -->
-	<!-- </fieldset> -->
+	<fieldset class="equipWeaponType">
+	  <legend>技種類</legend>
+	  <label><input type="checkbox" name="剣技" checked />剣技</label>
+	  <label><input type="checkbox" name="大剣技" checked />大剣技</label>
+	  <label><input type="checkbox" name="斧技" checked />斧技</label>
+	  <label><input type="checkbox" name="棍棒技" checked />棍棒技</label>
+	  <label><input type="checkbox" name="槍技" checked />槍技</label>
+	  <label><input type="checkbox" name="小剣技" checked />小剣技</label>
+	  <label><input type="checkbox" name="弓技" checked />弓技</label>
+	  <label><input type="checkbox" name="体術技" checked />体術技</label>
+	  <label><input type="checkbox" name="爪技" checked />爪技</label>
+	</fieldset>
 	<fieldset>
 	  <legend>装備技術欄</legend>
 	  装備技は閃き可能技一覧には出ない。また、閃き派生元の技術を装備している場合、閃き可能技一覧の派生先が太字になる。(装備していない場合は薄字)
@@ -122,11 +129,7 @@
       </details>
       <!-- 閃き可能技一覧　装備技から閃き可能は太字、装備技から無理なら薄字。閃き済みなら出さない。 -->
       <label>閃き可能技一覧
-	<output>
-	  <table class="hiramekiTable" border="1">
-
-	  </table>
-	</output>
+	<output class="hiramekiTableOutput"><table></table></output>
       </label>
     </div>
     <hr>
