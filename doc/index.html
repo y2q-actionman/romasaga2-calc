@@ -13,6 +13,12 @@
        	  }
       }
 
+      function invokeAllCharacterChangeEvent() {
+	  for(i of document.querySelectorAll('.character')){
+	      invokeChangeEvent(i);
+	  }
+      }
+
       // Building 'hiramekiTable'.
       function buildTBodyHeader(name, colspan) {
 	  let tr = document.createElement('tr');
@@ -85,7 +91,7 @@
       </label>
       <label>敵の技レベル
 	<input id="enemyTechLevel" type="number" min="0" max="50"
-	       onChange="for(i of document.querySelectorAll('.character')){invokeChangeEvent(i);}" />
+	       onChange="invokeAllCharacterChangeEvent()" />
       </label>
     </div>
     <!-- 個々の人の欄、それと固有技カウンター技欄 -->
@@ -120,9 +126,6 @@
       </details>
       <details class="characterEquipWaza">
 	<summary>装備技術欄設定</summary>
-	TODO: 装備技は閃き可能技一覧には出ない。また、閃き派生元の技術を装備している場合、閃き可能技一覧の派生先が太字になる。(装備していない場合は薄字)
-	TODO: 装備技から閃き可能は太字、装備技から無理なら薄字。閃き済みなら出さない。
-	TODO: とりあえず初期装備技を置く。
 	<ul>
 	  <li><input type="text" list="allWazaNameList" /></li>
 	  <li><input type="text" list="allWazaNameList" /></li>
@@ -141,13 +144,6 @@
     </fieldset>
 
     
-    <hr>
-    TODO
-    <ul>
-      <li>技道場から取れる技の一覧</li>
-      <li>固有装備の所持状況、閃き状況</li>
-    </ul>
-
     <!-- Datalist -->
     <datalist id="hiramekiTypeNameList">
       <option>体術A型</option> <!-- 0 -->
@@ -291,5 +287,16 @@
       <option>七英雄<option>
       <option>七英雄<option>
     </datalist>
+
+    <hr>
+    TODO
+    <ul>
+      <li>技道場から取れる技の一覧</li>
+      <li>固有装備の所持状況、閃き状況</li>
+      <li>セーブ</li>
+      <li>装備技は閃き可能技一覧には出ない。また、閃き派生元の技術を装備している場合、閃き可能技一覧の派生先が太字になる。(装備していない場合は薄字)</li>
+      <li>装備技から閃き可能は太字、装備技から無理なら薄字。閃き済みなら出さない。</li>
+      <li>とりあえず初期装備技を置く。</li>
+    </ul>
   </body>
 </html>
