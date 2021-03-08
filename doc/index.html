@@ -2,10 +2,14 @@
   <head>
     <script type="text/javascript" src="./romasaga2.js"></script>
     <script type="text/javascript">
+      function invokeChangeEvent(targetElem) {
+	  targetElem.dispatchEvent(new Event("change"));
+      }
+
       function changeAndInvokeChangeEvent(targetElem, newValue) {
        	  if (targetElem.value != newValue) {
        	      targetElem.value = newValue;
-       	      targetElem.dispatchEvent(new Event("change"));
+	      invokeChangeEvent(targetElem);
        	  }
       }
 
@@ -33,16 +37,19 @@
       
       function updateHiramekiTable(characterDivElem) {
 	  const eLevel = document.querySelector('#enemyTechLevel').value;
+	  if(!eLevel) return;
+	  
 	  const hiramekiId = characterDivElem.querySelector('.hiramekiTypeId').value;
+	  if(!hiramekiId) return;
+	  
 	  const availableWaza = find閃き可能WazaListBy閃きTypeId(hiramekiId);
 
-	  // make waza list
-	  // const equipWeaponType
-	  // 	= characterDivElem.querySelectorAll('.equipWeaponType input:checked');
-	  // for (i of equipWeaponType) {
-	  //     console.log(i);
-	  // }
-	  
+	  const equipWeaponTypeList = [];
+	  for (i of characterDivElem.querySelectorAll('.equipWeaponType input:checked')) {
+	      equipWeaponTypeList.push(i.name);
+	  }
+
+	  // Building table.
 	  const table = document.createElement('table');
 
 	  // Header
@@ -50,7 +57,7 @@
 	  header.appendChild(buildTR(HIRAMEKI_TABLE_HEADER, true));
 	  
 	  // Body
-	  for (wKind of 技種類LIST) {
+	  for (wKind of equipWeaponTypeList) {
 	      let hiramekiList = calcWazaHiramekiList(find技種類技一覧Alist(wKind),
 	  					      閃き済み技LIST,
 	  					      eLevel,
@@ -76,17 +83,19 @@
 	       onChange="const targetElem = document.querySelector('#enemyTechLevel');
 			 changeAndInvokeChangeEvent(targetElem, findWazaLevelByEnemyName(this.value));"/>
       </label>
-      <label>敵の技レベル <input id="enemyTechLevel" type="number" min="0" max="50"/> </label>
+      <label>敵の技レベル
+	<input id="enemyTechLevel" type="number" min="0" max="50"
+	       onChange="for(i of document.querySelectorAll('.character')){invokeChangeEvent(i);}" />
+      </label>
     </div>
-    <hr>
     <!-- 個々の人の欄、それと固有技カウンター技欄 -->
-    <div class="character" onChange="updateHiramekiTable(this);">
-      <label>キャラクタの名前
+    <fieldset class="character" onChange="updateHiramekiTable(this);">
+      <legend>キャラクタ1</legend>
+      <label>名前
 	<input class="characterName" type="text" list="characterNameList" size="18"
 	       onChange="const targetElem = this.parentElement.parentElement.querySelector('.hiramekiTypeId');
 			 changeAndInvokeChangeEvent(targetElem, find閃きTypeIdByCharacterName(this.value));" />
       </label>
-      <br/>
       <label>閃きタイプ
 	<input class="hiramekiTypeId" type="number" min="0" max="15"
 	       onChange="const targetElem = this.parentElement.parentElement.querySelector('.hiramekiTypeName');
@@ -97,41 +106,41 @@
 	       onChange="const targetElem = this.parentElement.parentElement.querySelector('.hiramekiTypeId');
 			 changeAndInvokeChangeEvent(targetElem, find閃きTypeIdBy閃きTypeName(this.value));" />
       </label>
-      
-      <details>
-	<summary>装備品、装備技術設定</summary>
-	<fieldset class="equipWeaponType">
-	  <legend>技種類</legend>
-	  <label><input type="checkbox" name="剣技" checked />剣技</label>
-	  <label><input type="checkbox" name="大剣技" checked />大剣技</label>
-	  <label><input type="checkbox" name="斧技" checked />斧技</label>
-	  <label><input type="checkbox" name="棍棒技" checked />棍棒技</label>
-	  <label><input type="checkbox" name="槍技" checked />槍技</label>
-	  <label><input type="checkbox" name="小剣技" checked />小剣技</label>
-	  <label><input type="checkbox" name="弓技" checked />弓技</label>
-	  <label><input type="checkbox" name="体術技" checked />体術技</label>
-	  <label><input type="checkbox" name="爪技" checked />爪技</label>
-	</fieldset>
-	<fieldset>
-	  <legend>装備技術欄</legend>
-	  装備技は閃き可能技一覧には出ない。また、閃き派生元の技術を装備している場合、閃き可能技一覧の派生先が太字になる。(装備していない場合は薄字)
-	  <ul> <!-- TODO: とりあえず初期装備技を置く。 -->
-	    <li><input class="characterEquipWaza" type="text" list="allWazaNameList" /></li>
-	    <li><input class="characterEquipWaza" type="text" list="allWazaNameList" /></li>
-	    <li><input class="characterEquipWaza" type="text" list="allWazaNameList" /></li>
-	    <li><input class="characterEquipWaza" type="text" list="allWazaNameList" /></li>
-	    <li><input class="characterEquipWaza" type="text" list="allWazaNameList" /></li>
-	    <li><input class="characterEquipWaza" type="text" list="allWazaNameList" /></li>
-	    <li><input class="characterEquipWaza" type="text" list="allWazaNameList" /></li>
-	    <li><input class="characterEquipWaza" type="text" list="allWazaNameList" /></li>
-	  </ul>
-	</fieldset>
+      <details class="equipWeaponType">
+	<summary>技種類設定</summary>
+	<label><input type="checkbox" name="剣技" checked />剣技</label>
+	<label><input type="checkbox" name="大剣技" checked />大剣技</label>
+	<label><input type="checkbox" name="斧技" checked />斧技</label>
+	<label><input type="checkbox" name="棍棒技" checked />棍棒技</label>
+	<label><input type="checkbox" name="槍技" checked />槍技</label>
+	<label><input type="checkbox" name="小剣技" checked />小剣技</label>
+	<label><input type="checkbox" name="弓技" checked />弓技</label>
+	<label><input type="checkbox" name="体術技" checked />体術技</label>
+	<label><input type="checkbox" name="爪技" checked />爪技</label>
       </details>
-      <!-- 閃き可能技一覧　装備技から閃き可能は太字、装備技から無理なら薄字。閃き済みなら出さない。 -->
-      <label>閃き可能技一覧
+      <details class="characterEquipWaza">
+	<summary>装備技術欄設定</summary>
+	TODO: 装備技は閃き可能技一覧には出ない。また、閃き派生元の技術を装備している場合、閃き可能技一覧の派生先が太字になる。(装備していない場合は薄字)
+	TODO: 装備技から閃き可能は太字、装備技から無理なら薄字。閃き済みなら出さない。
+	TODO: とりあえず初期装備技を置く。
+	<ul>
+	  <li><input type="text" list="allWazaNameList" /></li>
+	  <li><input type="text" list="allWazaNameList" /></li>
+	  <li><input type="text" list="allWazaNameList" /></li>
+	  <li><input type="text" list="allWazaNameList" /></li>
+	  <li><input type="text" list="allWazaNameList" /></li>
+	  <li><input type="text" list="allWazaNameList" /></li>
+	  <li><input type="text" list="allWazaNameList" /></li>
+	  <li><input type="text" list="allWazaNameList" /></li>
+	</ul>
+      </details>
+      <details open>
+	<summary>閃き可能技一覧</summary>
 	<output class="hiramekiTableOutput"><table></table></output>
-      </label>
-    </div>
+      </details>
+    </fieldset>
+
+    
     <hr>
     TODO
     <ul>
