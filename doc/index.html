@@ -1,5 +1,7 @@
 <html>
   <head>
+    <title>ロマンシング サ・ガ2 閃き計算器</title>
+    <meta charset="utf-8"/>
     <style type="text/css">
       ul {
 	  list-style: none;
@@ -181,6 +183,8 @@
     </script>
   </head>
   <body>
+    <h1>ロマンシング サ・ガ2 閃き計算器</h1>
+    使い方は一番下。
     <fieldset id="enemy">
       <legend>敵</legend>
       <label>名前
@@ -214,7 +218,7 @@
 	       onChange="const targetElem = this.parentElement.parentElement.querySelector('.hiramekiTypeId');
 			 targetElem.value = find閃きTypeIdBy閃きTypeName(this.value);" />
       </label>
-      <details class="wazaFilter">
+      <details open class="wazaFilter">
 	<summary>技種類設定</summary>
 	<label><input class="wazaType" type="checkbox" name="剣技" checked />剣技</label>
 	<label><input class="wazaType" type="checkbox" name="大剣技" checked />大剣技</label>
@@ -227,7 +231,7 @@
 	<label><input class="wazaType" type="checkbox" name="爪技" checked />爪技</label>
 	<label><input class="unique" type="checkbox" name="固有技" checked />固有技</label>
       </details>
-      <details class="equipWaza">
+      <details open class="equipWaza">
 	<summary>装備技術欄設定</summary>
 	<ul>
 	  <li><input type="text" list="allWazaNameList" /></li>
@@ -246,7 +250,7 @@
       </details>
     </fieldset>
 
-    <fieldset open id="dojo" onChange="invokeAllCharacterChangeEvent()">
+    <fieldset id="dojo" onChange="invokeAllCharacterChangeEvent()">
       <legend>技道場登録状況</legend>
       <details>
 	<summary>剣技</summary>
@@ -592,14 +596,15 @@
       <li>「キャラクタ1」などの「名前」か「閃きタイプ」、「閃きタイプ名前」を埋める。</li>
       <li>すると「閃き可能技一覧」に閃き可能な技の表が出る。</li>
       <li>「技種類設定」をいじると表示させたい技の種類を切り替えられる。</li>
+      <li>(TODO) キャラクタ欄は予備も含めて7つ用意。キャラクタ1以外は閉じているが、いい感じに開いて使ってほしい。</li> 
       <li>(TODO) 装備技術欄設定を行うと・・</li>
-      <li>(TODO)「技道場登録状態」を行うと・・ 1. 閃き一覧に出てこなくなる。</li>
+      <li>(TODO)「技道場登録状態」を行うと・・ 1. 閃き一覧に出てこなくなる。 ・・閉じているがいい感じに開いて使ってほしい。</li>
     </ol>
     <h1>データの出典</h1>
     <ul>
-      <li><a href="http://kaerulabo.web.fc2.com/rs2/index.htm">カエル研究室</a></li>
-      <li><a href="http://s-endo.skr.jp/gameprog_analysis.html#Description-RS2">"Index of /~s-endo/" の ロマンシング サ・ガ2 関連情報</a></li>
-      <li><a href="https://wikiwiki.jp/romasaga2/">romasaga2apli Wiki*</a></li>
+      <li><a href="http://kaerulabo.web.fc2.com/rs2/index.htm">カエル研究室さん</a></li>
+      <li><a href="http://s-endo.skr.jp/gameprog_analysis.html#Description-RS2">"Index of /~s-endo/" さんの ロマンシング サ・ガ2 関連情報</a></li>
+      <li><a href="https://wikiwiki.jp/romasaga2/">romasaga2apli Wiki* さん</a></li>
     </ul>
     <h1>TODO</h1>
     <ul>
@@ -612,8 +617,11 @@
       <li><del>技道場にない派生は薄字</del></li>
       <li><del>とりあえず初期装備技を置く。</del></li>
       <li>ジェラール世代は技道場の技を使えなくするスイッチ</li>
+      <li>ファイル分割</li>
       <li>エラー処理。おかしな名前のときは表を消す</li>
+      <li>増やす。一つめだけは open 指定。</li>
       <li>ベルセルクが技Lvとして参照するのはキャラクタの技Lvだが上手く扱えていない。</li>
+      <li>見切りには、これとは別の全く新しいフォームを作って対応したい。</li>
       <li>SFC版は全体攻撃の弓技の参照技Lvにバグがあるようだがどう扱うのやら。</li>
     </ul>
   </body>
