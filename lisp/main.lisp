@@ -62,7 +62,7 @@
        (format stream "<summary>~A</summary>~%" type-name)
        (loop initially (format stream "<ul>~%")
           for waza in waza-list
-          do (format stream "<li><label><input type=\"checkbox\" ~:[~;checked~] name=\"~A\"/>~:*~A</label></li>~%"
+          do (format stream "<li><label><input type=\"checkbox\" ~:[~;checked disabled~] name=\"~A\"/>~:*~A</label></li>~%"
                      (member waza +閃き済み技-list+) waza)
           finally (format stream "</ul>~%"))
        (format stream "</details>~%"))

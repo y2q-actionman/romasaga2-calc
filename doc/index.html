@@ -38,6 +38,12 @@
       	  padding-left: 0.5ch;
       	  padding-right: 0.5ch;
       }
+      .hiramekiTableOutput tr.equipped {
+      	  font-weight: bolder;
+      }
+      .hiramekiTableOutput tr.notInDojo {
+      	  text-decoration: line-through;
+      }
     </style>
     <script type="text/javascript" src="./romasaga2.js"></script>
     <script type="text/javascript">
@@ -93,9 +99,23 @@
       }
       
       const PROB_FORMATTER = new Intl.NumberFormat(undefined, { style: "percent", maximumFractionDigits: 2, minimumFractionDigits: 2, mimimumIntegerDigits: 1 });
+
+      const HIRAMEKI_TABLE_HEADER = ['技名', '確率', '派生元', '技Lv', '固有武器'];
       
-      function buildTR(array, isHeader) {
-	  let tr = document.createElement('tr');
+      function buildWazaTR(array, isHeader, equipWazaList, dojoWazaList) {
+	  const tr = document.createElement('tr');
+	  
+	  // <tr> class
+	  if (!isHeader) {
+	      const 派生元 = array[2];
+	      if (equipWazaList.includes(派生元)) {
+		  tr.classList.add("equipped");
+	      } else if (!閃き済み技LIST.includes(派生元) && !dojoWazaList.includes(派生元)) {
+		  tr.classList.add("notInDojo");
+	      }
+	  }
+
+	  // <td> class
 	  for (i of array) {
 	      let td = tr.appendChild(document.createElement(isHeader ? 'th' : 'td'));
 	      if (i) {
@@ -110,8 +130,6 @@
 	  }
 	  return tr;
       }
-      
-      const HIRAMEKI_TABLE_HEADER = ['技名', '確率', '閃き元', '技Lv', '固有武器'];
       
       function updateHiramekiTable(characterDivElem) {
 	  const eLevel = document.querySelector('#enemyTechLevel').value;
@@ -137,22 +155,23 @@
 	  const dojoWazaList = makeDojoWazaList();
 	  for (wKind of wazaTypeList) {
 	      let hiramekiList = calcWazaHiramekiList(find技種類技一覧Alist(wKind),
-	  					      equipWazaList.concat(dojoWazaList),
+	  					      閃き済み技LIST.concat(equipWazaList).concat(dojoWazaList),
 	  					      eLevel,
 	  					      availableWaza,
 						      includeUnique);
-	      if (hiramekiList.length > 0) {
-	  	  let tbody = table.appendChild(document.createElement('tbody'));
+	      if (!hiramekiList || hiramekiList.length <= 0)
+		  continue;
+
+	      let tbody = table.appendChild(document.createElement('tbody'));
 		  
-		  let tbodyCap = tbody.appendChild(buildTBodyCaption(wKind, HIRAMEKI_TABLE_HEADER.length));
-		  tbodyCap.classList.add("tbodyCaption");
+	      let tbodyCap = tbody.appendChild(buildTBodyCaption(wKind, HIRAMEKI_TABLE_HEADER.length));
+	      tbodyCap.classList.add("tbodyCaption");
 		  
-		  let tbodyHeader = tbody.appendChild(buildTR(HIRAMEKI_TABLE_HEADER, true));
-		  tbodyHeader.classList.add("tbodyHeader");
+	      let tbodyHeader = tbody.appendChild(buildWazaTR(HIRAMEKI_TABLE_HEADER, true));
+	      tbodyHeader.classList.add("tbodyHeader");
 		  
-	  	  for (i of hiramekiList) {
-	  	      tbody.appendChild(buildTR(i));
-	  	  }
+	      for (i of hiramekiList) {
+		  tbody.appendChild(buildWazaTR(i, false, equipWazaList, dojoWazaList));
 	      }
 	  }
 
@@ -232,7 +251,7 @@
       <details>
 	<summary>剣技</summary>
 	<ul>
-	  <li><label><input type="checkbox" checked name="なぎ払い"/>なぎ払い</label></li>
+	  <li><label><input type="checkbox" checked disabled name="なぎ払い"/>なぎ払い</label></li>
 	  <li><label><input type="checkbox"  name="パリイ"/>パリイ</label></li>
 	  <li><label><input type="checkbox"  name="二段斬り"/>二段斬り</label></li>
 	  <li><label><input type="checkbox"  name="十文字斬り"/>十文字斬り</label></li>
@@ -255,13 +274,13 @@
 	  <li><label><input type="checkbox"  name="スウォーム"/>スウォーム</label></li>
 	  <li><label><input type="checkbox"  name="カマイタチ"/>カマイタチ</label></li>
 	  <li><label><input type="checkbox"  name="稲妻斬り"/>稲妻斬り</label></li>
-	  <li><label><input type="checkbox" checked name="ファイナルストライク"/>ファイナルストライク</label></li>
+	  <li><label><input type="checkbox" checked disabled name="ファイナルストライク"/>ファイナルストライク</label></li>
 	</ul>
       </details>
       <details>
 	<summary>大剣技</summary>
 	<ul>
-	  <li><label><input type="checkbox" checked name="みね打ち"/>みね打ち</label></li>
+	  <li><label><input type="checkbox" checked disabled name="みね打ち"/>みね打ち</label></li>
 	  <li><label><input type="checkbox"  name="ディフレクト"/>ディフレクト</label></li>
 	  <li><label><input type="checkbox"  name="巻き打ち"/>巻き打ち</label></li>
 	  <li><label><input type="checkbox"  name="強撃"/>強撃</label></li>
@@ -274,7 +293,7 @@
 	  <li><label><input type="checkbox"  name="乱れ雪月花"/>乱れ雪月花</label></li>
 	  <li><label><input type="checkbox"  name="無明剣"/>無明剣</label></li>
 	  <li><label><input type="checkbox"  name="活人剣"/>活人剣</label></li>
-	  <li><label><input type="checkbox" checked name="ダンシングソード"/>ダンシングソード</label></li>
+	  <li><label><input type="checkbox" checked disabled name="ダンシングソード"/>ダンシングソード</label></li>
 	  <li><label><input type="checkbox"  name="雷殺斬"/>雷殺斬</label></li>
 	  <li><label><input type="checkbox"  name="聖光"/>聖光</label></li>
 	  <li><label><input type="checkbox"  name="月影"/>月影</label></li>
@@ -307,7 +326,7 @@
       <details>
 	<summary>棍棒技</summary>
 	<ul>
-	  <li><label><input type="checkbox" checked name="脳天割り"/>脳天割り</label></li>
+	  <li><label><input type="checkbox" checked disabled name="脳天割り"/>脳天割り</label></li>
 	  <li><label><input type="checkbox"  name="返し突き"/>返し突き</label></li>
 	  <li><label><input type="checkbox"  name="地裂撃"/>地裂撃</label></li>
 	  <li><label><input type="checkbox"  name="骨砕き"/>骨砕き</label></li>
@@ -322,13 +341,13 @@
 	  <li><label><input type="checkbox"  name="スペルエンハンス"/>スペルエンハンス</label></li>
 	  <li><label><input type="checkbox"  name="祝福"/>祝福</label></li>
 	  <li><label><input type="checkbox"  name="グランドバスター"/>グランドバスター</label></li>
-	  <li><label><input type="checkbox" checked name="シャッタースタッフ"/>シャッタースタッフ</label></li>
+	  <li><label><input type="checkbox" checked disabled name="シャッタースタッフ"/>シャッタースタッフ</label></li>
 	</ul>
       </details>
       <details>
 	<summary>槍技</summary>
 	<ul>
-	  <li><label><input type="checkbox" checked name="二段突き"/>二段突き</label></li>
+	  <li><label><input type="checkbox" checked disabled name="二段突き"/>二段突き</label></li>
 	  <li><label><input type="checkbox"  name="足払い"/>足払い</label></li>
 	  <li><label><input type="checkbox"  name="エイミング"/>エイミング</label></li>
 	  <li><label><input type="checkbox"  name="風車"/>風車</label></li>
@@ -349,8 +368,8 @@
       <details>
 	<summary>小剣技</summary>
 	<ul>
-	  <li><label><input type="checkbox" checked name="フェイント"/>フェイント</label></li>
-	  <li><label><input type="checkbox" checked name="サイドワインダー"/>サイドワインダー</label></li>
+	  <li><label><input type="checkbox" checked disabled name="フェイント"/>フェイント</label></li>
+	  <li><label><input type="checkbox" checked disabled name="サイドワインダー"/>サイドワインダー</label></li>
 	  <li><label><input type="checkbox"  name="感電衝"/>感電衝</label></li>
 	  <li><label><input type="checkbox"  name="マタドール"/>マタドール</label></li>
 	  <li><label><input type="checkbox"  name="プラズマスラスト"/>プラズマスラスト</label></li>
@@ -363,13 +382,13 @@
 	  <li><label><input type="checkbox"  name="マッドバイター"/>マッドバイター</label></li>
 	  <li><label><input type="checkbox"  name="百花繚乱"/>百花繚乱</label></li>
 	  <li><label><input type="checkbox"  name="火龍出水"/>火龍出水</label></li>
-	  <del><li><label><input type="checkbox"  name="ライフスティール"/>ライフスティール</label></li></del>
+	  <li><label><input type="checkbox" disabled name="ライフスティール"/>ライフスティール</label></li>
 	</ul>
       </details>
       <details>
 	<summary>弓技</summary>
 	<ul>
-	  <li><label><input type="checkbox" checked name="イド・ブレイク"/>イド・ブレイク</label></li>
+	  <li><label><input type="checkbox" checked disabled name="イド・ブレイク"/>イド・ブレイク</label></li>
 	  <li><label><input type="checkbox"  name="でたらめ矢"/>でたらめ矢</label></li>
 	  <li><label><input type="checkbox"  name="影ぬい"/>影ぬい</label></li>
 	  <li><label><input type="checkbox"  name="二本射ち"/>二本射ち</label></li>
@@ -388,7 +407,7 @@
       <details>
 	<summary>体術技</summary>
 	<ul>
-	  <li><label><input type="checkbox" checked name="キック"/>キック</label></li>
+	  <li><label><input type="checkbox" checked disabled name="キック"/>キック</label></li>
 	  <li><label><input type="checkbox"  name="集気法"/>集気法</label></li>
 	  <li><label><input type="checkbox"  name="ネコだまし"/>ネコだまし</label></li>
 	  <li><label><input type="checkbox"  name="カウンター"/>カウンター</label></li>
@@ -402,16 +421,16 @@
 	  <li><label><input type="checkbox"  name="クワドラブル"/>クワドラブル</label></li>
 	  <li><label><input type="checkbox"  name="活殺破邪法"/>活殺破邪法</label></li>
 	  <li><label><input type="checkbox"  name="千手観音"/>千手観音</label></li>
-	  <li><label><input type="checkbox" checked name="ふみつけ"/>ふみつけ</label></li>
-	  <li><label><input type="checkbox" checked name="サラマンダークロー"/>サラマンダークロー</label></li>
-	  <li><label><input type="checkbox" checked name="赤竜波"/>赤竜波</label></li>
+	  <li><label><input type="checkbox" checked disabled name="ふみつけ"/>ふみつけ</label></li>
+	  <li><label><input type="checkbox" checked disabled name="サラマンダークロー"/>サラマンダークロー</label></li>
+	  <li><label><input type="checkbox" checked disabled name="赤竜波"/>赤竜波</label></li>
 	</ul>
       </details>
       <details>
 	<summary>爪技</summary>
 	<ul>
 	  <li><label><input type="checkbox"  name="ベルセルク"/>ベルセルク</label></li>
-	  <li><label><input type="checkbox" checked name="地獄爪殺法"/>地獄爪殺法</label></li>
+	  <li><label><input type="checkbox" checked disabled name="地獄爪殺法"/>地獄爪殺法</label></li>
 	</ul>
       </details>
     </fieldset>
@@ -588,11 +607,12 @@
       <li>固有装備の所持状況、閃き状況</li>
       <li>セーブ</li>
       <li><del>装備技は閃き可能技一覧には出ない。</del></li>
-      <li>また、閃き派生元の技術を装備している場合、閃き可能技一覧の派生先が太字になる。</li>
-      <li>装備技から閃き可能は太字、装備技から無理なら薄字。<del>閃き済みなら出さない。</del></li>
-      <li>技道場にない派生は薄字</li>
+      <li><del>また、閃き派生元の技術を装備している場合、閃き可能技一覧の派生先が太字になる。</del></li>
+      <li><del>装備技から閃き可能は太字。</del><del>閃き済みなら出さない。</del></li>
+      <li><del>技道場にない派生は薄字</del></li>
       <li><del>とりあえず初期装備技を置く。</del></li>
-      <li>おかしな名前のときは表を消す</li>
+      <li>ジェラール世代は技道場の技を使えなくするスイッチ</li>
+      <li>エラー処理。おかしな名前のときは表を消す</li>
       <li>ベルセルクが技Lvとして参照するのはキャラクタの技Lvだが上手く扱えていない。</li>
       <li>SFC版は全体攻撃の弓技の参照技Lvにバグがあるようだがどう扱うのやら。</li>
     </ul>
