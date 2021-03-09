@@ -16,14 +16,19 @@
       .hiramekiTableOutput tr.tbodyCaption{
 	  background-color: lavender;
       }
+      .hiramekiTableOutput tr.tbodyCaption th{
+      	  padding-top: 0.25em;
+      	  padding-bottom: 0.25em;
+      }
       .hiramekiTableOutput tr.tbodyHeader{
       	  border-bottom: dashed thin;
       }
       .hiramekiTableOutput th {
 	  border-top: solid thin;
+      	  border-right: solid thin;
 	  text-align: center;
       }
-      .hiramekiTableOutput td,th {
+      .hiramekiTableOutput td {
       	  border-right: solid thin;
       	  padding-left: 1ch;
       	  padding-right: 1ch;
@@ -125,9 +130,6 @@
 	  // Building table.
 	  const table = document.createElement('table');
 
-	  // Header
-	  const header = table.appendChild(document.createElement('thead'));
-	  
 	  // Body
 	  const knownWazaList = makeEquipWazaList(characterDivElem.querySelector(".equipWaza")).concat(makeDojoWazaList()); // TODO: make one function?
 	  for (wKind of equipWeaponTypeList) {
