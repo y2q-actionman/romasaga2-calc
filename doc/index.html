@@ -32,6 +32,14 @@
 	  return ret;
       }
 
+      function makeEquipWazaList(equipWazaElem) {
+	  let ret = [];
+	  for (i of equipWazaElem.querySelectorAll('input')) {
+	      if(i.value) ret.push(i.value);
+	  }
+	  return ret;
+      }
+
       // Building 'equipWaza' by initial waza list.
       function updateEquipWaza(equipWazaElem, characterName) {
 	  const wazaList = findCharacter初期技List(characterName, makeDojoWazaList());
@@ -85,9 +93,10 @@
 	  header.appendChild(buildTR(HIRAMEKI_TABLE_HEADER, true));
 	  
 	  // Body
+	  const knownWazaList = makeEquipWazaList(characterDivElem.querySelector(".equipWaza")).concat(makeDojoWazaList()); // TODO: make one function?
 	  for (wKind of equipWeaponTypeList) {
 	      let hiramekiList = calcWazaHiramekiList(find技種類技一覧Alist(wKind),
-	  					      makeDojoWazaList(),
+	  					      knownWazaList,
 	  					      eLevel,
 	  					      availableWaza);
 	      if (hiramekiList.length > 0) {
@@ -508,8 +517,9 @@
       <li><del>技道場から取れる技の一覧</del></li>
       <li>固有装備の所持状況、閃き状況</li>
       <li>セーブ</li>
-      <li>装備技は閃き可能技一覧には出ない。また、閃き派生元の技術を装備している場合、閃き可能技一覧の派生先が太字になる。(装備していない場合は薄字)</li>
-      <li>装備技から閃き可能は太字、装備技から無理なら薄字。閃き済みなら出さない。</li>
+      <li><del>装備技は閃き可能技一覧には出ない。</del></li>
+      <li>また、閃き派生元の技術を装備している場合、閃き可能技一覧の派生先が太字になる。(装備していない場合は薄字)</li>
+      <li>装備技から閃き可能は太字、装備技から無理なら薄字。<del>閃き済みなら出さない。</del></li>
       <li><del>とりあえず初期装備技を置く。</del></li>
     </ul>
   </body>
