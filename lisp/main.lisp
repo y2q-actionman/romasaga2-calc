@@ -1,9 +1,8 @@
 (in-package :romasaga2)
 
 
-(defun print-waza-hirameki-result (waza-hirameki-result include-固有技)
+(defun print-waza-hirameki-result (waza-hirameki-result)
   (loop for (waza prob from level unique-weapon) in waza-hirameki-result
-     when (if include-固有技 t (not unique-weapon))
      do (format t " ~A	~5,3F	(from ~A)	(level ~A)	~@[~A~]~%"
                 waza prob from level unique-weapon)))
 
@@ -16,8 +15,8 @@
    (calc-waza-hirameki-list waza-list
                             閃き済み技-list
                             enemy-waza-level
-                            character-閃き可能-waza-list)
-   include-固有技))
+                            character-閃き可能-waza-list
+                            include-固有技)))
 
 (defun print-result (enemy-waza-level character-name
                      &key (include-固有技 nil)

@@ -122,21 +122,25 @@
 	  
 	  const availableWaza = find閃き可能WazaListBy閃きTypeId(hiramekiId);
 
-	  const equipWeaponTypeList = [];
-	  for (i of characterDivElem.querySelectorAll('.equipWeaponType input:checked')) {
-	      equipWeaponTypeList.push(i.name);
+	  const wazaTypeList = [];
+	  for (i of characterDivElem.querySelectorAll('.wazaFilter input.wazaType:checked')) {
+	      wazaTypeList.push(i.name);
 	  }
+
+	  const includeUnique = (characterDivElem.querySelector('.wazaFilter input.unique:checked')) ? true : false;
 
 	  // Building table.
 	  const table = document.createElement('table');
 
 	  // Body
-	  const knownWazaList = makeEquipWazaList(characterDivElem.querySelector(".equipWaza")).concat(makeDojoWazaList()); // TODO: make one function?
-	  for (wKind of equipWeaponTypeList) {
+	  const equipWazaList = makeEquipWazaList(characterDivElem.querySelector(".equipWaza"));
+	  const dojoWazaList = makeDojoWazaList();
+	  for (wKind of wazaTypeList) {
 	      let hiramekiList = calcWazaHiramekiList(find技種類技一覧Alist(wKind),
-	  					      knownWazaList,
+	  					      equipWazaList.concat(dojoWazaList),
 	  					      eLevel,
-	  					      availableWaza);
+	  					      availableWaza,
+						      includeUnique);
 	      if (hiramekiList.length > 0) {
 	  	  let tbody = table.appendChild(document.createElement('tbody'));
 		  
@@ -191,17 +195,18 @@
 	       onChange="const targetElem = this.parentElement.parentElement.querySelector('.hiramekiTypeId');
 			 targetElem.value = find閃きTypeIdBy閃きTypeName(this.value);" />
       </label>
-      <details class="equipWeaponType">
+      <details class="wazaFilter">
 	<summary>技種類設定</summary>
-	<label><input type="checkbox" name="剣技" checked />剣技</label>
-	<label><input type="checkbox" name="大剣技" checked />大剣技</label>
-	<label><input type="checkbox" name="斧技" checked />斧技</label>
-	<label><input type="checkbox" name="棍棒技" checked />棍棒技</label>
-	<label><input type="checkbox" name="槍技" checked />槍技</label>
-	<label><input type="checkbox" name="小剣技" checked />小剣技</label>
-	<label><input type="checkbox" name="弓技" checked />弓技</label>
-	<label><input type="checkbox" name="体術技" checked />体術技</label>
-	<label><input type="checkbox" name="爪技" checked />爪技</label>
+	<label><input class="wazaType" type="checkbox" name="剣技" checked />剣技</label>
+	<label><input class="wazaType" type="checkbox" name="大剣技" checked />大剣技</label>
+	<label><input class="wazaType" type="checkbox" name="斧技" checked />斧技</label>
+	<label><input class="wazaType" type="checkbox" name="棍棒技" checked />棍棒技</label>
+	<label><input class="wazaType" type="checkbox" name="槍技" checked />槍技</label>
+	<label><input class="wazaType" type="checkbox" name="小剣技" checked />小剣技</label>
+	<label><input class="wazaType" type="checkbox" name="弓技" checked />弓技</label>
+	<label><input class="wazaType" type="checkbox" name="体術技" checked />体術技</label>
+	<label><input class="wazaType" type="checkbox" name="爪技" checked />爪技</label>
+	<label><input class="unique" type="checkbox" name="固有技" checked />固有技</label>
       </details>
       <details class="equipWaza">
 	<summary>装備技術欄設定</summary>
