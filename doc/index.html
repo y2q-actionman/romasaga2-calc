@@ -4,6 +4,35 @@
       ul {
 	  list-style: none;
       }
+      .hiramekiTableOutput table {
+	  font-size: small;
+      	  border: solid thin;
+	  border-collapse: collapse;
+	  border-spacing: 1;
+      }
+      .hiramekiTableOutput tr:nth-child(odd){
+	  background-color: whitesmoke;
+      }
+      .hiramekiTableOutput tr.tbodyCaption{
+	  background-color: lavender;
+      }
+      .hiramekiTableOutput tr.tbodyHeader{
+      	  border-bottom: dashed thin;
+      }
+      .hiramekiTableOutput th {
+	  border-top: solid thin;
+	  text-align: center;
+      }
+      .hiramekiTableOutput td,th {
+      	  border-right: solid thin;
+      	  padding-left: 1ch;
+      	  padding-right: 1ch;
+      }
+      .hiramekiTableOutput td.numeric{
+	  text-align: right;
+      	  padding-left: 0.5ch;
+      	  padding-right: 0.5ch;
+      }
     </style>
     <script type="text/javascript" src="./romasaga2.js"></script>
     <script type="text/javascript">
@@ -50,19 +79,27 @@
       }
 
       // Building 'hiramekiTable'.
-      function buildTBodyHeader(name, colspan) {
+      function buildTBodyCaption(name, colspan) {
 	  let tr = document.createElement('tr');
-	  let td = tr.appendChild(document.createElement('td'));
-	  td.setAttribute("colspan", colspan)
-	  td.appendChild(document.createTextNode(name));
+	  let th = tr.appendChild(document.createElement('th'));
+	  th.setAttribute("colspan", colspan)
+	  th.appendChild(document.createTextNode(name));
 	  return tr;
       }
+      
+      const PROB_FORMATTER = new Intl.NumberFormat(undefined, { style: "percent", maximumFractionDigits: 2, minimumFractionDigits: 2, mimimumIntegerDigits: 1 });
       
       function buildTR(array, isHeader) {
 	  let tr = document.createElement('tr');
 	  for (i of array) {
 	      let td = tr.appendChild(document.createElement(isHeader ? 'th' : 'td'));
 	      if (i) {
+		  if(Number.isFinite(i)) {
+		      td.classList.add("numeric");
+		      if(!Number.isInteger(i)) {
+			  i = PROB_FORMATTER.format(i);
+		      }
+		  }
 		  td.appendChild(document.createTextNode(i));
 	      }
 	  }
@@ -90,7 +127,6 @@
 
 	  // Header
 	  const header = table.appendChild(document.createElement('thead'));
-	  header.appendChild(buildTR(HIRAMEKI_TABLE_HEADER, true));
 	  
 	  // Body
 	  const knownWazaList = makeEquipWazaList(characterDivElem.querySelector(".equipWaza")).concat(makeDojoWazaList()); // TODO: make one function?
@@ -101,7 +137,13 @@
 	  					      availableWaza);
 	      if (hiramekiList.length > 0) {
 	  	  let tbody = table.appendChild(document.createElement('tbody'));
-	  	  tbody.appendChild(buildTBodyHeader(wKind, HIRAMEKI_TABLE_HEADER.length));
+		  
+		  let tbodyCap = tbody.appendChild(buildTBodyCaption(wKind, HIRAMEKI_TABLE_HEADER.length));
+		  tbodyCap.classList.add("tbodyCaption");
+		  
+		  let tbodyHeader = tbody.appendChild(buildTR(HIRAMEKI_TABLE_HEADER, true));
+		  tbodyHeader.classList.add("tbodyHeader");
+		  
 	  	  for (i of hiramekiList) {
 	  	      tbody.appendChild(buildTR(i));
 	  	  }
