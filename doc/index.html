@@ -36,8 +36,8 @@
       function updateEquipWaza(equipWazaElem, characterName) {
 	  const wazaList = findCharacter初期技List(characterName, makeDojoWazaList());
 	  const inputs = equipWazaElem.querySelectorAll('input');
-	  for (let i = 0; i < wazaList.length; ++i) {
-	      inputs[i].value = wazaList[i];
+	  for (let i = 0; i < inputs.length; ++i) {
+	      inputs[i].value = (i < wazaList.length) ? wazaList[i] : null;
 	  }
       }
 
