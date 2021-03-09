@@ -15,6 +15,9 @@
 (ps:defpsmacro plusp (number)
   `(if (> ,number 0) t nil))
 
+(ps:defpsmacro first (list)
+  `(elt ,list 0))
+
 (ps:defpsmacro position (item sequence &key (start 0 start-supplied-p))
   (let ((ret (gensym)))
     `(let ((,ret (ps:chain ,sequence (index-of ,item ,@ (if start-supplied-p `(,start))))))

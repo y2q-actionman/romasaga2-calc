@@ -26,10 +26,19 @@
 
       function makeDojoWazaList() {
 	  let ret = [];
-	  for (i of document.querySelectorAll('#dojoStatus input:checked')) {
+	  for (i of document.querySelectorAll('#dojo input:checked')) {
 	      ret.push(i.name);
 	  }
 	  return ret;
+      }
+
+      // Building 'equipWaza' by initial waza list.
+      function updateEquipWaza(equipWazaElem, characterName) {
+	  const wazaList = findCharacter初期技List(characterName, makeDojoWazaList());
+	  const inputs = equipWazaElem.querySelectorAll('input');
+	  for (let i = 0; i < wazaList.length; ++i) {
+	      inputs[i].value = wazaList[i];
+	  }
       }
 
       // Building 'hiramekiTable'.
@@ -114,18 +123,20 @@
       <legend>キャラクタ1</legend>
       <label>名前
 	<input class="characterName" type="text" list="characterNameList" size="18"
-	       onChange="const targetElem = this.parentElement.parentElement.querySelector('.hiramekiTypeId');
-			 changeAndInvokeChangeEvent(targetElem, find閃きTypeIdByCharacterName(this.value));" />
+	       onChange="const characterElem = this.parentElement.parentElement;
+			 updateEquipWaza(characterElem.querySelector('.equipWaza'), this.value);
+			 const typeIdElem = characterElem.querySelector('.hiramekiTypeId');
+			 changeAndInvokeChangeEvent(typeIdElem, find閃きTypeIdByCharacterName(this.value)); " />
       </label>
       <label>閃きタイプ
 	<input class="hiramekiTypeId" type="number" min="0" max="15"
 	       onChange="const targetElem = this.parentElement.parentElement.querySelector('.hiramekiTypeName');
-			 changeAndInvokeChangeEvent(targetElem, find閃きTypeNameBy閃きTypeId(this.value));" />
+			 targetElem.value = find閃きTypeNameBy閃きTypeId(this.value);" />
       </label>
       <label>閃きタイプ名前
 	<input class="hiramekiTypeName" type="text" list="hiramekiTypeNameList" size="10"
 	       onChange="const targetElem = this.parentElement.parentElement.querySelector('.hiramekiTypeId');
-			 changeAndInvokeChangeEvent(targetElem, find閃きTypeIdBy閃きTypeName(this.value));" />
+			 targetElem.value = find閃きTypeIdBy閃きTypeName(this.value);" />
       </label>
       <details class="equipWeaponType">
 	<summary>技種類設定</summary>
@@ -139,7 +150,7 @@
 	<label><input type="checkbox" name="体術技" checked />体術技</label>
 	<label><input type="checkbox" name="爪技" checked />爪技</label>
       </details>
-      <details class="characterEquipWaza">
+      <details class="equipWaza">
 	<summary>装備技術欄設定</summary>
 	<ul>
 	  <li><input type="text" list="allWazaNameList" /></li>
@@ -158,7 +169,7 @@
       </details>
     </fieldset>
 
-    <fieldset open id="dojoStatus" onChange="invokeAllCharacterChangeEvent()">
+    <fieldset open id="dojo" onChange="invokeAllCharacterChangeEvent()">
       <legend>技道場登録状況</legend>
       <details>
 	<summary>剣技</summary>
@@ -294,7 +305,7 @@
 	  <li><label><input type="checkbox"  name="マッドバイター"/>マッドバイター</label></li>
 	  <li><label><input type="checkbox"  name="百花繚乱"/>百花繚乱</label></li>
 	  <li><label><input type="checkbox"  name="火龍出水"/>火龍出水</label></li>
-	  <li><label><input type="checkbox"  name="ライフスティール"/>ライフスティール</label></li>
+	  <del><li><label><input type="checkbox"  name="ライフスティール"/>ライフスティール</label></li></del>
 	</ul>
       </details>
       <details>
@@ -494,12 +505,12 @@
     <hr>
     TODO
     <ul>
-      <li>技道場から取れる技の一覧</li>
+      <li><del>技道場から取れる技の一覧</del></li>
       <li>固有装備の所持状況、閃き状況</li>
       <li>セーブ</li>
       <li>装備技は閃き可能技一覧には出ない。また、閃き派生元の技術を装備している場合、閃き可能技一覧の派生先が太字になる。(装備していない場合は薄字)</li>
       <li>装備技から閃き可能は太字、装備技から無理なら薄字。閃き済みなら出さない。</li>
-      <li>とりあえず初期装備技を置く。</li>
+      <li><del>とりあえず初期装備技を置く。</del></li>
     </ul>
   </body>
 </html>
