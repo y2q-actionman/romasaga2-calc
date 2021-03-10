@@ -4,8 +4,8 @@
 (defun print-waza-hirameki-result (waza-hirameki-result)
   "For `print-result'."
   (loop for (waza prob from level unique-weapon status) in waza-hirameki-result
-     do (format t " ~A	~5,3F	(from ~A)	(level ~A)	~@[~A~]	~@[# ~A~]~%"
-                waza prob from level unique-weapon status)))
+     do (format t " ~13A	~5,3F (Lv ~2D)	from ~A (~A)	~@[~A~]~%"
+                waza prob level from status unique-weapon)))
 
 (defun print-result (enemy-waza-level character-name character-装備技-alist
                      &key (include-固有技 nil)
@@ -61,7 +61,8 @@
        (loop initially (format stream "<ul>~%")
           for waza in waza-list
           do (format stream "<li><label><input type=\"checkbox\" ~:[~;checked disabled~] name=\"~A\"/>~:*~A</label></li>~%"
-                     (member waza +閃き済み技-list+) waza)
+                     (or (member waza +基本技-list+) (member waza +閃き済み技-list+))
+                     waza)
           finally (format stream "</ul>~%"))
        (format stream "</details>~%"))
   (format stream "~&</fieldset>"))

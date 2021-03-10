@@ -46,6 +46,7 @@
   (loop for waza in waza-list
      when (and (not (includes 装備技-list waza))
                (not (includes dojo-閃き済み技-list waza))
+               (not (includes +基本技-list+ waza))
                (not (includes +閃き済み技-list+ waza))
                (includes character-閃き可能-waza-list waza))
      append
@@ -56,8 +57,10 @@
           collect (list waza prob from level unique-weapon
                         (cond ((includes 装備技-list from)
                                :equipped)
-                              ((and (not (includes dojo-閃き済み技-list from))
-                                    (not (includes +閃き済み技-list+ from)))
-                               :not-in-dojo)
+                              ((includes +基本技-list+ from)
+                               :basic)
+                              ((or (includes dojo-閃き済み技-list from)
+                                   (includes +閃き済み技-list+ from))
+                               :in-dojo)
                               (t
-                               nil))))))
+                               :nowhere))))))

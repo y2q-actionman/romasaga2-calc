@@ -254,10 +254,16 @@
 ;;;
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (define-constant +閃き済み技-list+
+  (define-constant +基本技-list+
       '(剣攻撃 大剣攻撃 斧攻撃 棍棒攻撃 槍攻撃 小剣攻撃 弓攻撃 パンチ 爪攻撃
-        なぎ払い みね打ち 脳天割り 二段突き フェイント サイドワインダー イド・ブレイク キック
-        ダンシングソード ファイナルストライク シャッタースタッフ
+        ダンシングソード ファイナルストライク シャッタースタッフ)
+    :test 'equal)
+  (import-and-export +基本技-list+
+                     *romasaga2-name-package*))
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (define-constant +閃き済み技-list+
+      '(なぎ払い みね打ち 脳天割り 二段突き フェイント サイドワインダー イド・ブレイク キック
         ふみつけ サラマンダークロー 赤竜波 地獄爪殺法)
     :test 'equal)
   (import-and-export +閃き済み技-list+
