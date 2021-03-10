@@ -16,6 +16,22 @@ function invokeAllCharacterChangeEvent() {
     }
 }
 
+function handleCharacterNameChangeEvent(characterElem, value) {
+    updateEquipWaza(characterElem.querySelector('.equipWaza'), value);
+    const 閃きTypeId = find閃きTypeIdByCharacterName(value)
+    characterElem.querySelector('.hiramekiTypeId').value = 閃きTypeId;
+    characterElem.querySelector('.hiramekiTypeName').value = find閃きTypeNameBy閃きTypeId(閃きTypeId);
+}
+
+function handleHiramekiTypeIdChangeEvent(characterElem, value) {
+    characterElem.querySelector('.charactername').value = null;
+    characterElem.querySelector('.hiramekiTypeName').value = find閃きTypeNameBy閃きTypeId(value);
+}
+
+function handleHiramekiTypeNameChangeEvent(characterElem, value) {
+    characterElem.querySelector('.charactername').value = null;
+    characterElem.querySelector('.hiramekiTypeId').value = find閃きTypeIdBy閃きTypeName(value);
+}
 
 //
 // 'equipWaza' handling.

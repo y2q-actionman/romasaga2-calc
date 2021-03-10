@@ -27,23 +27,15 @@
       <legend>キャラクタ1</legend>
       <label>名前
 	<input class="characterName" type="text" list="characterNameList" size="18"
-	       onChange="const characterElem = this.parentElement.parentElement;
-			 updateEquipWaza(characterElem.querySelector('.equipWaza'), this.value);
-			 const 閃きTypeId = find閃きTypeIdByCharacterName(this.value)
-			 characterElem.querySelector('.hiramekiTypeId').value = 閃きTypeId;
-			 characterElem.querySelector('.hiramekiTypeName').value = find閃きTypeNameBy閃きTypeId(閃きTypeId);" />
+	       onChange="handleCharacterNameChangeEvent(this.parentElement.parentElement, this.value);" />
       </label>
       <label>閃きタイプ
 	<input class="hiramekiTypeId" type="number" min="0" max="15"
-	       onChange="const characterElem = this.parentElement.parentElement;
-			 characterElem.querySelector('.charactername').value = null;
-			 characterElem.querySelector('.hiramekiTypeName').value = find閃きTypeNameBy閃きTypeId(this.value);" />
+	       onChange="handleHiramekiTypeIdChangeEvent(this.parentElement.parentElement, this.value);" />
       </label>
       <label>閃きタイプ名前
 	<input class="hiramekiTypeName" type="text" list="hiramekiTypeNameList" size="10"
-	       onChange="const characterElem = this.parentElement.parentElement;
-			 characterElem.querySelector('.charactername').value = null;
-			 characterElem.querySelector('.hiramekiTypeId').value = find閃きTypeIdBy閃きTypeName(this.value);" />
+	       onChange="handleHiramekiTypeNameChangeEvent(this.parentElement.parentElement, this.value);" />
       </label>
       <details open class="wazaFilter">
 	<summary>技種類設定</summary>
