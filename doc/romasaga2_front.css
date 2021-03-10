@@ -1,0 +1,43 @@
+ul {
+    list-style: none;
+}
+.hiramekiTableOutput table {
+    font-size: small;
+    border: solid thin;
+    border-collapse: collapse;
+    border-spacing: 1;
+}
+.hiramekiTableOutput tr:nth-child(odd){
+    background-color: whitesmoke;
+}
+.hiramekiTableOutput tr.tbodyCaption{
+    background-color: lavender;
+}
+.hiramekiTableOutput tr.tbodyCaption th{
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+}
+.hiramekiTableOutput tr.tbodyHeader{
+    border-bottom: dashed thin;
+}
+.hiramekiTableOutput th {
+    border-top: solid thin;
+    border-right: solid thin;
+    text-align: center;
+}
+.hiramekiTableOutput td {
+    border-right: solid thin;
+    padding-left: 1ch;
+    padding-right: 1ch;
+}
+.hiramekiTableOutput td.numeric{
+    text-align: right;
+    padding-left: 0.5ch;
+    padding-right: 0.5ch;
+}
+.hiramekiTableOutput tr.equipped {
+    font-weight: bolder;
+}
+.hiramekiTableOutput tr.notInDojo {
+    text-decoration: line-through;
+}

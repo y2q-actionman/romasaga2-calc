@@ -1,189 +1,13 @@
 <html>
   <head>
-    <title>ロマンシング サ・ガ2 閃き計算器</title>
+    <title>ロマンシング サ・ガ2 閃き計算機</title>
     <meta charset="utf-8"/>
-    <style type="text/css">
-      ul {
-	  list-style: none;
-      }
-      .hiramekiTableOutput table {
-	  font-size: small;
-      	  border: solid thin;
-	  border-collapse: collapse;
-	  border-spacing: 1;
-      }
-      .hiramekiTableOutput tr:nth-child(odd){
-	  background-color: whitesmoke;
-      }
-      .hiramekiTableOutput tr.tbodyCaption{
-	  background-color: lavender;
-      }
-      .hiramekiTableOutput tr.tbodyCaption th{
-      	  padding-top: 0.25em;
-      	  padding-bottom: 0.25em;
-      }
-      .hiramekiTableOutput tr.tbodyHeader{
-      	  border-bottom: dashed thin;
-      }
-      .hiramekiTableOutput th {
-	  border-top: solid thin;
-      	  border-right: solid thin;
-	  text-align: center;
-      }
-      .hiramekiTableOutput td {
-      	  border-right: solid thin;
-      	  padding-left: 1ch;
-      	  padding-right: 1ch;
-      }
-      .hiramekiTableOutput td.numeric{
-	  text-align: right;
-      	  padding-left: 0.5ch;
-      	  padding-right: 0.5ch;
-      }
-      .hiramekiTableOutput tr.equipped {
-      	  font-weight: bolder;
-      }
-      .hiramekiTableOutput tr.notInDojo {
-      	  text-decoration: line-through;
-      }
-    </style>
-    <script type="text/javascript" src="./romasaga2.js"></script>
-    <script type="text/javascript">
-      function invokeChangeEvent(targetElem) {
-	  targetElem.dispatchEvent(new Event("change"));
-      }
-
-      function changeAndInvokeChangeEvent(targetElem, newValue) {
-       	  if (targetElem.value != newValue) {
-       	      targetElem.value = newValue;
-	      invokeChangeEvent(targetElem);
-       	  }
-      }
-
-      function invokeAllCharacterChangeEvent() {
-	  for(i of document.querySelectorAll('.character')){
-	      invokeChangeEvent(i);
-	  }
-      }
-
-      function makeDojoWazaList() {
-	  let ret = [];
-	  for (i of document.querySelectorAll('#dojo input:checked')) {
-	      ret.push(i.name);
-	  }
-	  return ret;
-      }
-
-      function makeEquipWazaList(equipWazaElem) {
-	  let ret = [];
-	  for (i of equipWazaElem.querySelectorAll('input')) {
-	      if(i.value) ret.push(i.value);
-	  }
-	  return ret;
-      }
-
-      // Building 'equipWaza' by initial waza list.
-      function updateEquipWaza(equipWazaElem, characterName) {
-	  const wazaList = findCharacter初期技List(characterName, makeDojoWazaList());
-	  const inputs = equipWazaElem.querySelectorAll('input');
-	  for (let i = 0; i < inputs.length; ++i) {
-	      inputs[i].value = (i < wazaList.length) ? wazaList[i] : null;
-	  }
-      }
-
-      // Building 'hiramekiTable'.
-      function buildTBodyCaption(name, colspan) {
-	  let tr = document.createElement('tr');
-	  let th = tr.appendChild(document.createElement('th'));
-	  th.setAttribute("colspan", colspan)
-	  th.appendChild(document.createTextNode(name));
-	  return tr;
-      }
-      
-      const PROB_FORMATTER = new Intl.NumberFormat(undefined, { style: "percent", maximumFractionDigits: 2, minimumFractionDigits: 2, mimimumIntegerDigits: 1 });
-
-      const HIRAMEKI_TABLE_HEADER = ['技名', '確率', '派生元', '技Lv', '固有武器'];
-      
-      function buildWazaTR(array, isHeader, equipWazaList, dojoWazaList) {
-	  const tr = document.createElement('tr');
-	  
-	  // <tr> class
-	  if (!isHeader) {
-	      const 派生元 = array[2];
-	      if (equipWazaList.includes(派生元)) {
-		  tr.classList.add("equipped");
-	      } else if (!閃き済み技LIST.includes(派生元) && !dojoWazaList.includes(派生元)) {
-		  tr.classList.add("notInDojo");
-	      }
-	  }
-
-	  // <td> class
-	  for (i of array) {
-	      let td = tr.appendChild(document.createElement(isHeader ? 'th' : 'td'));
-	      if (i) {
-		  if(Number.isFinite(i)) {
-		      td.classList.add("numeric");
-		      if(!Number.isInteger(i)) {
-			  i = PROB_FORMATTER.format(i);
-		      }
-		  }
-		  td.appendChild(document.createTextNode(i));
-	      }
-	  }
-	  return tr;
-      }
-      
-      function updateHiramekiTable(characterDivElem) {
-	  const eLevel = document.querySelector('#enemyTechLevel').value;
-	  if(!eLevel) return;
-	  
-	  const hiramekiId = characterDivElem.querySelector('.hiramekiTypeId').value;
-	  if(!hiramekiId) return;
-	  
-	  const availableWaza = find閃き可能WazaListBy閃きTypeId(hiramekiId);
-
-	  const wazaTypeList = [];
-	  for (i of characterDivElem.querySelectorAll('.wazaFilter input.wazaType:checked')) {
-	      wazaTypeList.push(i.name);
-	  }
-
-	  const includeUnique = (characterDivElem.querySelector('.wazaFilter input.unique:checked')) ? true : false;
-
-	  // Building table.
-	  const table = document.createElement('table');
-
-	  // Body
-	  const equipWazaList = makeEquipWazaList(characterDivElem.querySelector(".equipWaza"));
-	  const dojoWazaList = makeDojoWazaList();
-	  for (wKind of wazaTypeList) {
-	      let hiramekiList = calcWazaHiramekiList(find技種類技一覧Alist(wKind),
-	  					      閃き済み技LIST.concat(equipWazaList).concat(dojoWazaList),
-	  					      eLevel,
-	  					      availableWaza,
-						      includeUnique);
-	      if (!hiramekiList || hiramekiList.length <= 0)
-		  continue;
-
-	      let tbody = table.appendChild(document.createElement('tbody'));
-		  
-	      let tbodyCap = tbody.appendChild(buildTBodyCaption(wKind, HIRAMEKI_TABLE_HEADER.length));
-	      tbodyCap.classList.add("tbodyCaption");
-		  
-	      let tbodyHeader = tbody.appendChild(buildWazaTR(HIRAMEKI_TABLE_HEADER, true));
-	      tbodyHeader.classList.add("tbodyHeader");
-		  
-	      for (i of hiramekiList) {
-		  tbody.appendChild(buildWazaTR(i, false, equipWazaList, dojoWazaList));
-	      }
-	  }
-
-	  const outputTable = characterDivElem.querySelector('.hiramekiTableOutput table');
-	  outputTable.replaceWith(table);
-      }
-    </script>
+    <link rel="stylesheet" href="romasaga2_front.css" type="text/css">
+    <script type="text/javascript" src="romasaga2.js"></script>
+    <script type="text/javascript" src="romasaga2_front.js"> </script>
   </head>
   <body>
-    <h1>ロマンシング サ・ガ2 閃き計算器</h1>
+    <h1>ロマンシング サ・ガ2 閃き計算機</h1>
     使い方は一番下。
     <fieldset id="enemy">
       <legend>敵</legend>
@@ -585,10 +409,10 @@
 
     <hr>
     <h1>これは何？</h1>
-    ロマンシング サ・ガ2の閃き可能な技の一覧を計算する。
+    ロマサガ2の閃き可能な技の一覧を計算する。
     <br>
     例えば、「現在のパーティーはジェラール、ベア、ジェイムズ、テレーズ、アリエスだが、この状態でディープワン道場に行ったらどんな技が閃けるのか？」を計算するのに使える。
-    <small>（こんな計算を何度もするうちに必要に迫られて作った。）</small>
+    <small>（こんな計算を何度もするうちに必要性を痛感して作った。）</small>
     
     <h1>使い方</h1>
     <ol>
@@ -600,11 +424,12 @@
       <li>(TODO) 装備技術欄設定を行うと・・</li>
       <li>(TODO)「技道場登録状態」を行うと・・ 1. 閃き一覧に出てこなくなる。 ・・閉じているがいい感じに開いて使ってほしい。</li>
     </ol>
-    <h1>データの出典</h1>
+    <h1>出典・参考情報等</h1>
     <ul>
       <li><a href="http://kaerulabo.web.fc2.com/rs2/index.htm">カエル研究室さん</a></li>
       <li><a href="http://s-endo.skr.jp/gameprog_analysis.html#Description-RS2">"Index of /~s-endo/" さんの ロマンシング サ・ガ2 関連情報</a></li>
       <li><a href="https://wikiwiki.jp/romasaga2/">romasaga2apli Wiki* さん</a></li>
+      <li><a href="https://www.reddit.com/r/SaGa/comments/9rucbu/rs2_spark_assist_tool/">RS2 spark assist tool</a></li>
     </ul>
     <h1>TODO</h1>
     <ul>
