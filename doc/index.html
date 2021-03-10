@@ -26,7 +26,7 @@
     <fieldset class="character" onChange="updateHiramekiTable(this);">
       <legend>キャラクタ1</legend>
       <label>名前
-	<input class="characterName" type="text" list="characterNameList" size="18"
+	<input class="characterName" type="text" list="characterNameList"
 	       onChange="handleCharacterNameChangeEvent(this.parentElement.parentElement, this.value);" />
       </label>
       <label>閃きタイプ
@@ -34,8 +34,14 @@
 	       onChange="handleHiramekiTypeIdChangeEvent(this.parentElement.parentElement, this.value);" />
       </label>
       <label>閃きタイプ名前
-	<input class="hiramekiTypeName" type="text" list="hiramekiTypeNameList" size="10"
-	       onChange="handleHiramekiTypeNameChangeEvent(this.parentElement.parentElement, this.value);" />
+	<select class="hiramekiTypeName"
+		onChange="handleHiramekiTypeNameChangeEvent(this.parentElement.parentElement, this.value);">
+	  <option selected disabled></option>
+	  <option>体術A型</option> <option>体術B型</option> <option>弓型</option> <option>小剣型</option> <option>槍型</option>
+	  <option>棍棒型</option> <option>斧型</option> <option>皆無型</option> <option>大剣A型</option> <option>斧槍型</option>
+	  <option>剣豪型</option> <option>大剣B型</option> <option>未使用</option> <option>半端型</option> <option>剣型</option>
+	  <option>術士型</option>
+	</select>
       </label>
       <details open class="wazaFilter">
 	<summary>技種類設定</summary>
@@ -261,21 +267,9 @@
     
     <!-- Datalist -->
     <datalist id="hiramekiTypeNameList">
-      <option>体術A型</option> <!-- 0 -->
-      <option>体術B型</option> <!-- 1 -->
-      <option>弓型</option>	   <!-- 2 -->
-      <option>小剣型</option>
-      <option>槍型</option>
-      <option>棍棒型</option> <!-- 5 -->
-      <option>斧型</option>
-      <option>皆無型</option>
-      <option>大剣A型</option>
-      <option>斧槍型</option>
-      <option>剣豪型</option> <!-- 10 -->
-      <option>大剣B型</option>
-      <option>未使用</option> <!-- 12 -->
-      <option>半端型</option>
-      <option>剣型</option>
+      <option>体術A型</option> <option>体術B型</option> <option>弓型</option> <option>小剣型</option> <option>槍型</option>
+      <option>棍棒型</option> <option>斧型</option> <option>皆無型</option> <option>大剣A型</option> <option>斧槍型</option>
+      <option>剣豪型</option> <option>大剣B型</option> <option>未使用</option> <option>半端型</option> <option>剣型</option>
       <option>術士型</option>
     </datalist>
     <datalist id="characterNameList">
