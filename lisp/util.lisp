@@ -163,3 +163,7 @@ This macro is for Parenscript-compatible alist definition."
     "Calls `cl:import' and `cl:export'"
     (import symbols package)
     (export symbols package)))
+
+(ps:defpsmacro import-and-export (&rest _)
+  (declare (ignore _))
+  nil)
