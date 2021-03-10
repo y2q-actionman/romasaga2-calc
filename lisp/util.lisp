@@ -74,7 +74,8 @@ This macro is for Parenscript-compatible alist definition."
            (if errorp
                (ps-simple-error (+ "'" name "' was not found in " ',variable-name)))))))
 
-
+;;; Used in 'hirameki-type__old.lisp' only.
+#+ ()
 (ps:defpsmacro defstruct (name &body slots)
   ;; TODO: copier, predicate
   (let ((constructor-name (intern (format nil "make~A" name)))
@@ -131,9 +132,7 @@ This macro is for Parenscript-compatible alist definition."
   y))
 
 (ps:ps (make-test :name "some name" :id 3))
-
 |#
-
 
 (defun ps-compile-file-to-file (lisp-file-name)
   "For debug"
