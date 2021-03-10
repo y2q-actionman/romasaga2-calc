@@ -1,0 +1,47 @@
+#+TITLE: ロマサガ2 閃き計算機
+
+* これは何？
+
+ロマンシング サ・ガ2 での閃き計算な技の一覧を計算する。
+
+例えば、 *現在のパーティーはジェラール、ベア、ジェイムズ、テレーズ、アリエスだが、この状態でゼラチナスマターと戦ったりディープワン道場に行ったりしたら、どんな技が閃けるのか？* を計算するのに使える。
+（こんな計算を何度もするうちに必要性を痛感して作った。）
+
+* 使い方
+
+** TODO HTML版
+
+TODO: ここに Link を張る
+
+** Lisp 版
+
+1. 以下でLoad.
+
+#+BEGIN_SRC lisp
+(asdf:load-asd (truename "romasaga2.asd"))
+(asdf:load-system "romasaga2")
+(in-package :romasaga2-user)
+#+END_SRC
+
+2. romasaga2-user.lisp を適当に編集して設定する。
+
+3. REPL で =(main :enemy 'ディープワン)= とかすると表が出る。
+
+*** JS の Build
+
+doc/romasaga2.js は以下でビルドする:
+
+#+BEGIN_SRC lisp
+(romasaga2:make-romasaga2-js :print-pretty nil)
+#+END_SRC
+
+* 出典・参考情報等
+
+- [[http://kaerulabo.web.fc2.com/rs2/index.htm][カエル研究室]] さん
+- [[http://s-endo.skr.jp/gameprog_analysis.html#Description-RS2][Index of ~s-endo]] さんの ロマンシング サ・ガ2 関連情報
+- [[https://wikiwiki.jp/romasaga2/][romasaga2apli Wiki*]] の忍者、陰陽師についての情報
+- [[https://www.reddit.com/r/SaGa/comments/9rucbu/rs2_spark_assist_tool/][RS2 spark assist tool]] もっとすごいツール。このページを作り始める前に見つけたかった。
+
+* TODO License
+
+GPL の予定
