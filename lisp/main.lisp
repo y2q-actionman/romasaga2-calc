@@ -11,7 +11,7 @@
                      &key (include-固有技 nil)
                        (additional-閃き済み技-list nil))
   "For `print-all'."
-  (let* ((閃き済み技-list (append additional-閃き済み技-list *閃き済み技-list*))
+  (let* ((閃き済み技-list (append additional-閃き済み技-list +閃き済み技-list+))
          (閃き-type-id (find-閃き-type-id-by-character-name character-name))
          (閃き可能-waza-list (find-閃き可能-waza-list-by-閃き-type-id 閃き-type-id)))
     (format t "~2&名前 ~A 閃きタイプ ~A (~A)~%"
@@ -24,7 +24,8 @@
          (print-waza-hirameki-result
           (calc-waza-hirameki-list waza-list 閃き済み技-list enemy-waza-level 閃き可能-waza-list include-固有技)))))
 
-(defun print-all (enemy member-list enemy-waza-level additional-閃き済み技-list)
+(defun print-all (enemy member-list additional-閃き済み技-list
+                  &key (enemy-waza-level (find-waza-level-by-enemy-name enemy)))
   "For romasaga2-user main function."
   (format t "~&敵 ~A Level ~D~2%" enemy enemy-waza-level)
   (loop for m in member-list

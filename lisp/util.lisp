@@ -141,3 +141,25 @@ This macro is for Parenscript-compatible alist definition."
       (let ((ps:*parenscript-stream* out))
         (ps:ps-compile-file lisp-file-name)))
     output-file-name))
+
+
+;;; For building 'romasaga2-name' package.
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (defun collect-tree-symbol (tree &optional (accumulator nil))
+    "Walks TREE and collect distinct symbols."
+    (typecase tree
+      (null accumulator)
+      (symbol (list* tree accumulator))
+      (list (union (collect-tree-symbol (car tree) accumulator)
+                   (collect-tree-symbol (cdr tree) accumulator)))
+      (array (loop for i across tree
+                do (setf accumulator (collect-tree-symbol i accumulator))
+                finally (return accumulator)))
+      (t accumulator))))
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (defun import-and-export (symbols &optional (package *package*))
+    "Calls `cl:import' and `cl:export'"
+    (import symbols package)
+    (export symbols package)))

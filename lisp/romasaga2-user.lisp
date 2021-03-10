@@ -1,4 +1,10 @@
-(in-package :romasaga2)
+(in-package :cl-user)
+
+(defpackage :romasaga2-user
+  (:use :cl :romasaga2 :romasaga2-name)
+  (:export))
+
+(in-package :romasaga2-user)
 
 (defparameter *user-閃き済み-剣技-list*
   '(なぎ払い
@@ -200,9 +206,8 @@
 (defparameter *main-member-list* '(ジェラール ベア ジェイムズ テレーズ アリエス アンドロマケー))
 
 (defun main (&key (enemy *main-enemy*)
-               (member-list *main-member-list*)
-               (enemy-waza-level (find-waza-level-by-enemy-name enemy)))
-  (print-all enemy member-list enemy-waza-level
+               (member-list *main-member-list*))
+  (print-all enemy member-list
              (append *user-閃き済み-剣技-list*
                      *user-閃き済み-大剣技-list*
                      *user-閃き済み-斧技-list*
