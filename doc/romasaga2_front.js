@@ -78,30 +78,31 @@ const PROB_FORMATTER = new Intl.NumberFormat(undefined, { style: "percent", maxi
 
 const HIRAMEKI_TABLE_HEADER = ['技名', '確率', '派生元', '技Lv', '固有武器'];
 
-function buildWazaTR(array, isHeader, equipWazaList, dojoWazaList) {
+function buildWazaTR(array, isHeader) {
     const tr = document.createElement('tr');
 
     // <tr> class
     if (!isHeader) {
-	const 派生元 = array[2];
-	if (equipWazaList.includes(派生元)) {
+	const calcKwd = array[5];
+	if (calcKwd === 'equipped') {
 	    tr.classList.add("equipped");
-	} else if (!閃き済み技LIST.includes(派生元) && !dojoWazaList.includes(派生元)) {
+	} else if (calcKwd === 'not-in-dojo') {
 	    tr.classList.add("notInDojo");
 	}
     }
 
     // <td> class
-    for (i of array) {
+    for (let i = 0; i < HIRAMEKI_TABLE_HEADER.length; ++i) {
 	let td = tr.appendChild(document.createElement(isHeader ? 'th' : 'td'));
-	if (i) {
-	    if(Number.isFinite(i)) {
+	let data = array[i];
+	if (data) {
+	    if(Number.isFinite(data)) {
 		td.classList.add("numeric");
-		if(!Number.isInteger(i)) {
-		    i = PROB_FORMATTER.format(i);
+		if(!Number.isInteger(data)) {
+		    data = PROB_FORMATTER.format(data);
 		}
 	    }
-	    td.appendChild(document.createTextNode(i));
+	    td.appendChild(document.createTextNode(data));
 	}
     }
     return tr;
@@ -114,7 +115,7 @@ function updateHiramekiTable(characterElem) {
     const hiramekiId = characterElem.querySelector('.hiramekiTypeId').value;
     if(!hiramekiId) return;
 
-    const availableWaza = find閃き可能WazaListBy閃きTypeId(hiramekiId);
+    const 閃き可能WazaList = find閃き可能WazaListBy閃きTypeId(hiramekiId);
 
     const wazaTypeList = [];
     for (i of characterElem.querySelectorAll('.wazaFilter input.wazaType:checked')) {
@@ -131,9 +132,10 @@ function updateHiramekiTable(characterElem) {
     const dojoWazaList = makeDojoWazaList();
     for (wKind of wazaTypeList) {
 	let hiramekiList = calcWazaHiramekiList(find技種類技一覧Alist(wKind),
-	  					閃き済み技LIST.concat(equipWazaList).concat(dojoWazaList),
+						equipWazaList,
+						dojoWazaList,
 	  					eLevel,
-	  					availableWaza,
+	  					閃き可能WazaList,
 						includeUnique);
 	if (!hiramekiList || hiramekiList.length <= 0)
 	    continue;
@@ -147,7 +149,7 @@ function updateHiramekiTable(characterElem) {
 	tbodyHeader.classList.add("tbodyHeader");
 
 	for (i of hiramekiList) {
-	    tbody.appendChild(buildWazaTR(i, false, equipWazaList, dojoWazaList));
+	    tbody.appendChild(buildWazaTR(i, false));
 	}
     }
 

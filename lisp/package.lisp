@@ -3,7 +3,8 @@
 (defpackage :romasaga2
   (:use #:cl)
   (:import-from #:alexandria
-                #:define-constant)
+                #:define-constant
+                #:if-let)
   (:export
    ;; For HTML and JS output.
    #:print-all-waza-name-for-html-datalist

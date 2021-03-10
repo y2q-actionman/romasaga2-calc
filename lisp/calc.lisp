@@ -38,16 +38,26 @@
       (50	52/255))))
 
 (defun calc-waza-hirameki-list (waza-list
-                                閃き済み技-list
+                                装備技-list
+                                dojo-閃き済み技-list
                                 enemy-waza-level
                                 character-閃き可能-waza-list
                                 include-固有技)
   (loop for waza in waza-list
-     when (and (not (includes 閃き済み技-list waza))
+     when (and (not (includes 装備技-list waza))
+               (not (includes dojo-閃き済み技-list waza))
+               (not (includes +閃き済み技-list+ waza))
                (includes character-閃き可能-waza-list waza))
      append
        (loop for (level from unique-weapon) in (find-閃き-alist waza nil)
           for prob = (calc-閃き確率 enemy-waza-level level)
           when (and (plusp prob)
                     (if include-固有技 t (not unique-weapon)))
-          collect (list waza prob from level unique-weapon))))
+          collect (list waza prob from level unique-weapon
+                        (cond ((includes 装備技-list from)
+                               :equipped)
+                              ((and (not (includes dojo-閃き済み技-list from))
+                                    (not (includes +閃き済み技-list+ from)))
+                               :not-in-dojo)
+                              (t
+                               nil))))))
