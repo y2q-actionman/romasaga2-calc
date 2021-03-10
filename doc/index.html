@@ -8,17 +8,17 @@
   </head>
   <body>
     <h1>ロマンシング サ・ガ2 閃き計算機</h1>
-    使い方は一番下。
-    <fieldset id="enemy">
+    <a href="#readme">使い方等は一番下</a>
+    <fieldset id="enemy"
+	      onChange="invokeAllCharacterChangeEvent();">
       <legend>敵</legend>
       <label>名前
 	<input id="enemyName" type="text" list="enemyNameList"
-	       onChange="const targetElem = document.querySelector('#enemyTechLevel');
-			 changeAndInvokeChangeEvent(targetElem, findWazaLevelByEnemyName(this.value));"/>
+	       onChange="document.querySelector('#enemyTechLevel').value = findWazaLevelByEnemyName(this.value); "/>
       </label>
       <label>技レベル
 	<input id="enemyTechLevel" type="number" min="0" max="50"
-	       onChange="invokeAllCharacterChangeEvent()" />
+	       onChange="document.querySelector('#enemyName').value = null;" />
       </label>
     </fieldset>
     
@@ -29,18 +29,21 @@
 	<input class="characterName" type="text" list="characterNameList" size="18"
 	       onChange="const characterElem = this.parentElement.parentElement;
 			 updateEquipWaza(characterElem.querySelector('.equipWaza'), this.value);
-			 const typeIdElem = characterElem.querySelector('.hiramekiTypeId');
-			 changeAndInvokeChangeEvent(typeIdElem, find閃きTypeIdByCharacterName(this.value)); " />
+			 const 閃きTypeId = find閃きTypeIdByCharacterName(this.value)
+			 characterElem.querySelector('.hiramekiTypeId').value = 閃きTypeId;
+			 characterElem.querySelector('.hiramekiTypeName').value = find閃きTypeNameBy閃きTypeId(閃きTypeId);" />
       </label>
       <label>閃きタイプ
 	<input class="hiramekiTypeId" type="number" min="0" max="15"
-	       onChange="const targetElem = this.parentElement.parentElement.querySelector('.hiramekiTypeName');
-			 targetElem.value = find閃きTypeNameBy閃きTypeId(this.value);" />
+	       onChange="const characterElem = this.parentElement.parentElement;
+			 characterElem.querySelector('.charactername').value = null;
+			 characterElem.querySelector('.hiramekiTypeName').value = find閃きTypeNameBy閃きTypeId(this.value);" />
       </label>
       <label>閃きタイプ名前
 	<input class="hiramekiTypeName" type="text" list="hiramekiTypeNameList" size="10"
-	       onChange="const targetElem = this.parentElement.parentElement.querySelector('.hiramekiTypeId');
-			 targetElem.value = find閃きTypeIdBy閃きTypeName(this.value);" />
+	       onChange="const characterElem = this.parentElement.parentElement;
+			 characterElem.querySelector('.charactername').value = null;
+			 characterElem.querySelector('.hiramekiTypeId').value = find閃きTypeIdBy閃きTypeName(this.value);" />
       </label>
       <details open class="wazaFilter">
 	<summary>技種類設定</summary>
@@ -74,7 +77,8 @@
       </details>
     </fieldset>
 
-    <fieldset id="dojo" onChange="invokeAllCharacterChangeEvent()">
+    <fieldset id="dojo"
+	      onChange="invokeAllCharacterChangeEvent()">
       <legend>技道場登録状況</legend>
       <details>
 	<summary>剣技</summary>
@@ -408,7 +412,7 @@
     </datalist>
 
     <hr>
-    <h1>これは何？</h1>
+    <h1 id="readme">これは何？</h1>
     ロマサガ2の閃き可能な技の一覧を計算する。
     <br>
     例えば、「現在のパーティーはジェラール、ベア、ジェイムズ、テレーズ、アリエスだが、この状態でディープワン道場に行ったらどんな技が閃けるのか？」を計算するのに使える。

@@ -1,19 +1,25 @@
+//
+// Util
+//
+
 function invokeChangeEvent(targetElem) {
     targetElem.dispatchEvent(new Event("change"));
 }
 
-function changeAndInvokeChangeEvent(targetElem, newValue) {
-    if (targetElem.value != newValue) {
-       	targetElem.value = newValue;
-	invokeChangeEvent(targetElem);
-    }
-}
+//
+// onChange handlers
+//
 
 function invokeAllCharacterChangeEvent() {
     for(i of document.querySelectorAll('.character')){
 	invokeChangeEvent(i);
     }
 }
+
+
+//
+// 'equipWaza' handling.
+//
 
 function makeDojoWazaList() {
     let ret = [];
@@ -40,7 +46,10 @@ function updateEquipWaza(equipWazaElem, characterName) {
     }
 }
 
-// Building 'hiramekiTable'.
+//
+// 'hiramekiTable' creation.
+//
+
 function buildTBodyCaption(name, colspan) {
     let tr = document.createElement('tr');
     let th = tr.appendChild(document.createElement('th'));
@@ -82,27 +91,27 @@ function buildWazaTR(array, isHeader, equipWazaList, dojoWazaList) {
     return tr;
 }
 
-function updateHiramekiTable(characterDivElem) {
+function updateHiramekiTable(characterElem) {
     const eLevel = document.querySelector('#enemyTechLevel').value;
     if(!eLevel) return;
 
-    const hiramekiId = characterDivElem.querySelector('.hiramekiTypeId').value;
+    const hiramekiId = characterElem.querySelector('.hiramekiTypeId').value;
     if(!hiramekiId) return;
 
     const availableWaza = find閃き可能WazaListBy閃きTypeId(hiramekiId);
 
     const wazaTypeList = [];
-    for (i of characterDivElem.querySelectorAll('.wazaFilter input.wazaType:checked')) {
+    for (i of characterElem.querySelectorAll('.wazaFilter input.wazaType:checked')) {
 	wazaTypeList.push(i.name);
     }
 
-    const includeUnique = (characterDivElem.querySelector('.wazaFilter input.unique:checked')) ? true : false;
+    const includeUnique = (characterElem.querySelector('.wazaFilter input.unique:checked')) ? true : false;
 
     // Building table.
     const table = document.createElement('table');
 
     // Body
-    const equipWazaList = makeEquipWazaList(characterDivElem.querySelector(".equipWaza"));
+    const equipWazaList = makeEquipWazaList(characterElem.querySelector(".equipWaza"));
     const dojoWazaList = makeDojoWazaList();
     for (wKind of wazaTypeList) {
 	let hiramekiList = calcWazaHiramekiList(find技種類技一覧Alist(wKind),
@@ -126,6 +135,6 @@ function updateHiramekiTable(characterDivElem) {
 	}
     }
 
-    const outputTable = characterDivElem.querySelector('.hiramekiTableOutput table');
+    const outputTable = characterElem.querySelector('.hiramekiTableOutput table');
     outputTable.replaceWith(table);
 }
