@@ -38,6 +38,6 @@ ul {
 .hiramekiTableOutput tr.equipped {
     font-weight: bolder;
 }
-.hiramekiTableOutput tr.notInDojo {
+.hiramekiTableOutput tr.unavailable {
     text-decoration: line-through;
 }

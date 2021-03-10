@@ -78,7 +78,7 @@ const PROB_FORMATTER = new Intl.NumberFormat(undefined, { style: "percent", maxi
 
 const HIRAMEKI_TABLE_HEADER = ['技名', '確率', '派生元', '技Lv', '固有武器'];
 
-function buildWazaTR(array, isHeader) {
+function buildWazaTR(array, isHeader, dojoAvailable) {
     const tr = document.createElement('tr');
 
     // <tr> class
@@ -86,8 +86,16 @@ function buildWazaTR(array, isHeader) {
 	const calcKwd = array[5];
 	if (calcKwd === 'equipped') {
 	    tr.classList.add("equipped");
-	} else if (calcKwd === 'not-in-dojo') {
-	    tr.classList.add("notInDojo");
+	} else if (calcKwd === 'basic') {
+	    ;
+	} else if (calcKwd === 'in-dojo') {
+	    if (dojoAvailable) {
+		;
+	    } else {
+		tr.classList.add("unavailable");
+	    }
+	} else if (calcKwd === 'nowhere') {
+	    tr.classList.add("unavailable");
 	}
     }
 
@@ -130,6 +138,7 @@ function updateHiramekiTable(characterElem) {
     // Body
     const equipWazaList = makeEquipWazaList(characterElem.querySelector(".equipWaza"));
     const dojoWazaList = makeDojoWazaList();
+    const dojoAvailable = document.querySelector("input#dojoAvailable:checked") ? true : false;
     for (wKind of wazaTypeList) {
 	let hiramekiList = calcWazaHiramekiList(find技種類技一覧Alist(wKind),
 						equipWazaList,
@@ -149,7 +158,7 @@ function updateHiramekiTable(characterElem) {
 	tbodyHeader.classList.add("tbodyHeader");
 
 	for (i of hiramekiList) {
-	    tbody.appendChild(buildWazaTR(i, false));
+	    tbody.appendChild(buildWazaTR(i, false, dojoAvailable));
 	}
     }
 

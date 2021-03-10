@@ -78,6 +78,7 @@
     <fieldset id="dojo"
 	      onChange="invokeAllCharacterChangeEvent()">
       <legend>技道場登録状況</legend>
+      <label><input id="dojoAvailable" type="checkbox" checked />技道場が使える</label>
       <details>
 	<summary>剣技</summary>
 	<ul>
@@ -431,13 +432,15 @@
       <li>✔ 装備技から閃き可能は太字。閃き済みなら出さない。</li>
       <li>✔ 技道場にない派生は薄字。</li>
       <li>✔ とりあえず初期装備技を置く。</li>
-      <li>☐ ジェラール世代は技道場の技を使えなくするスイッチ</li>
+      <li>✔ ジェラール世代は技道場の技を使えなくするスイッチ</li>
       <li>✔ ファイル分割</li>
       <li>☐ エラー処理。おかしな名前のときは表を消す</li>
       <li>☐ 増やす。一つめだけは open 指定。</li>
       <li>☐ ベルセルクが技Lvとして参照するのはキャラクタの技Lvだが上手く扱えていない。</li>
+      <li>☐ 装備技術設定に固有技も置けてしまう。</li>
       <li>☐ 見切りには、これとは別の全く新しいフォームを作って対応したい。</li>
       <li>☐ SFC版は全体攻撃の弓技の参照技Lvにバグがあるようだがどう扱うのやら。</li>
+      <li>☐ ライセンスはGPLです。</li>
     </ul>
   </body>
 </html>
