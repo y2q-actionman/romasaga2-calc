@@ -268,10 +268,9 @@
 
     <fieldset id="save">
       <legend>セーブ</legend>
-      <label>最終セーブ時間
-	<output id="lastSaveTime"><input type="datetime-local" disabled /></output></label>
-      <input type="button" value="セーブ" onClick="saveToLocalStorage()" />
-      <input type="button" value="ロード" onClick="loadFromLocalStorage()" />
+      <input type="button" value="上記の設定内容を保存" onClick="saveToLocalStorage()" />
+      <input type="button" value="前に保存した内容を読込" onClick="loadFromLocalStorage()" />
+      <label>最終保存時間 <output id="lastSaveTime"><input type="datetime-local" disabled /></output></label>
     </fieldset>
     
     <!-- Datalist -->
@@ -422,6 +421,9 @@
       <li>(TODO) キャラクタ欄は予備も含めて7つ用意。キャラクタ1以外は閉じているが、いい感じに開いて使ってほしい。</li> 
       <li>(TODO) 装備技術欄設定を行うと・・</li>
       <li>(TODO)「技道場登録状態」を行うと・・ 1. 閃き一覧に出てこなくなる。 ・・閉じているがいい感じに開いて使ってほしい。</li>
+      <li>「技道場が使える」のチェックボックスを外すと、技道場に登録されているが習得できない技を使った派生にも削除線が付く。
+	<ul><li><small>技道場が使えない世代では技道場に登録済みの技を使う手段は初期習得技しかなく、よってモンスターの巣にいるゼラチナスマター戦で「脳天割り」を使うことは難しく、その派生の「骨砕き」の閃きも難しい・・ということで何度か計算をやり直したので作った機能。</small></li></ul>
+      </li>
     </ol>
     <h1>出典・参考情報等</h1>
     <ul>
@@ -442,12 +444,12 @@
       <li>✔ とりあえず初期装備技を置く。</li>
       <li>✔ ジェラール世代は技道場の技を使えなくするスイッチ</li>
       <li>✔ ファイル分割</li>
-      <li>☐ エラー処理。おかしな名前のときは表を消す</li>
+      <li>☐ エラー処理。おかしな名前のときは表を消すか、エラーメッセージを出すかする。</li>
       <li>☐ 増やす。一つめだけは open 指定。</li>
       <li>☐ ベルセルクが技Lvとして参照するのはキャラクタの技Lvだが上手く扱えていない。</li>
       <li>☐ 装備技術設定に固有技も置けてしまう。</li>
       <li>☐ 見切りには、これとは別の全く新しいフォームを作って対応したい。</li>
-      <li>☐ SFC版は全体攻撃の弓技の参照技Lvにバグがあるようだがどう扱うのやら。</li>
+      <li>☐ <a href="http://kaerulabo.web.fc2.com/rs2/columu/columu_01.html">SFC版は全体攻撃の弓技が参照する技Lvにバグがある</a>ようだがどう扱うのやら。</li>
       <li>☐ ライセンスはLLGPLです。</li>
     </ul>
   </body>
