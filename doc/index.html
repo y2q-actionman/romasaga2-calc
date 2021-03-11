@@ -270,6 +270,7 @@
       <legend>セーブ</legend>
       <input type="button" value="上記の設定内容を保存" onClick="saveToLocalStorage()" />
       <input type="button" value="前に保存した内容を読込" onClick="loadFromLocalStorage()" />
+      <input type="button" value="保存した内容を捨てる" onClick="clearLocalStorage()" />
       <label><small>最終保存時刻: <output id="lastSaveDateTime">なし</output></small></label>
     </fieldset>
     
@@ -383,7 +384,7 @@
     <ul>
       <li>✔ 技道場から取れる技の一覧</li>
       <li>☐ 固有装備の所持状況、閃き状況</li>
-      <li>☐ セーブ</li>
+      <li>✔ セーブ</li>
       <li>✔ 装備技は閃き可能技一覧には出ない。</li>
       <li>✔ また、閃き派生元の技術を装備している場合、閃き可能技一覧の派生先が太字になる。</li>
       <li>✔ 装備技から閃き可能は太字。閃き済みなら出さない。</li>
@@ -393,6 +394,7 @@
       <li>✔ ファイル分割</li>
       <li>☐ エラー処理。おかしな名前のときは表を消すか、エラーメッセージを出すかする。</li>
       <li>✔ リマスター追加敵</li>
+      <li>☐ オートロードについての注</li>
       <li>☐ 増やす。一つめだけは open 指定。</li>
       <li>☐ ベルセルクが技Lvとして参照するのはキャラクタの技Lvだが上手く扱えていない。敵の技Lvにそのキャラクタの平均技Lvを設定することで代用してほしい。</li>
       <li>☐ 装備技術設定に固有技も置けてしまう。</li>

@@ -28,7 +28,8 @@ function invokeAllCharacterChangeEvent() {
 }
 
 function handleCharacterNameChangeEvent(characterElem, value) {
-    updateEquipWaza(characterElem.querySelectorAll('input.equipWaza'), value);
+    updateEquipWaza(characterElem,
+		    findCharacter初期技List(value, makeDojoWazaList()));
     const 閃きTypeId = find閃きTypeIdByCharacterName(value)
     characterElem.querySelector('.hiramekiTypeId').value = 閃きTypeId;
     characterElem.querySelector('.hiramekiTypeName').value = find閃きTypeNameBy閃きTypeId(閃きTypeId);
@@ -52,8 +53,12 @@ function makeDojoWazaList() {
     return makeListByProperty(document.querySelectorAll('#dojo input:checked'), "name");
 }
 
-function updateEquipWaza(equipWazaInputs, characterName) {
-    const wazaList = findCharacter初期技List(characterName, makeDojoWazaList());
+function makeEquipWazaList(characterElem) {
+    return makeListByProperty(characterElem.querySelectorAll("input.equipWaza"), "value", true);
+}
+
+function updateEquipWaza(characterElem, wazaList) {
+    const equipWazaInputs = characterElem.querySelectorAll('input.equipWaza');
     for (let i = 0; i < equipWazaInputs.length; ++i) {
 	equipWazaInputs[i].value = (i < wazaList.length) ? wazaList[i] : null;
     }
@@ -113,6 +118,14 @@ function buildWazaTR(array, isHeader, dojoAvailable) {
     return tr;
 }
 
+function makeWazaTypeList(characterElem) {
+    return makeListByProperty(characterElem.querySelectorAll('.wazaFilter input.wazaType:checked'), "name");
+} 
+
+function characterIncludeUnique(characterElem) {
+    return (characterElem.querySelector('.wazaFilter input.unique:checked')) ? true : false;
+} 
+
 function updateHiramekiTable(characterElem) {
     const eLevel = document.querySelector('#enemyTechLevel').value;
     if(!eLevel) return;
@@ -121,16 +134,14 @@ function updateHiramekiTable(characterElem) {
     if(!hiramekiId) return;
 
     const 閃き可能WazaList = find閃き可能WazaListBy閃きTypeId(hiramekiId);
-
-    const wazaTypeList = makeListByProperty(characterElem.querySelectorAll('.wazaFilter input.wazaType:checked'), "name");
-
-    const includeUnique = (characterElem.querySelector('.wazaFilter input.unique:checked')) ? true : false;
+    const wazaTypeList = makeWazaTypeList(characterElem);
+    const includeUnique = characterIncludeUnique(characterElem);
 
     // Building table.
     const table = document.createElement('table');
 
     // Body
-    const equipWazaList = makeListByProperty(characterElem.querySelectorAll("input.equipWaza"), "value", true);
+    const equipWazaList = makeEquipWazaList(characterElem);
     const dojoWazaList = makeDojoWazaList();
     const dojoAvailable = document.querySelector("input#dojoAvailable:checked") ? true : false;
     for (wKind of wazaTypeList) {
@@ -193,15 +204,94 @@ function storageAvailable(type) {
 function initSaveElement(element) {
     if (storageAvailable('localStorage')) {
     	element.removeAttribute('disabled');
+	updateLastSaveDateTimeView();
+	loadFromLocalStorage();
     } else {
 	element.setAttribute('disabled', true);
     }
 }
 
+function updateLastSaveDateTimeView() {
+    const last = localStorage.getItem('lastSaveDateTime');
+    document.querySelector('#lastSaveDateTime').value = last ? last : 'なし';
+}
+
 function saveToLocalStorage() {
-    console.log("TODO");
+    // Save '#enemy'
+    for(elem of document.querySelectorAll('#enemy input')) {
+	localStorage.setItem(elem.id, elem.value);
+    }
+    
+    // Save '.character'
+    let i = 1;
+    for(cElem of document.querySelectorAll('.character')) {
+	let obj = {
+	    characterName: cElem.querySelector('input.characterName').value,
+	    hiramekiTypeId: cElem.querySelector('input.hiramekiTypeId').value,
+	    hiramekiTypeName: cElem.querySelector('.hiramekiTypeName').value,
+	    wazaFilter: {
+		wazaType: makeWazaTypeList(cElem),
+		unique: characterIncludeUnique(cElem)
+	    },
+	    equipWazaList: makeEquipWazaList(cElem)
+	};
+
+	localStorage.setItem(('character' + i), JSON.stringify(obj));
+	++i;
+    }
+
+    // Dojo
+    localStorage.setItem('dojoAvailable', document.querySelector('input#dojoAvailable').checked);
+    localStorage.setItem('dojoWazaList', JSON.stringify(makeDojoWazaList()));
+    
+    // update time
+    localStorage.setItem('lastSaveDateTime', new Date(Date.now()).toLocaleString());
+    updateLastSaveDateTimeView();
 }
 
 function loadFromLocalStorage() {
-    console.log("TODO");
+    if(!localStorage.getItem('lastSaveDateTime'))
+	return;
+    
+    // Load '#enemy'
+    for(elem of document.querySelectorAll('#enemy input')) {
+	elem.value = localStorage.getItem(elem.id);
+    }
+    
+    // Load '.character'
+    let i = 1;
+    for(cElem of document.querySelectorAll('.character')) {
+	const obj = JSON.parse(localStorage.getItem('character' + i));
+	
+	cElem.querySelector('input.characterName').value = obj.characterName;
+	cElem.querySelector('input.hiramekiTypeId').value = obj.hiramekiTypeId;
+	cElem.querySelector('.hiramekiTypeName').value = obj.hiramekiTypeName;
+	const wazaTypeList = obj.wazaFilter.wazaType;
+	if (wazaTypeList) {
+	    for (wtElem of cElem.querySelectorAll('.wazaFilter input.wazaType')) {
+		wtElem.checked = (wazaTypeList.includes(wtElem.name));
+	    }
+	}
+	cElem.querySelector('.wazaFilter input.unique').checked = obj.wazaFilter.unique;
+	updateEquipWaza(cElem, obj.equipWazaList);
+	
+	++i;
+    }
+
+    // Dojo
+    document.querySelector('#dojoAvailable').checked = localStorage.getItem('dojoAvailable');
+    const dojoWazaList = JSON.parse(localStorage.getItem('dojoWazaList'));
+    if (dojoWazaList) {
+	for (d of document.querySelectorAll('#dojo input')) {
+	    d.checked = (dojoWazaList.includes(d.name));
+	}
+    }
+
+    // Done
+    invokeAllCharacterChangeEvent();
+}
+
+function clearLocalStorage() {
+    localStorage.clear();
+    updateLastSaveDateTimeView();
 }
