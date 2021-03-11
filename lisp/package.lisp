@@ -5,7 +5,9 @@
   (:use #:alexandria)
   (:export
    ;; For HTML and JS output.
+   #:print-character-name-list-for-html-datalist
    #:print-all-waza-name-for-html-datalist
+   #:print-enemy-name-list-for-html-datalist
    #:print-all-waza-name-for-html-dojo
    #:make-romasaga2-js
    ;; For romasaga2-user

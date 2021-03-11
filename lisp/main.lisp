@@ -42,13 +42,33 @@
 
 ;;; HTML output
 
+(defun print-character-name-list-for-html-datalist (&optional (stream *standard-output*))
+  "For making the frontend HTML parts."
+  (format stream "<datalist id=\"characterNameList\"")
+  (loop for name in (mapcar #'car +character-name-to-閃き-type-id+)
+     for i from 0
+     when (zerop (mod i 8))
+     do (fresh-line stream)
+     do (format stream "<option>~A<option> " name))
+  (format stream "~&</datalist>"))
+
 (defun print-all-waza-name-for-html-datalist (&optional (stream *standard-output*))
   "For making the frontend HTML parts."
-  (format stream "<datalist id=\"all_waza_name\">~%")
+  (format stream "<datalist id=\"allWazaNameList\">~%")
   (dolist (waza-list (mapcar #'cdr +技種類-技一覧-alist+))
     (loop for waza in (rest waza-list)
        do (format stream "<option>~A<option> " waza))
     (terpri stream))
+  (format stream "~&</datalist>"))
+
+(defun print-enemy-name-list-for-html-datalist (&optional (stream *standard-output*))
+  "For making the frontend HTML parts."
+  (format stream "<datalist id=\"enemyNameList\">~%")
+  (loop for name in (mapcar #'car +enemy-name-to-waza-level-alist+)
+     for i from 0
+     when (zerop (mod i 16))
+     do (fresh-line stream)
+     do (format stream "<option>~A<option> " name))
   (format stream "~&</datalist>"))
 
 (defun print-all-waza-name-for-html-dojo (&optional (stream *standard-output*))
