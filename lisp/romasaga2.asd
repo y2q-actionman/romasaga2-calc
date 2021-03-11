@@ -1,8 +1,9 @@
 (defsystem :romasaga2
-  :description ""
-  :license ""
+  :description "ロマサガ2 閃き計算機"
+  :license "LLGPL"
   :author "YOKOTA Yuki <y2q.actionman@gmail.com>"
-  :depends-on (:parenscript :paren6 :alexandria :cl-ppcre)
+  :depends-on (:parenscript :alexandria :cl-ppcre
+                            #+() :paren6)
   :serial t
   :components
   ((:file "package")
