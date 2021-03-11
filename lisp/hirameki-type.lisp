@@ -471,5 +471,10 @@
   (import-and-export (collect-tree-symbol +閃き可能-waza-list-array+)
                      *romasaga2-name-package*))
 
+(define-constant +適性無視技-list+
+    '(パリイ ディフレクト 風車 マタドール カウンター 集気法)
+  :test 'equal)
+
 (defun find-閃き可能-waza-list-by-閃き-type-id (id)
-  (aref +閃き可能-waza-list-array+ id))
+  (append +適性無視技-list+
+          (aref +閃き可能-waza-list-array+ id)))
