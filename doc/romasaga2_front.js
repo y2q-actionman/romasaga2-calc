@@ -74,7 +74,7 @@ function buildTBodyCaption(name, colspan) {
     return tr;
 }
 
-const PROB_FORMATTER = new Intl.NumberFormat(undefined, { style: "percent", maximumFractionDigits: 2, minimumFractionDigits: 2, mimimumIntegerDigits: 1 });
+const PROB_FORMATTER = new Intl.NumberFormat(undefined, { style: "percent", maximumFractionDigits: 2, minimumFractionDigits: 2 });
 
 const HIRAMEKI_TABLE_HEADER = ['技名', '確率', '派生元', '技Lv', '固有武器'];
 
