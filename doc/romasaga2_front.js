@@ -6,6 +6,17 @@ function invokeChangeEvent(targetElem) {
     targetElem.dispatchEvent(new Event("change"));
 }
 
+function makeListByProperty(iterable, propertyName, excludeFalse) {
+    let ret = [];
+    for (i of iterable) {
+	let v = i[propertyName];
+	if (v || ! excludeFalse) {
+	    ret.push(v);
+	}
+    }
+    return ret;
+}
+
 //
 // onChange handlers
 //
@@ -17,7 +28,7 @@ function invokeAllCharacterChangeEvent() {
 }
 
 function handleCharacterNameChangeEvent(characterElem, value) {
-    updateEquipWaza(characterElem.querySelector('.equipWaza'), value);
+    updateEquipWaza(characterElem.querySelectorAll('input.equipWaza'), value);
     const 閃きTypeId = find閃きTypeIdByCharacterName(value)
     characterElem.querySelector('.hiramekiTypeId').value = 閃きTypeId;
     characterElem.querySelector('.hiramekiTypeName').value = find閃きTypeNameBy閃きTypeId(閃きTypeId);
@@ -38,27 +49,13 @@ function handleHiramekiTypeNameChangeEvent(characterElem, value) {
 //
 
 function makeDojoWazaList() {
-    let ret = [];
-    for (i of document.querySelectorAll('#dojo input:checked')) {
-	ret.push(i.name);
-    }
-    return ret;
+    return makeListByProperty(document.querySelectorAll('#dojo input:checked'), "name");
 }
 
-function makeEquipWazaList(equipWazaElem) {
-    let ret = [];
-    for (i of equipWazaElem.querySelectorAll('input')) {
-	if(i.value) ret.push(i.value);
-    }
-    return ret;
-}
-
-// Building 'equipWaza' by initial waza list.
-function updateEquipWaza(equipWazaElem, characterName) {
+function updateEquipWaza(equipWazaInputs, characterName) {
     const wazaList = findCharacter初期技List(characterName, makeDojoWazaList());
-    const inputs = equipWazaElem.querySelectorAll('input');
-    for (let i = 0; i < inputs.length; ++i) {
-	inputs[i].value = (i < wazaList.length) ? wazaList[i] : null;
+    for (let i = 0; i < equipWazaInputs.length; ++i) {
+	equipWazaInputs[i].value = (i < wazaList.length) ? wazaList[i] : null;
     }
 }
 
@@ -125,10 +122,7 @@ function updateHiramekiTable(characterElem) {
 
     const 閃き可能WazaList = find閃き可能WazaListBy閃きTypeId(hiramekiId);
 
-    const wazaTypeList = [];
-    for (i of characterElem.querySelectorAll('.wazaFilter input.wazaType:checked')) {
-	wazaTypeList.push(i.name);
-    }
+    const wazaTypeList = makeListByProperty(characterElem.querySelectorAll('.wazaFilter input.wazaType:checked'), "name");
 
     const includeUnique = (characterElem.querySelector('.wazaFilter input.unique:checked')) ? true : false;
 
@@ -136,7 +130,7 @@ function updateHiramekiTable(characterElem) {
     const table = document.createElement('table');
 
     // Body
-    const equipWazaList = makeEquipWazaList(characterElem.querySelector(".equipWaza"));
+    const equipWazaList = makeListByProperty(characterElem.querySelectorAll("input.equipWaza"), "value", true);
     const dojoWazaList = makeDojoWazaList();
     const dojoAvailable = document.querySelector("input#dojoAvailable:checked") ? true : false;
     for (wKind of wazaTypeList) {

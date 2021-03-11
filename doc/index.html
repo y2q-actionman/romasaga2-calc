@@ -56,17 +56,17 @@
 	<label><input class="wazaType" type="checkbox" name="爪技" checked />爪技</label>
 	<label><input class="unique" type="checkbox" name="武器固有技" checked />武器固有技</label>
       </details>
-      <details open class="equipWaza">
+      <details open class="equipWazaList">
 	<summary>装備技術欄設定</summary>
 	<ul>
-	  <li><input type="text" list="allWazaNameList" /></li>
-	  <li><input type="text" list="allWazaNameList" /></li>
-	  <li><input type="text" list="allWazaNameList" /></li>
-	  <li><input type="text" list="allWazaNameList" /></li>
-	  <li><input type="text" list="allWazaNameList" /></li>
-	  <li><input type="text" list="allWazaNameList" /></li>
-	  <li><input type="text" list="allWazaNameList" /></li>
-	  <li><input type="text" list="allWazaNameList" /></li>
+	  <li><input class="equipWaza" type="text" list="allWazaNameList" /></li>
+	  <li><input class="equipWaza" type="text" list="allWazaNameList" /></li>
+	  <li><input class="equipWaza" type="text" list="allWazaNameList" /></li>
+	  <li><input class="equipWaza" type="text" list="allWazaNameList" /></li>
+	  <li><input class="equipWaza" type="text" list="allWazaNameList" /></li>
+	  <li><input class="equipWaza" type="text" list="allWazaNameList" /></li>
+	  <li><input class="equipWaza" type="text" list="allWazaNameList" /></li>
+	  <li><input class="equipWaza" type="text" list="allWazaNameList" /></li>
 	</ul>
       </details>
       <details open>
@@ -270,7 +270,7 @@
       <legend>セーブ</legend>
       <input type="button" value="上記の設定内容を保存" onClick="saveToLocalStorage()" />
       <input type="button" value="前に保存した内容を読込" onClick="loadFromLocalStorage()" />
-      <label>最終保存時間 <output id="lastSaveTime"><input type="datetime-local" disabled /></output></label>
+      <label><small>最終保存時刻: <output id="lastSaveDateTime">なし</output></small></label>
     </fieldset>
     
     <!-- Datalist -->
