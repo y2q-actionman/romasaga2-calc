@@ -56,7 +56,7 @@
   "For making the frontend HTML parts."
   (format stream "<datalist id=\"allWazaNameList\">~%")
   (dolist (waza-list (mapcar #'cdr +技種類-技一覧-alist+))
-    (loop for waza in (rest waza-list)
+    (loop for waza in waza-list
        do (format stream "<option>~A<option> " waza))
     (terpri stream))
   (format stream "~&</datalist>"))
