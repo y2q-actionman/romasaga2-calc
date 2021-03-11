@@ -2,8 +2,7 @@
   :description "ロマサガ2 閃き計算機"
   :license "LLGPL"
   :author "YOKOTA Yuki <y2q.actionman@gmail.com>"
-  :depends-on (:parenscript :alexandria
-                            #+() :paren6)
+  :depends-on (:parenscript :alexandria)
   :serial t
   :components
   ((:file "package")
