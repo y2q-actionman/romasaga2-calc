@@ -6,7 +6,7 @@
     <script type="text/javascript" src="romasaga2.js"></script>
     <script type="text/javascript" src="romasaga2_front.js"> </script>
   </head>
-  <body>
+  <body onLoad="initSaveElement(document.querySelector('#save'));">
     <h1>ロマサガ2 閃き計算機</h1>
     <a href="#readme">使い方等は一番下</a>
     <fieldset id="enemy"
@@ -264,6 +264,14 @@
 	  <li><label><input type="checkbox" checked disabled name="地獄爪殺法"/>地獄爪殺法</label></li>
 	</ul>
       </details>
+    </fieldset>
+
+    <fieldset id="save">
+      <legend>セーブ</legend>
+      <label>最終セーブ時間
+	<output id="lastSaveTime"><input type="datetime-local" disabled /></output></label>
+      <input type="button" value="セーブ" onClick="saveToLocalStorage()" />
+      <input type="button" value="ロード" onClick="loadFromLocalStorage()" />
     </fieldset>
     
     <!-- Datalist -->
