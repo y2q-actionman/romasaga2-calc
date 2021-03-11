@@ -1,4 +1,4 @@
-(in-package :romasaga2)
+(in-package :romasaga2-generator)
 
 (defparameter *rs2techlearnflag-regex*
   "[0-9]{3}\\([0-9A-F]{2}\\): (.+?)\\s*:\\s+[○×]\\s+([○×])\\s+([○×])\\s+([○×])\\s+([○×])\\s+([○×])\\s+([○×])\\s+([○×])\\s+([○×])\\s+([○×])\\s+([○×])\\s+([○×])\\s+([○×])\\s+([○×])\\s+([○×])\\s+([○×])\\s+([○×])")
