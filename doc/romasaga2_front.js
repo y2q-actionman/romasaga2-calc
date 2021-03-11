@@ -247,6 +247,7 @@ function saveToLocalStorage() {
     // update time
     localStorage.setItem('lastSaveDateTime', new Date(Date.now()).toLocaleString());
     updateLastSaveDateTimeView();
+    document.querySelector('#save #clearWarning').hidden = true;
 }
 
 function loadFromLocalStorage() {
@@ -294,4 +295,5 @@ function loadFromLocalStorage() {
 function clearLocalStorage() {
     localStorage.clear();
     updateLastSaveDateTimeView();
+    document.querySelector('#save #clearWarning').hidden = false;
 }

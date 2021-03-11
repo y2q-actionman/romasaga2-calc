@@ -272,6 +272,8 @@
       <input type="button" value="前に保存した内容を読込" onClick="loadFromLocalStorage()" />
       <input type="button" value="保存した内容を捨てる" onClick="clearLocalStorage()" />
       <label><small>最終保存時刻: <output id="lastSaveDateTime">なし</output></small></label>
+      <br>
+      <div id="clearWarning" hidden>localStorageから設定を消しました。まだこの画面は変化しませんが、リロードすると完全に失われます。</div>
     </fieldset>
     
     <!-- Datalist -->
@@ -394,7 +396,7 @@
       <li>✔ ファイル分割</li>
       <li>☐ エラー処理。おかしな名前のときは表を消すか、エラーメッセージを出すかする。</li>
       <li>✔ リマスター追加敵</li>
-      <li>☐ オートロードについての注</li>
+      <li>☐ オートロードについての注。初期化する場合はクリアしてからリロードする必要あり。</li>
       <li>☐ 増やす。一つめだけは open 指定。</li>
       <li>☐ ベルセルクが技Lvとして参照するのはキャラクタの技Lvだが上手く扱えていない。敵の技Lvにそのキャラクタの平均技Lvを設定することで代用してほしい。</li>
       <li>☐ 装備技術設定に固有技も置けてしまう。</li>
