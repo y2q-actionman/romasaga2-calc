@@ -205,7 +205,7 @@ function initSaveElement(element) {
     if (storageAvailable('localStorage')) {
     	element.removeAttribute('disabled');
 	updateLastSaveDateTimeView();
-	loadFromLocalStorage();
+	// loadFromLocalStorage();
     } else {
 	element.setAttribute('disabled', true);
     }
