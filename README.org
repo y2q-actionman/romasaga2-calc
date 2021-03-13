@@ -9,9 +9,9 @@
 
 * 使い方
 
-** TODO HTML版
+** HTML版
 
-TODO: ここに Link を張る
+https://y2q-actionman.github.io/romasaga2-calc/hirameki.html
 
 ** Lisp 版
 
