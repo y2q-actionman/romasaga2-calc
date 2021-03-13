@@ -30,12 +30,13 @@
 	<legend>敵</legend>
 	<label>名前
 	  <input id="enemyName" type="text" list="enemyNameList"
-		 onChange="document.querySelector('#enemyTechLevel').value = findWazaLevelByEnemyName(this.value); "/>
+		 onChange="handleEnemyNameChangeEvent(this)"/>
 	</label>
 	<label>技レベル
 	  <input id="enemyTechLevel" type="number" min="0" max="50"
-		 onChange="document.querySelector('#enemyName').value = null;" />
+		 onChange="handleEnemyTechLevelChangeEvent(this);" />
 	</label>
+	<spen class="warning" hidden></span>
       </fieldset>
       
       <!-- 個々の人の欄、それと固有技カウンター技欄 -->
@@ -290,8 +291,7 @@
 	<input type="button" value="前に保存した内容を読込" onClick="loadFromLocalStorage()" />
 	<input type="button" value="保存した内容を捨てる" onClick="clearLocalStorage()" />
 	<!-- <input type="reset" value="設定内容を初期状態に戻す" onClick="invokeAllCharacterChangeEvent(); initSaveElement(document.querySelector('#save'));"/> -->
-	<br>
-	<div id="clearWarning" hidden>localStorageから設定を消しました。まだこの画面には残っていますが、リロードすると完全に失われます。</div>
+	<div id="clearWarning" class="warning" hidden><br>localStorageから設定を消しました。まだこの画面には残っていますが、リロードすると完全に失われます。</div>
       </fieldset>
     </form>
     

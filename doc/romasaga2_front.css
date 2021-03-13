@@ -3,6 +3,10 @@ ul {
     margin-bottom: 0;
     list-style: none;
 }
+.warning {
+    font-weight: bolder;
+    color: red;
+}
 .hiramekiTableOutput table {
     font-size: small;
     border: solid thin;

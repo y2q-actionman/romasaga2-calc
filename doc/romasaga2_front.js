@@ -27,6 +27,30 @@ function invokeAllCharacterChangeEvent() {
     }
 }
 
+function enemyFormMessage(message) {
+    let elem = document.querySelector('#enemy .warning');
+    if (message) {
+	elem.hidden = false;
+	elem.textContent = message
+    } else {
+	elem.hidden = true;
+    }
+}
+
+function handleEnemyNameChangeEvent(elem) {
+    try {
+	document.querySelector('#enemyTechLevel').value = findWazaLevelByEnemyName(elem.value);
+	enemyFormMessage(null);
+    } catch (e) {
+	enemyFormMessage('# 敵名 ' + elem.value + ' は見つかりませんでした。');
+    }
+}
+
+function handleEnemyTechLevelChangeEvent(elem) {
+    document.querySelector('#enemyName').value = null;
+    enemyFormMessage(null);
+}
+
 function handleCharacterNameChangeEvent(characterElem, value) {
     updateEquipWaza(characterElem,
 		    findCharacter初期技List(value, makeDojoWazaList()));
@@ -136,14 +160,13 @@ function updateHiramekiTable(characterElem) {
     const 閃き可能WazaList = find閃き可能WazaListBy閃きTypeId(hiramekiId);
     const wazaTypeList = makeWazaTypeList(characterElem);
     const includeUnique = characterIncludeUnique(characterElem);
+    const equipWazaList = makeEquipWazaList(characterElem);
+    const dojoWazaList = makeDojoWazaList();
+    const dojoAvailable = document.querySelector("input#dojoAvailable:checked") ? true : false;
 
     // Building table.
     const table = document.createElement('table');
 
-    // Body
-    const equipWazaList = makeEquipWazaList(characterElem);
-    const dojoWazaList = makeDojoWazaList();
-    const dojoAvailable = document.querySelector("input#dojoAvailable:checked") ? true : false;
     for (wKind of wazaTypeList) {
 	let hiramekiList = calcWazaHiramekiList(find技種類技一覧Alist(wKind),
 						equipWazaList,
