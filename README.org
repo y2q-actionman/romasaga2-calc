@@ -42,6 +42,6 @@ doc/romasaga2.js は以下でビルドする:
 - [[https://wikiwiki.jp/romasaga2/][romasaga2apli Wiki*]] の忍者、陰陽師についての情報
 - [[https://www.reddit.com/r/SaGa/comments/9rucbu/rs2_spark_assist_tool/][RS2 spark assist tool]] もっとすごいツール。このページを作り始める前に見つけたかった。
 
-* TODO License
+* License
 
-LLGPL の予定
+LLGPL. See the LICENSE file.

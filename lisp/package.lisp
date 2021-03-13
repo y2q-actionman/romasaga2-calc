@@ -7,6 +7,7 @@
    ;; For HTML and JS output.
    #:print-character-name-list-for-html-datalist
    #:print-all-waza-name-for-html-datalist
+   #:print-waza-option-set-for-html-select
    #:print-enemy-name-list-for-html-datalist
    #:print-all-waza-name-for-html-dojo
    #:make-romasaga2-js
