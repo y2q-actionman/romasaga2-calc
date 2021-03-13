@@ -5,11 +5,26 @@
     <link rel="stylesheet" href="romasaga2_front.css" type="text/css">
     <script type="text/javascript" src="romasaga2.js"></script>
     <script type="text/javascript" src="romasaga2_front.js"> </script>
+    <script type="text/javascript">
+      function cloneCharacterForm(bodyElem, count) {
+	  const parent = document.querySelector('#rootForm');
+	  const cElem = document.querySelector('.character');
+	  for (let i = 0; i < count; ++i) {
+	      let clone = cElem.cloneNode(true);
+	      // close all <details>
+	      for (n of clone.querySelectorAll('details')) {
+		  n.removeAttribute('open');
+	      }
+	      parent.insertBefore(clone, cElem.nextSibling);
+	  }
+      }
+    </script>
   </head>
-  <body onLoad="initSaveElement(document.querySelector('#save'));">
+  <body onLoad="initSaveElement(document.querySelector('#save'));
+		cloneCharacterForm(this, 5);">
     <h1>ロマサガ2 閃き計算機</h1>
     <a href="#readme">使い方等は一番下</a>
-    <form action="#">
+    <form action="#" id="rootForm">
       <fieldset id="enemy"
 		onChange="invokeAllCharacterChangeEvent();">
 	<legend>敵</legend>
@@ -25,7 +40,7 @@
       
       <!-- 個々の人の欄、それと固有技カウンター技欄 -->
       <fieldset class="character" onChange="updateHiramekiTable(this);">
-	<legend>キャラクタ1</legend>
+	<legend>キャラクタ設定</legend>
 	<label>名前
 	  <input class="characterName" type="text" list="characterNameList"
 		 onChange="handleCharacterNameChangeEvent(this.parentElement.parentElement, this.value);" />
@@ -372,7 +387,7 @@
       <li>「キャラクタ1」などの「名前」か「閃きタイプ」、「閃きタイプ名前」を埋める。</li>
       <li>すると「閃き可能技一覧」に閃き可能な技の表が出る。</li>
       <li>「技種類設定」をいじると表示させたい技の種類を切り替えられる。</li>
-      <li>(TODO) キャラクタ欄は予備も含めて7つ用意。キャラクタ1以外は閉じているが、いい感じに開いて使ってほしい。</li> 
+      <li>(TODO) キャラクタ欄は予備も含めて6つ用意。キャラクタ1以外は閉じているが、いい感じに開いて使ってほしい。</li> 
       <li>(TODO) 装備技術欄設定を行うと・・</li>
       <li>(TODO)「技道場登録状態」を行うと・・ 1. 閃き一覧に出てこなくなる。 ・・閉じているがいい感じに開いて使ってほしい。</li>
       <li>「技道場が使える」のチェックボックスを外すと、技道場に登録されているが習得できない技を使った派生にも削除線が付く。
@@ -402,12 +417,15 @@
       <li>✔ リマスター追加敵</li>
       <li>✔ <del>オートロードについての</del>注。初期化する場合はクリアしてからリロードする必要あり。</li>
       <li>✔ リセットボタン配置。 (でもコメントアウト)</li>
-      <li>☐ 増やす。一つめだけは open 指定。</li>
+      <li>✔ 増やす。一つめだけは open 指定。</li>
+      <li>☐ ライセンスはLLGPLです。</li>
+    </ul>
+    <h1>既知の問題</h1>
+    <ul>
       <li>☐ ベルセルクが技Lvとして参照するのはキャラクタの技Lvだが上手く扱えていない。敵の技Lvにそのキャラクタの平均技Lvを設定することで代用してほしい。</li>
       <li>☐ 装備技術設定に固有技も置けてしまう。</li>
       <li>☐ 見切りには、これとは別の全く新しいフォームを作って対応したい。</li>
       <li>☐ <a href="http://kaerulabo.web.fc2.com/rs2/columu/columu_01.html">SFC版は全体攻撃の弓技が参照する技Lvにバグがある</a>ようだがどう扱うのやら。</li>
-      <li>☐ ライセンスはLLGPLです。</li>
     </ul>
   </body>
 </html>
