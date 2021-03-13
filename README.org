@@ -11,7 +11,7 @@
 
 ** HTML版
 
-https://y2q-actionman.github.io/romasaga2-calc/hirameki.html
+https://y2q-actionman.github.io/romasaga2-calc/
 
 ** Lisp 版
 
