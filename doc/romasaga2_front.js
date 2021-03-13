@@ -17,6 +17,15 @@ function makeListByProperty(iterable, propertyName, excludeFalse) {
     return ret;
 }
 
+function showWarningMessage(elem, message) {
+    if (message) {
+	elem.hidden = false;
+	elem.textContent = message
+    } else {
+	elem.hidden = true;
+    }
+}
+
 // onLoad handler
 
 const EQUIP_WAZA_LIST_COUNT = 8;
@@ -62,13 +71,7 @@ function invokeAllCharacterChangeEvent() {
 }
 
 function enemyFormMessage(message) {
-    let elem = document.querySelector('#enemy .warning');
-    if (message) {
-	elem.hidden = false;
-	elem.textContent = message
-    } else {
-	elem.hidden = true;
-    }
+    showWarningMessage(document.querySelector('#enemy .warning'), message);
 }
 
 function handleEnemyNameChangeEvent(elem) {
@@ -85,21 +88,33 @@ function handleEnemyTechLevelChangeEvent(elem) {
     enemyFormMessage(null);
 }
 
+
+function characterNameFormMessage(characterElem, message) {
+    showWarningMessage(characterElem.querySelector('.warning'), message)
+}
+
 function handleCharacterNameChangeEvent(characterElem, value) {
-    updateEquipWaza(characterElem,
-		    findCharacter初期技List(value, makeDojoWazaList()));
-    const 閃きTypeId = find閃きTypeIdByCharacterName(value)
-    characterElem.querySelector('.hiramekiTypeId').value = 閃きTypeId;
-    characterElem.querySelector('.hiramekiTypeName').value = find閃きTypeNameBy閃きTypeId(閃きTypeId);
+    try {
+	updateEquipWaza(characterElem,
+			findCharacter初期技List(value, makeDojoWazaList()));
+	const 閃きTypeId = find閃きTypeIdByCharacterName(value)
+	characterElem.querySelector('.hiramekiTypeId').value = 閃きTypeId;
+	characterElem.querySelector('.hiramekiTypeName').value = find閃きTypeNameBy閃きTypeId(閃きTypeId);
+	characterNameFormMessage(characterElem, null);
+    } catch (e) {
+	characterNameFormMessage(characterElem, '# キャラクタ名 ' + value + ' は見つかりませんでした。');
+    }
 }
 
 function handleHiramekiTypeIdChangeEvent(characterElem, value) {
     characterElem.querySelector('.charactername').value = null;
+    characterNameFormMessage(characterElem, null);
     characterElem.querySelector('.hiramekiTypeName').value = find閃きTypeNameBy閃きTypeId(value);
 }
 
 function handleHiramekiTypeNameChangeEvent(characterElem, value) {
     characterElem.querySelector('.charactername').value = null;
+    characterNameFormMessage(characterElem, null);
     characterElem.querySelector('.hiramekiTypeId').value = find閃きTypeIdBy閃きTypeName(value);
 }
 
@@ -273,6 +288,10 @@ function updateLastSaveDateTimeView() {
     document.querySelector('#lastSaveDateTime').value = last ? last : 'なし';
 }
 
+function saveFormMessage(message) {
+    showWarningMessage(document.querySelector('#save #clearWarning'), message);
+}
+
 function saveToLocalStorage() {
     // Save '#enemy'
     for(elem of document.querySelectorAll('#enemy input')) {
@@ -304,7 +323,7 @@ function saveToLocalStorage() {
     // update time
     localStorage.setItem('lastSaveDateTime', new Date(Date.now()).toLocaleString());
     updateLastSaveDateTimeView();
-    document.querySelector('#save #clearWarning').hidden = true;
+    saveFormMessage(null);
 }
 
 function loadFromLocalStorage() {
@@ -352,5 +371,5 @@ function loadFromLocalStorage() {
 function clearLocalStorage() {
     localStorage.clear();
     updateLastSaveDateTimeView();
-    document.querySelector('#save #clearWarning').hidden = false;
+    saveFormMessage('localStorageから設定を消しました。まだこの画面には残っていますが、リロードすると完全に失われます。');
 }

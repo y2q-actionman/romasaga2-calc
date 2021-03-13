@@ -45,6 +45,7 @@
 	    <option>剣豪型</option> <option>大剣B型</option> <option>未使用</option> <option>半端型</option> <option>剣型</option>
 	    <option>術士型</option>
 	  </select>
+	  <spen class="warning" hidden></span>
 	</label>
 	<details open class="wazaFilter">
 	  <summary>技種類設定</summary>
@@ -270,7 +271,7 @@
 	<input type="button" value="前に保存した内容を読込" onClick="loadFromLocalStorage()" />
 	<input type="button" value="保存した内容を捨てる" onClick="clearLocalStorage()" />
 	<!-- <input type="reset" value="設定内容を初期状態に戻す" onClick="invokeAllCharacterChangeEvent(); initSaveElement(document.querySelector('#save'));"/> -->
-	<div id="clearWarning" class="warning" hidden><br>localStorageから設定を消しました。まだこの画面には残っていますが、リロードすると完全に失われます。</div>
+	<div id="clearWarning" class="warning" hidden></div>
       </fieldset>
     </form>
     
@@ -389,6 +390,8 @@
       <li>「技道場が使える」のチェックボックスを外すと、技道場に登録されているが習得できない技を使った派生にも削除線が付く。
 	<ul><li><small>技道場が使えない世代では技道場に登録済みの技を使う手段は初期習得技しかなく、よってモンスターの巣にいるゼラチナスマター戦で「脳天割り」を使うことは難しく、その派生の「骨砕き」の閃きも難しい・・ということで何度か計算をやり直したので作った機能。</small></li></ul>
       </li>
+      <li>(TODO) セーブ関連</li>
+      <li>リセットはない。代わりに再読み込みすると入力欄が初期化される。</li>
     </ol>
     <h1>出典・参考情報等</h1>
     <ul>
@@ -409,7 +412,7 @@
       <li>✔ とりあえず初期装備技を置く。</li>
       <li>✔ ジェラール世代は技道場の技を使えなくするスイッチ</li>
       <li>✔ ファイル分割</li>
-      <li>☐ エラー処理。おかしな名前のときは表を消すか、エラーメッセージを出すかする。</li>
+      <li>✔ エラー処理。<del>おかしな名前のときは表を消すか、</del>エラーメッセージを出すかする。</li>
       <li>✔ リマスター追加敵</li>
       <li>✔ <del>オートロードについての</del>注。初期化する場合はクリアしてからリロードする必要あり。</li>
       <li>✔ リセットボタン配置。 (でもコメントアウト)</li>
