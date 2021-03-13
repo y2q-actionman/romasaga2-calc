@@ -17,6 +17,40 @@ function makeListByProperty(iterable, propertyName, excludeFalse) {
     return ret;
 }
 
+// onLoad handler
+
+const EQUIP_WAZA_LIST_COUNT = 8;
+const EQUIP_WAZA_LIST_STYLE = 'select'; // 'select' or 'input'
+
+function initCharacterForm(count) {
+    const cElem = document.querySelector('.character');
+    
+    // Init '.equipWazaList'
+    const template
+	  = (EQUIP_WAZA_LIST_STYLE === 'select')
+	  ? document.querySelector('template#wazaSelectTemplate')
+	  : (EQUIP_WAZA_LIST_STYLE === 'input')
+	  ? document.querySelector('template#wazaInputTemplate')
+	  : (function () {throw new Error('Unknown EQUIP_WAZA_LIST_STYLE')}());
+	  
+    const equipWazaListUL = cElem.querySelector('.equipWazaList ul');
+    for (let i = 0; i < EQUIP_WAZA_LIST_COUNT; ++i) {
+	let li = equipWazaListUL.appendChild(document.createElement('li'));
+	li.appendChild(template.content.cloneNode(true));
+    }
+    
+    // Clone '.character'.
+    const parent = document.querySelector('#rootForm');
+    for (let i = 0; i < count; ++i) {
+	let clone = cElem.cloneNode(true);
+	// close all <details>
+	for (n of clone.querySelectorAll('details')) {
+	    n.removeAttribute('open');
+	}
+	parent.insertBefore(clone, cElem.nextSibling);
+    }
+}
+
 //
 // onChange handlers
 //
@@ -78,11 +112,11 @@ function makeDojoWazaList() {
 }
 
 function makeEquipWazaList(characterElem) {
-    return makeListByProperty(characterElem.querySelectorAll("input.equipWaza"), "value", true);
+    return makeListByProperty(characterElem.querySelectorAll(".equipWaza"), "value", true);
 }
 
 function updateEquipWaza(characterElem, wazaList) {
-    const equipWazaInputs = characterElem.querySelectorAll('input.equipWaza');
+    const equipWazaInputs = characterElem.querySelectorAll('.equipWaza');
     for (let i = 0; i < equipWazaInputs.length; ++i) {
 	equipWazaInputs[i].value = (i < wazaList.length) ? wazaList[i] : null;
     }

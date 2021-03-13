@@ -61,6 +61,20 @@
     (terpri stream))
   (format stream "~&</datalist>"))
 
+(defun print-waza-option-set-for-html-select (&optional (stream *standard-output*))
+  "For making the frontend HTML parts."
+  (format stream "<select>~%")
+  (format stream "<option></option>~%")
+  (loop for (type . waza-list) in +技種類-技一覧-alist+
+     do (format stream "<optgroup label=\"~A\">" type)
+       (loop for waza in waza-list
+          as hirameki = (find-閃き-alist waza nil)
+          when (and hirameki
+                    (not (third (first hirameki)))) ; Do not include unique techs.
+          do (format stream "<option>~A</option> " waza))
+       (format stream "</optgroup>~%"))
+  (format stream "~&</select>"))
+
 (defun print-enemy-name-list-for-html-datalist (&optional (stream *standard-output*))
   "For making the frontend HTML parts."
   (format stream "<datalist id=\"enemyNameList\">~%")

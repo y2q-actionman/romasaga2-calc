@@ -5,23 +5,9 @@
     <link rel="stylesheet" href="romasaga2_front.css" type="text/css">
     <script type="text/javascript" src="romasaga2.js"></script>
     <script type="text/javascript" src="romasaga2_front.js"> </script>
-    <script type="text/javascript">
-      function cloneCharacterForm(bodyElem, count) {
-	  const parent = document.querySelector('#rootForm');
-	  const cElem = document.querySelector('.character');
-	  for (let i = 0; i < count; ++i) {
-	      let clone = cElem.cloneNode(true);
-	      // close all <details>
-	      for (n of clone.querySelectorAll('details')) {
-		  n.removeAttribute('open');
-	      }
-	      parent.insertBefore(clone, cElem.nextSibling);
-	  }
-      }
-    </script>
   </head>
   <body onLoad="initSaveElement(document.querySelector('#save'));
-		cloneCharacterForm(this, 5);">
+		initCharacterForm(5);">
     <h1>ロマサガ2 閃き計算機</h1>
     <a href="#readme">使い方等は一番下</a>
     <form action="#" id="rootForm">
@@ -76,14 +62,7 @@
 	<details open class="equipWazaList">
 	  <summary>装備技術欄設定</summary>
 	  <ul>
-	    <li><input class="equipWaza" type="text" list="allWazaNameList" /></li>
-	    <li><input class="equipWaza" type="text" list="allWazaNameList" /></li>
-	    <li><input class="equipWaza" type="text" list="allWazaNameList" /></li>
-	    <li><input class="equipWaza" type="text" list="allWazaNameList" /></li>
-	    <li><input class="equipWaza" type="text" list="allWazaNameList" /></li>
-	    <li><input class="equipWaza" type="text" list="allWazaNameList" /></li>
-	    <li><input class="equipWaza" type="text" list="allWazaNameList" /></li>
-	    <li><input class="equipWaza" type="text" list="allWazaNameList" /></li>
+	    <!-- Created by JS with '#wazaSelectTemplate' or '#wazaInputTemplate'. -->
 	  </ul>
 	</details>
 	<details open>
@@ -339,6 +318,20 @@
       <option>アザミ</option> <option>シオン</option> <option>ツバキ</option> <option>ナズナ</option> <option>フヨウ</option> <option>ミズキ</option> <option>モミジ</option> <option>ユキノ</option> 
       <option>レオン</option> <option>ジェラール</option> <option>コッペリア</option> <option>最終皇帝男</option> <option>最終皇帝女</option> 
     </datalist>
+    <template id="wazaSelectTemplate">
+      <select class="equipWaza">
+	<option></option>
+	<optgroup label="剣技"><option>なぎ払い</option> <option>パリイ</option> <option>二段斬り</option> <option>十文字斬り</option> <option>みじん斬り</option> <option>短冊斬り</option> <option>空圧波</option> <option>つむじ風</option> <option>線斬り</option> <option>音速剣</option> <option>残像剣</option> <option>真空斬り</option> <option>光速剣</option> <option>不動剣</option> </optgroup>
+	<optgroup label="大剣技"><option>みね打ち</option> <option>ディフレクト</option> <option>巻き打ち</option> <option>強撃</option> <option>切り落とし</option> <option>流し斬り</option> <option>無無剣</option> <option>水鳥剣</option> <option>清流剣</option> <option>ツバメ返し</option> <option>乱れ雪月花</option> <option>無明剣</option> <option>活人剣</option> </optgroup>
+	<optgroup label="斧技"><option>トマホーク</option> <option>アクスボンバー</option> <option>大木断</option> <option>次元断</option> <option>一人時間差</option> <option>ブレードロール</option> <option>ヨーヨー</option> <option>高速ナブラ</option> <option>マキ割りスペシャル</option> <option>スカイドライブ</option> </optgroup>
+	<optgroup label="棍棒技"><option>脳天割り</option> <option>返し突き</option> <option>地裂撃</option> <option>骨砕き</option> <option>ダブルヒット</option> <option>削岩撃</option> <option>フルフラット</option> <option>グランドスラム</option> <option>オゾンビート</option> <option>かめごうら割り</option> </optgroup>
+	<optgroup label="槍技"><option>二段突き</option> <option>足払い</option> <option>エイミング</option> <option>風車</option> <option>くし刺し</option> <option>チャージ</option> <option>一文字突き</option> <option>活殺化石衝</option> <option>稲妻突き</option> <option>活殺獣神衝</option> <option>無双三段</option> <option>スパイラルチャージ</option> </optgroup>
+	<optgroup label="小剣技"><option>フェイント</option> <option>サイドワインダー</option> <option>感電衝</option> <option>マタドール</option> <option>プラズマスラスト</option> <option>スネークショット</option> <option>幻惑剣</option> <option>マリオネット</option> <option>スクリュードライバ</option> <option>乱れ突き</option> <option>ファイナルレター</option> </optgroup>
+	<optgroup label="弓技"><option>イド・ブレイク</option> <option>でたらめ矢</option> <option>影ぬい</option> <option>二本射ち</option> <option>ビーストスレイヤー</option> <option>アローレイン</option> <option>影矢</option> <option>瞬速の矢</option> <option>落鳳破</option> <option>バラージシュート</option> <option>イヅナ</option> </optgroup>
+	<optgroup label="体術技"><option>キック</option> <option>集気法</option> <option>ネコだまし</option> <option>カウンター</option> <option>ソバット</option> <option>気弾</option> <option>不動金しばり</option> <option>ジョルトカウンター</option> <option>コークスクリュー</option> <option>カポエラキック</option> <option>マシンガンジャブ</option> <option>クワドラブル</option> <option>活殺破邪法</option> <option>千手観音</option> </optgroup>
+	<optgroup label="爪技"><option>ベルセルク</option> </optgroup>
+      </select>
+    </template>
     <datalist id="allWazaNameList">
       <option>なぎ払い</option> <option>パリイ</option> <option>二段斬り</option> <option>十文字斬り</option> <option>みじん斬り</option> <option>短冊斬り</option> <option>空圧波</option> <option>つむじ風</option> <option>線斬り</option> <option>音速剣</option> <option>残像剣</option> <option>真空斬り</option> <option>光速剣</option> <option>不動剣</option> <option>落月破斬</option> <option>プロミネンス斬</option> <option>風狼剣</option> <option>咬竜剣</option> <option>サクション</option> <option>分子分解</option> <option>スウォーム</option> <option>カマイタチ</option> <option>稲妻斬り</option> <option>ファイナルストライク</option> 
       <option>みね打ち</option> <option>ディフレクト</option> <option>巻き打ち</option> <option>強撃</option> <option>切り落とし</option> <option>流し斬り</option> <option>無無剣</option> <option>水鳥剣</option> <option>清流剣</option> <option>ツバメ返し</option> <option>乱れ雪月花</option> <option>無明剣</option> <option>活人剣</option> <option>ダンシングソード</option> <option>雷殺斬</option> <option>聖光</option> <option>月影</option> <option>殺虫剣</option> <option>殺人剣</option> <option>退魔神剣</option> <option>一刀両断</option> 
@@ -350,6 +343,9 @@
       <option>キック</option> <option>集気法</option> <option>ネコだまし</option> <option>カウンター</option> <option>ソバット</option> <option>気弾</option> <option>不動金しばり</option> <option>ジョルトカウンター</option> <option>コークスクリュー</option> <option>カポエラキック</option> <option>マシンガンジャブ</option> <option>クワドラブル</option> <option>活殺破邪法</option> <option>千手観音</option> <option>ふみつけ</option> <option>サラマンダークロー</option> <option>赤竜波</option> 
       <option>ベルセルク</option> <option>地獄爪殺法</option> 
     </datalist>
+    <template id="wazaInputTemplate">
+      <input class="equipWaza" type="text" list="allWazaNameList" />
+    </template>
     <datalist id="enemyNameList">
       <option>スケルトン</option> <option>スカルデーモン</option> <option>ボーンヘッド</option> <option>スカルロード</option> <option>ロトンビースト</option> <option>スパイクヘッド</option> <option>ドレッドナイト</option> <option>ヘルビースト</option> <option>フライアー</option> <option>ウインガー</option> <option>ヘルタスケルター</option> <option>腐骨鳥</option> <option>獄門鳥</option> <option>アドバード</option> <option>ボーンドレイク</option> <option>チャリオット</option> 
       <option>コープス</option> <option>ゾンビ</option> <option>レブナント</option> <option>屍食鬼</option> <option>吸精鬼</option> <option>寄生鬼</option> <option>ボーンバイター</option> <option>ブレインイーター</option> <option>ブラッドサッカー</option> <option>獄竜</option> <option>屍竜</option> <option>腐竜</option> <option>ヴァンパイア(男)</option> <option>ヴァンパイア(女)</option> <option>デュラハン</option> <option>ノスフェラン</option> 
