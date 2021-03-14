@@ -4,32 +4,48 @@
 
 ロマンシング サ・ガ2 での閃き計算な技の一覧を計算する。SFC版とリマスター版の両方に対応。
 
-例えば、 *現在のパーティーはジェラール、ベア、ジェイムズ、テレーズ、アリエスだが、この状態でゼラチナスマターと戦ったりディープワン道場に行ったりしたら、どんな技が閃けるのか？* を計算するのに使える。
+例えば、 *現在のパーティーはジェラール、ベア、ジェイムズ、テレーズ、アリエスだが、この状態でゼラチナスマターと戦ったりディープワン道場に行ったりしたら一体どんな技が閃けるのか？* を計算するのに使える。
 （こんな計算を何度もするうちに必要性を痛感して作った。）
 
 * 使い方
 
 ** HTML版
 
+使い方も含めて以下で公開中
 https://y2q-actionman.github.io/romasaga2-calc/
 
 ** Lisp 版
 
-1. 以下でLoad.
+1. 以下でLoadする。
 
 #+BEGIN_SRC lisp
-(asdf:load-asd (truename "romasaga2.asd"))
+(asdf:load-asd (truename "lisp/romasaga2.asd"))
 (asdf:load-system "romasaga2")
-(in-package :romasaga2-user)
 #+END_SRC
 
-2. romasaga2-user.lisp を適当に編集して設定する。
+2. romasaga2-user.lisp を適当に編集し、 =(load "romasaga2-user.lisp")= で読み込む。
 
-3. REPL で =(main :enemy 'ディープワン)= とかすると表が出る。
+3. REPL で以下のようにすると表が出る
 
-*** JS の Build
+#+BEGIN_SRC lisp
+  (in-package :romasaga2-user)
+  (main :enemy 'ディープワン
+	:member-list '(ジェラール ベア ジェイムズ テレーズ アリエス))
+#+END_SRC
 
-doc/romasaga2.js は以下でビルドする:
+* HTML 版について
+
+このおもちゃは、元々 Lisp の REPL で動けばいいというつもりで作っていた。
+その後、ブラウザで見られると便利と思ったので HTML ページを作った。
+
+=docs/= にある以下4ファイルで構成される。
+
+- index.html :: 手書きした HTML.
+- romasaga2_front.css :: 手書きした CSS.
+- romasaga2_front.js :: index.html の DOM を触るために手書きした JavaScript.
+- romasaga2.js :: =lisp/= の Lisp コードから Parenscript コンパイラで生成した JavaScript。
+
+docs/romasaga2.js は以下でビルドする:
 
 #+BEGIN_SRC lisp
 (romasaga2:make-romasaga2-js :print-pretty nil)
