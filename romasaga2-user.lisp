@@ -1,9 +1,3 @@
-(in-package :cl-user)
-
-(defpackage :romasaga2-user
-  (:use :cl :romasaga2 :romasaga2-name)
-  (:export))
-
 (in-package :romasaga2-user)
 
 (defparameter *user-閃き済み-剣技-list*
@@ -201,18 +195,8 @@
   ;; '金龍
   ;; 'ミスティック
   ;; 'アルビオン
-  )
+  "敵名を指定する")
 
 (defparameter *main-member-list* '(ジェラール ベア ジェイムズ テレーズ アリエス アンドロマケー))
 
-(defun main (&key (enemy *main-enemy*)
-               (member-list *main-member-list*))
-  (print-all enemy member-list
-             (append *user-閃き済み-剣技-list*
-                     *user-閃き済み-大剣技-list*
-                     *user-閃き済み-斧技-list*
-                     *user-閃き済み-棍棒技-list*
-                     *user-閃き済み-槍技-list*
-                     *user-閃き済み-小剣技-list*
-                     *user-閃き済み-弓技-list*
-                     *user-閃き済み-体術技-list*)))
+;;; 上記を適当に設定して (main) を呼ぶと表が出る。

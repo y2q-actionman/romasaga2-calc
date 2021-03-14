@@ -13,5 +13,5 @@
    (:file "initial-waza")
    (:file "calc")
    (:file "main")
-   (:file "romasaga2-user")
+   (:file "init-romasaga2-user-package")
    ))
